@@ -1,151 +1,347 @@
 [
     {
-        "children":{
-            "children":[
-            "ky65ly606kgtxrt"
+        "children": {
+            "children": [
+                "ky65ly606kgtxrt",
+                "20hvelzg9cw7nsn",
+                "om8nmdww43rx3f5",
+                "15rp7z8gdhk6xc4",
+                "ci6xtdknm4hi1f7"
             ]
         },
-        "collectionId":"djal98a7q4a4nnq",
-        "collectionName":"genealogy",
-        "created":"2024-07-08 16:40:19.383Z",
-        "date_of_birth":"1879",
-        "date_of_death":"1930",
-        "gender":"M",
-        "id":"773cwxw3wldeo0e",
-        "information":"",
-        "name":"Майсак Василий Степанович",
-        "parents":null,
-        "partner":{
-            "partner":"mozsck37anpj8rb"
+        "collectionId": "djal98a7q4a4nnq",
+        "collectionName": "genealogy",
+        "created": "2024-07-08 16:40:19.383Z",
+        "date_of_birth": "1879",
+        "date_of_death": "1930",
+        "gender": "M",
+        "id": "773cwxw3wldeo0e",
+        "information": "",
+        "name": "Майсак Василий Степанович",
+        "parents": {
+            "parents": [
+                "leg4jk4qpwxwrrs"
+            ]
         },
-        "place_of_birth":"c. Старобогдановка",
-        "place_of_death":"",
-        "portret":"",
-        "updated":"2024-08-26 13:52:58.442Z"
+        "partner": {
+            "spouse": "mozsck37anpj8rb"
+        },
+        "place_of_birth": "c. Старобогдановка",
+        "place_of_death": "",
+        "portret": "",
+        "updated": "2024-08-28 18:03:30.622Z"
     },
     {
-        "children":{
-            "children":[
-            "ky65ly606kgtxrt"
+        "children": {
+            "children": [
+                "ky65ly606kgtxrt",
+                "20hvelzg9cw7nsn",
+                "om8nmdww43rx3f5",
+                "15rp7z8gdhk6xc4",
+                "ci6xtdknm4hi1f7"
             ]
         },
-        "collectionId":"djal98a7q4a4nnq",
-        "collectionName":"genealogy",
-        "created":"2024-07-08 16:48:01.980Z",
-        "date_of_birth":"1880",
-        "date_of_death":"1957",
-        "gender":"F",
-        "id":"mozsck37anpj8rb",
-        "information":"",
-        "name":"Сидоряк Полина Тимофеевна",
-        "parents":null,
-        "partner":{
-            "partner":"773cwxw3wldeo0e"
+        "collectionId": "djal98a7q4a4nnq",
+        "collectionName": "genealogy",
+        "created": "2024-07-08 16:48:01.980Z",
+        "date_of_birth": "1880",
+        "date_of_death": "1957",
+        "gender": "F",
+        "id": "mozsck37anpj8rb",
+        "information": "",
+        "name": "Сидоряк Полина Тимофеевна",
+        "parents": null,
+        "partner": {
+            "spouse": "773cwxw3wldeo0e"
         },
-        "place_of_birth":"с. Терпенье",
-        "place_of_death":"",
-        "portret":"",
-        "updated":"2024-08-26 13:52:47.772Z"
+        "place_of_birth": "с. Терпенье",
+        "place_of_death": "",
+        "portret": "",
+        "updated": "2024-08-28 17:34:35.340Z"
     },
     {
-        "children":{
-            "children":[
-            "czci7e5rgxdpj23",
-            "7pm24fx98gzk5na"
+        "children": {
+            "children": [
+                "czci7e5rgxdpj23",
+                "7pm24fx98gzk5na"
             ]
         },
-        "collectionId":"djal98a7q4a4nnq",
-        "collectionName":"genealogy",
-        "created":"2024-07-08 17:04:32.634Z",
-        "date_of_birth":"22.06.1899",
-        "date_of_death":"1972",
-        "gender":"M",
-        "id":"ky65ly606kgtxrt",
-        "information":"",
-        "name":"Майсак Трофим Васильевич",
-        "parents":{
-            "parents":[
-            "773cwxw3wldeo0e",
-            "mozsck37anpj8rb"
+        "collectionId": "djal98a7q4a4nnq",
+        "collectionName": "genealogy",
+        "created": "2024-07-08 17:04:32.634Z",
+        "date_of_birth": "22.06.1899",
+        "date_of_death": "1972",
+        "gender": "M",
+        "id": "ky65ly606kgtxrt",
+        "information": "",
+        "name": "Майсак Трофим Васильевич",
+        "parents": {
+            "parents": [
+                "773cwxw3wldeo0e",
+                "mozsck37anpj8rb"
             ]
         },
-        "partner":{
-            "partner":"bv3fu3513z7s5np"
+        "partner": {
+            "spouse": "bv3fu3513z7s5np"
         },
-        "place_of_birth":"с. Старобогдановка",
-        "place_of_death":"г. Пятигорск",
-        "portret":"",
-        "updated":"2024-08-26 13:52:40.271Z"
+        "place_of_birth": "с. Старобогдановка",
+        "place_of_death": "г. Пятигорск",
+        "portret": "",
+        "updated": "2024-08-27 12:19:38.679Z"
     },
     {
-        "children":null,
-        "collectionId":"djal98a7q4a4nnq",
-        "collectionName":"genealogy",
-        "created":"2024-07-08 17:14:08.251Z",
-        "date_of_birth":"15.05.2021",
-        "date_of_death":"01.05.1991",
-        "gender":"M",
-        "id":"czci7e5rgxdpj23",
-        "information":"",
-        "name":"Майсак Владимир Трофимович",
-        "parents":{
-            "parents":[
-            "ky65ly606kgtxrt",
-            "bv3fu3513z7s5np"
+        "children": null,
+        "collectionId": "djal98a7q4a4nnq",
+        "collectionName": "genealogy",
+        "created": "2024-07-08 17:14:08.251Z",
+        "date_of_birth": "15.05.2021",
+        "date_of_death": "01.05.1991",
+        "gender": "M",
+        "id": "czci7e5rgxdpj23",
+        "information": "",
+        "name": "Майсак Владимир Трофимович",
+        "parents": {
+            "parents": [
+                "ky65ly606kgtxrt",
+                "bv3fu3513z7s5np"
             ]
         },
-        "partner":null,
-        "place_of_birth":"с. Старобогдановка",
-        "place_of_death":"г. Таллин",
-        "portret":"",
-        "updated":"2024-08-26 13:52:32.338Z"
+        "partner": null,
+        "place_of_birth": "с. Старобогдановка",
+        "place_of_death": "г. Таллин",
+        "portret": "",
+        "updated": "2024-08-26 13:52:32.338Z"
     },
     {
-        "children":null,
-        "collectionId":"djal98a7q4a4nnq",
-        "collectionName":"genealogy",
-        "created":"2024-07-08 17:21:19.776Z",
-        "date_of_birth":"27.11.1930(1931)",
-        "date_of_death":"2001",
-        "gender":"M",
-        "id":"7pm24fx98gzk5na",
-        "information":"\u003cp\u003eГод рождения в документах изменен отцом Михаила.\u003c/p\u003e",
-        "name":"Майсак Михаил Трофимович",
-        "parents":{
-            "parents":[
-            "ky65ly606kgtxrt",
-            "bv3fu3513z7s5np"
+        "children": null,
+        "collectionId": "djal98a7q4a4nnq",
+        "collectionName": "genealogy",
+        "created": "2024-07-08 17:21:19.776Z",
+        "date_of_birth": "27.11.1930(1931)",
+        "date_of_death": "2001",
+        "gender": "M",
+        "id": "7pm24fx98gzk5na",
+        "information": "<p>Год рождения в документах изменен отцом Михаила.</p>",
+        "name": "Майсак Михаил Трофимович",
+        "parents": {
+            "parents": [
+                "ky65ly606kgtxrt",
+                "bv3fu3513z7s5np"
             ]
         },
-        "partner":null,
-        "place_of_birth":"с. Старобогдановка",
-        "place_of_death":"с. Бурчак",
-        "portret":"",
-        "updated":"2024-08-26 13:52:21.048Z"
+        "partner": null,
+        "place_of_birth": "с. Старобогдановка",
+        "place_of_death": "с. Бурчак",
+        "portret": "",
+        "updated": "2024-08-26 13:52:21.048Z"
     },
     {
-        "children":{
-            "children":[
-            "czci7e5rgxdpj23",
-            "7pm24fx98gzk5na"
+        "children": {
+            "children": [
+                "czci7e5rgxdpj23",
+                "7pm24fx98gzk5na"
             ]
         },
-        "collectionId":"djal98a7q4a4nnq",
-        "collectionName":"genealogy",
-        "created":"2024-07-08 17:35:56.459Z",
-        "date_of_birth":"18.03.1900",
-        "date_of_death":"1979",
-        "gender":"F",
-        "id":"bv3fu3513z7s5np",
-        "information":"",
-        "name":"Дятлова Евдокия Митрофановна",
-        "parents":null,
-        "partner":{
-            "partner":"ky65ly606kgtxrt"
+        "collectionId": "djal98a7q4a4nnq",
+        "collectionName": "genealogy",
+        "created": "2024-07-08 17:35:56.459Z",
+        "date_of_birth": "18.03.1900",
+        "date_of_death": "1979",
+        "gender": "F",
+        "id": "bv3fu3513z7s5np",
+        "information": "",
+        "name": "Дятлова Евдокия Митрофановна",
+        "parents": {
+            "parents": [
+                "zt1ykgxh6e52162"
+            ]
         },
-        "place_of_birth":"с. Старобогдановка",
-        "place_of_death":"г. Пятигорск",
-        "portret":"",
-        "updated":"2024-08-26 13:52:09.909Z"
+        "partner": {
+            "spouse": "ky65ly606kgtxrt"
+        },
+        "place_of_birth": "с. Старобогдановка",
+        "place_of_death": "г. Пятигорск",
+        "portret": "",
+        "updated": "2024-08-28 17:42:43.033Z"
+    },
+    {
+        "children": null,
+        "collectionId": "djal98a7q4a4nnq",
+        "collectionName": "genealogy",
+        "created": "2024-08-28 17:07:11.322Z",
+        "date_of_birth": "1902",
+        "date_of_death": "1992",
+        "gender": "F",
+        "id": "ci6xtdknm4hi1f7",
+        "information": "<p>Взяла фамилию Рыкун.</p>",
+        "name": "Майсак  Татьяна Васильевна",
+        "parents": {
+            "parents": [
+                "773cwxw3wldeo0e",
+                "mozsck37anpj8rb"
+            ]
+        },
+        "partner": null,
+        "place_of_birth": "с. Старобогдановка",
+        "place_of_death": "пос. Кушучум",
+        "portret": "",
+        "updated": "2024-08-28 17:09:05.936Z"
+    },
+    {
+        "children": null,
+        "collectionId": "djal98a7q4a4nnq",
+        "collectionName": "genealogy",
+        "created": "2024-08-28 17:22:28.408Z",
+        "date_of_birth": "1905",
+        "date_of_death": "1985",
+        "gender": "F",
+        "id": "15rp7z8gdhk6xc4",
+        "information": "<p>Взяла фамилию Сидоряк.</p>",
+        "name": "Майсак Антонина Васильевна",
+        "parents": {
+            "parents": [
+                "773cwxw3wldeo0e",
+                "mozsck37anpj8rb"
+            ]
+        },
+        "partner": null,
+        "place_of_birth": "с. Старобогдановка",
+        "place_of_death": "в США",
+        "portret": "",
+        "updated": "2024-08-28 17:22:28.408Z"
+    },
+    {
+        "children": null,
+        "collectionId": "djal98a7q4a4nnq",
+        "collectionName": "genealogy",
+        "created": "2024-08-28 17:24:59.731Z",
+        "date_of_birth": "1914",
+        "date_of_death": "1964",
+        "gender": "F",
+        "id": "om8nmdww43rx3f5",
+        "information": "",
+        "name": "Майсак Ольга Васильевна",
+        "parents": {
+            "parents": [
+                "773cwxw3wldeo0e",
+                "mozsck37anpj8rb"
+            ]
+        },
+        "partner": null,
+        "place_of_birth": "с. Старобогдановка",
+        "place_of_death": "",
+        "portret": "",
+        "updated": "2024-08-28 17:24:59.731Z"
+    },
+    {
+        "children": null,
+        "collectionId": "djal98a7q4a4nnq",
+        "collectionName": "genealogy",
+        "created": "2024-08-28 17:28:03.490Z",
+        "date_of_birth": "1910",
+        "date_of_death": "1975",
+        "gender": "M",
+        "id": "20hvelzg9cw7nsn",
+        "information": "",
+        "name": "Майсак Даниил Васильевич",
+        "parents": {
+            "parents": [
+                "773cwxw3wldeo0e",
+                "mozsck37anpj8rb"
+            ]
+        },
+        "partner": null,
+        "place_of_birth": "с. Старобогдановка",
+        "place_of_death": "г. Тбилиси",
+        "portret": "",
+        "updated": "2024-08-28 17:28:03.490Z"
+    },
+    {
+        "children": {
+            "children": [
+                "bv3fu3513z7s5np"
+            ]
+        },
+        "collectionId": "djal98a7q4a4nnq",
+        "collectionName": "genealogy",
+        "created": "2024-08-28 17:41:12.089Z",
+        "date_of_birth": "1869",
+        "date_of_death": "1929",
+        "gender": "M",
+        "id": "zt1ykgxh6e52162",
+        "information": "",
+        "name": "Дятлов Митрофан Александрович",
+        "parents": null,
+        "partner": null,
+        "place_of_birth": "Курская обл.",
+        "place_of_death": "с. Старобогдановка",
+        "portret": "",
+        "updated": "2024-08-28 17:44:18.649Z"
+    },
+    {
+        "children": {
+            "children": [
+                "773cwxw3wldeo0e"
+            ]
+        },
+        "collectionId": "djal98a7q4a4nnq",
+        "collectionName": "genealogy",
+        "created": "2024-08-28 18:00:46.637Z",
+        "date_of_birth": "1846",
+        "date_of_death": "",
+        "gender": "M",
+        "id": "leg4jk4qpwxwrrs",
+        "information": "",
+        "name": "Майсак Степан Алексеевич",
+        "parents": null,
+        "partner": null,
+        "place_of_birth": "с. Старобогдановка",
+        "place_of_death": "",
+        "portret": "",
+        "updated": "2024-08-28 18:02:20.969Z"
+    },
+    {
+        "children": null,
+        "collectionId": "djal98a7q4a4nnq",
+        "collectionName": "genealogy",
+        "created": "2024-08-28 18:05:07.343Z",
+        "date_of_birth": "1883",
+        "date_of_death": "1942",
+        "gender": "M",
+        "id": "avas4imludho0gh",
+        "information": "",
+        "name": "Майсак Терентий Степанович",
+        "parents": {
+            "parents": [
+                "leg4jk4qpwxwrrs"
+            ]
+        },
+        "partner": null,
+        "place_of_birth": "с. Старобогдановка",
+        "place_of_death": "",
+        "portret": "",
+        "updated": "2024-08-28 18:06:13.037Z"
+    },
+    {
+        "children": null,
+        "collectionId": "djal98a7q4a4nnq",
+        "collectionName": "genealogy",
+        "created": "2024-08-28 18:07:38.391Z",
+        "date_of_birth": "1897",
+        "date_of_death": "1950",
+        "gender": "M",
+        "id": "mpdod7c1xtvl4ts",
+        "information": "",
+        "name": "Майсак Гавриил Степанович",
+        "parents": {
+            "parents": [
+                "leg4jk4qpwxwrrs"
+            ]
+        },
+        "partner": null,
+        "place_of_birth": "с. Старобогдановка",
+        "place_of_death": "",
+        "portret": "",
+        "updated": "2024-08-28 18:07:38.391Z"
     }
 ]

@@ -1,33 +1,7 @@
-// treeJson = d3.json("data.json", function(error, treeData) {
-//     dTree.init(treeData,
-//               {
-//                   target: "#graph",
-//                   debug: true,
-//                   hideMarriageNodes: true,
-//                   marriageNodeSize: 5,
-//                   height: 800,
-//                   width: 1200,
-//                   callbacks: {
-//                       nodeClick: function(name, extra) {
-//                           alert('Click: ' + name);
-//                       },
-//                       nodeRightClick: function(name, extra) {
-//                           alert('Right-click: ' + name);
-//                       },
-//                       textRenderer: function(name, extra, textClass) {
-//                           if (extra && extra.nickname)
-//                               name = name + " (" + extra.nickname + ")";
-//                           return "<p align='center' class='" + textClass + "'>" + name + "</p>";
-//                       },
-//                       marriageClick: function(extra, id) {
-//                           alert('Clicked marriage node' + id);
-//                       },
-//                       marriageRightClick: function(extra, id) {
-//                           alert('Right-clicked marriage node' + id);
-//                       },
-//                   }
-//               });
-//   });
+import httpService from "../services/http.js";
+
+const { request } = httpService();
+//const dataGenealogy = request("https://coldnaked.pockethost.io/api/collections/genealogy/records");
 
 
 function convertToDTreeFormat(serverData) {
@@ -38,6 +12,8 @@ serverData.forEach(person => {
     idMap.set(person.id, {
         name: person.name,
         class: person.gender === 'M' ? 'man' : 'woman',
+        textClass: "nodeText",
+        depthOffset: 1,
         extra: {
             birthDate: person.date_of_birth,
             deathDate: person.date_of_death,
@@ -52,7 +28,6 @@ serverData.forEach(person => {
 // Second pass: establish relationships
 serverData.forEach(person => {
     const node = idMap.get(person.id);
-
     // Add partner
     if (person.partner && person.partner.partner) {
         const spouse = idMap.get(person.partner.partner);
@@ -84,44 +59,81 @@ const root = serverData.find(person => !person.parents || !person.parents.parent
 return root ? [idMap.get(root.id)] : [];
 }
 
-
-d3.json("genealogy.json", function(error, serverData) {
-    if (error) {
-        console.error("Error loading the data:", error);
-        return;
-    }
-
-    var treeData = convertToDTreeFormat(serverData);
-    dTree.init(treeData, {
-        target: "#graph",
-        debug: true,
-        hideMarriageNodes: true,
-        marriageNodeSize: 5,
-        height: 800,
-        width: 1200,
-        nodeWidth: 130,
-        callbacks: {
-            nodeClick: function(name, extra) {
-                alert('Click: ' + name + '\n' + JSON.stringify(extra, null, 2));
-            },
-            nodeRightClick: function(name, extra) {
-                alert('Right-click: ' + name);
-            },
-            textRenderer: function(name, extra, textClass) {
-                var text = "<div style='width: 120px; padding: 5px; word-wrap: break-word;'>";
-                text += "<p align='center' class='" + textClass + "' style='margin-bottom: 5px; font-weight: bold;'>" + name + "</p>";
-                if (extra) {
-                    text += "<p align='center' style='margin-bottom: 3px;'>" + (extra.birthDate || '') + " - " + (extra.deathDate || '') + "</p>";
-                    if (extra.birthPlace) text += "<p align='center'>" + extra.birthPlace + "</p>";
+request("https://coldnaked.pockethost.io/api/collections/genealogy/records")
+    .then( response => {
+            console.log(response.items);
+            var treeData = convertToDTreeFormat(response.items);
+            dTree.init(treeData, {
+                target: "#graph",
+                debug: true,
+                hideMarriageNodes: true,
+                marriageNodeSize: 5,
+                height: 800,
+                width: 1200,
+                nodeWidth: 130,
+                callbacks: {
+                    nodeClick: function(name, extra) {
+                        alert('Click: ' + name + '\n' + JSON.stringify(extra, null, 2));
+                    },
+                    nodeRightClick: function(name, extra) {
+                        alert('Right-click: ' + name);
+                    },
+                    textRenderer: function(name, extra, textClass) {
+                        var text = "<div style='width: 120px; padding: 5px; word-wrap: break-word;'>";
+                        text += "<p align='center' class='" + textClass + "' style='margin-bottom: 5px; font-weight: bold;'>" + name + "</p>";
+                        if (extra) {
+                            text += "<p align='center' style='margin-bottom: 3px;'>" + (extra.birthDate || '') + " - " + (extra.deathDate || '') + "</p>";
+                            if (extra.birthPlace) text += "<p align='center'>" + extra.birthPlace + "</p>";
+                        }
+                        return text;
+                    },
+                    marriageClick: function(extra, id) {
+                        alert('Clicked marriage node ' + id);
+                    },
+                    marriageRightClick: function(extra, id) {
+                        alert('Right-clicked marriage node ' + id);
+                    },
                 }
-                return text;
-            },
-            marriageClick: function(extra, id) {
-                alert('Clicked marriage node ' + id);
-            },
-            marriageRightClick: function(extra, id) {
-                alert('Right-clicked marriage node ' + id);
-            },
-        }
-    });
-});
+            });
+        });
+
+// d3.json("genealogy.json", function(error, serverData) {
+//     if (error) {
+//         console.error("Error loading the data:", error);
+//         return;
+//     }
+
+//     var treeData = convertToDTreeFormat(serverData);
+//     dTree.init(treeData, {
+//         target: "#graph",
+//         debug: true,
+//         hideMarriageNodes: true,
+//         marriageNodeSize: 5,
+//         height: 800,
+//         width: 1200,
+//         nodeWidth: 130,
+//         callbacks: {
+//             nodeClick: function(name, extra) {
+//                 alert('Click: ' + name + '\n' + JSON.stringify(extra, null, 2));
+//             },
+//             nodeRightClick: function(name, extra) {
+//                 alert('Right-click: ' + name);
+//             },
+//             textRenderer: function(name, extra, textClass) {
+//                 var text = "<div style='width: 120px; padding: 5px; word-wrap: break-word;'>";
+//                 text += "<p align='center' class='" + textClass + "' style='margin-bottom: 5px; font-weight: bold;'>" + name + "</p>";
+//                 if (extra) {
+//                     text += "<p align='center' style='margin-bottom: 3px;'>" + (extra.birthDate || '') + " - " + (extra.deathDate || '') + "</p>";
+//                     if (extra.birthPlace) text += "<p align='center'>" + extra.birthPlace + "</p>";
+//                 }
+//                 return text;
+//             },
+//             marriageClick: function(extra, id) {
+//                 alert('Clicked marriage node ' + id);
+//             },
+//             marriageRightClick: function(extra, id) {
+//                 alert('Right-clicked marriage node ' + id);
+//             },
+//         }
+//     });
+// });
