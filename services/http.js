@@ -1,11 +1,9 @@
 const httpService = () => {
-    let isLoading = false;
+    let isLoading = true;
     let isError = false;
 
     const request = async (url, method = "GET", body = null) => {
         try {
-            isLoading = true;
-
             let options = {
                 method: method,
                 headers: {
@@ -22,6 +20,7 @@ const httpService = () => {
               if(response.ok) {
                 let result = await response.json();
                 isLoading = false;
+                isError = false;
                 console.log(result);
                 return result;
               } else {
