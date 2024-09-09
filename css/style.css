@@ -85,24 +85,25 @@ svg {
     background-color: white;
     padding: 30px;
     border-radius: 10px;
-    width: 400px;
+    width: 500px;
     position: relative;
     display: none;
     font-size: 14px;
-    animation-duration: 0.40s;
+    animation-duration: 0.35s;
     animation-fill-mode: none;
     animation-name: fadeInDown;
 }
 
 @keyframes fadeInDown {
     0% {
-        opacity: 0;
+        opacity: 0.25;
+        transform: translateY(15%);
     }
     100% {
         opacity: 1;
+        transform: translateY(0%);
     }
 }
-
 
 .popup_close {
     position: absolute;
@@ -119,27 +120,44 @@ svg {
     border-radius: 50%;
 }
 .person-photo {
-    width: 200px;
-    height: 200px;
+    width: 250px;
+    height: 250px;
     object-fit: cover;
-    margin: 0 auto 20px;
+    margin: 0 auto 0;
     display: block;
 }
 .person-info {
-    margin-bottom: 10px;
+    margin-bottom: 12px;
+}
+
+#person-info-name {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #person-name {
-    padding-top: 16px;
-    padding-bottom: 16px;
+    padding-top: 18px;
+    padding-bottom: 18px;
     font-size: 18px;
     font-weight: bold;
 }
 
 .gender-tag {
     display: inline-block;
-    padding: 5px 8px;
+    margin-left: 16px;
+    padding: 6px 10px;
     background-color: #e0e0e0;
-    border-radius: 15px;
-    font-size: 0.9em;
+    border-radius: 50%;
+    font-size: 18px;
+}
+
+.person-info__content {
+    border-radius: 8px;
+    margin-top: 8px;
+    min-height: 64px;
+    padding: 8px;
+    -webkit-box-shadow: 1px 1px 5px 1px rgba(34, 60, 80, 0.5) inset;
+    -moz-box-shadow: 1px 1px 5px 1px rgba(34, 60, 80, 0.5) inset;
+    box-shadow: 1px 1px 5px 1px rgba(34, 60, 80, 0.5) inset;
 }

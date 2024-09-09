@@ -1,8 +1,12 @@
 import httpService from "../services/http.js";
 import modals from "./modules/modals.js";
 
+
+const baseImagePath = "https://coldnaked.pockethost.io/api/files/genealogy";
 const { request, isLoading } = httpService();
+
 const loadingDiv = document.createElement("div");
+
 const modalControls = modals();
 
 
@@ -25,7 +29,9 @@ function convertToDTreeFormat(data) {
                     deathDate: person.date_of_death,
                     birthPlace: person.place_of_birth,
                     deathPlace: person.place_of_death,
-                    information: person.information
+                    information: person.information,
+                    isLiving: person.isLivingPerson,
+                    portret: person.portret
                 },
                 marriages: []
             };
@@ -126,6 +132,30 @@ const deleteLoadingDiv = () => {
     }
 };
 
+const changeInfoIsLivingPerson = (extra) => {
+    const personInfoDeath = document.getElementById("person-info-death");
+    const personInfoPlaceOfDeath = document.getElementById("person-info-place-death");
+    if (!extra.isLiving) {
+        personInfoDeath.style.display = "";
+        personInfoPlaceOfDeath.style.display = "";
+        document.getElementById("person-death").textContent = `${extra.deathDate || "неизвестный "} г.`;
+        document.getElementById("place-death").textContent = extra.deathPlace || "неизвестно";
+    } else {
+        personInfoDeath.style.display = "none";
+        personInfoPlaceOfDeath.style.display = "none";
+        document.getElementById("person-death").textContent = "";
+        document.getElementById("place-death").textContent = "";
+    }
+};
+
+const changePersonPortret = (extra) => {
+    if(extra.portret) {
+        document.querySelector(".person-photo").src=`${baseImagePath}/${extra.id}/${extra.portret}`;
+    } else {
+        document.querySelector(".person-photo").src="https://via.assets.so/img.jpg?w=200&h=200&tc=black&bg=#cecece";
+    }
+};
+
 request("https://coldnaked.pockethost.io/api/collections/genealogy/records")
     .then( response => {
             console.log(response.items);
@@ -143,10 +173,10 @@ request("https://coldnaked.pockethost.io/api/collections/genealogy/records")
                         document.getElementById('person-name').textContent = name;
                         document.getElementById('person-gender').textContent = extra.gender === "M" ? "М" : "Ж";
                         document.getElementById('person-birth').textContent = `${extra.birthDate || "неизвестный "} г.`;
-                        document.getElementById('person-death').textContent = `${extra.deathDate || "неизвестный "} г.`;
-                        document.getElementById('place-birth').textContent = extra.birthPlace || "Неизвестно";
-                        document.getElementById('place-death').textContent = extra.deathPlace || "Неизвестно";
-                        document.getElementById('person-info').innerHTML = extra.information || "Информация отсутствует";
+                        document.getElementById('place-birth').textContent = extra.birthPlace || "неизвестно";
+                        document.getElementById('person-info').innerHTML = extra.information || "информация отсутствует";
+                        changeInfoIsLivingPerson(extra);
+                        changePersonPortret(extra);
                         modalControls.openModal();
                     },
                     nodeRightClick: function(name, extra) {
