@@ -82,13 +82,14 @@ svg {
     z-index: 1000;
 }
 .popup_content {
+    display: none;
     background-color: white;
     padding: 30px;
     border-radius: 10px;
     width: 500px;
     position: relative;
-    display: none;
-    font-size: 14px;
+    font-family: "Open Sans";
+    font-size: 16px;
     animation-duration: 0.35s;
     animation-fill-mode: none;
     animation-name: fadeInDown;
@@ -120,11 +121,12 @@ svg {
     border-radius: 50%;
 }
 .person-photo {
+    display: block;
     width: 250px;
     height: 250px;
     object-fit: cover;
     margin: 0 auto 0;
-    display: block;
+    border-radius: 8px;
 }
 .person-info {
     margin-bottom: 12px;
@@ -149,14 +151,17 @@ svg {
     padding: 6px 10px;
     background-color: #e0e0e0;
     border-radius: 50%;
-    font-size: 18px;
+    font-size: 14px;
+    font-weight: bold;
 }
 
 .person-info__content {
     border-radius: 8px;
     margin-top: 8px;
-    min-height: 64px;
+    min-height: 120px;
+    max-height: 240px;
     padding: 8px;
+    overflow: auto;
     -webkit-box-shadow: 1px 1px 5px 1px rgba(34, 60, 80, 0.5) inset;
     -moz-box-shadow: 1px 1px 5px 1px rgba(34, 60, 80, 0.5) inset;
     box-shadow: 1px 1px 5px 1px rgba(34, 60, 80, 0.5) inset;

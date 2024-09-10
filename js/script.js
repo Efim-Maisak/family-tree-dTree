@@ -152,7 +152,7 @@ const changePersonPortret = (extra) => {
     if(extra.portret) {
         document.querySelector(".person-photo").src=`${baseImagePath}/${extra.id}/${extra.portret}`;
     } else {
-        document.querySelector(".person-photo").src="https://via.assets.so/img.jpg?w=200&h=200&tc=black&bg=#cecece";
+        document.querySelector(".person-photo").src="../assets/avatar-default-512x488.png";
     }
 };
 
@@ -171,7 +171,7 @@ request("https://coldnaked.pockethost.io/api/collections/genealogy/records")
                 callbacks: {
                     nodeClick: function(name, extra) {
                         document.getElementById('person-name').textContent = name;
-                        document.getElementById('person-gender').textContent = extra.gender === "M" ? "М" : "Ж";
+                        document.getElementById('person-gender').textContent = name === "неизвестно" ? "?" : (extra.gender === "M" ? "М" : "Ж");
                         document.getElementById('person-birth').textContent = `${extra.birthDate || "неизвестный "} г.`;
                         document.getElementById('place-birth').textContent = extra.birthPlace || "неизвестно";
                         document.getElementById('person-info').innerHTML = extra.information || "информация отсутствует";
