@@ -17,6 +17,8 @@
         "gender": "M",
         "id": "773cwxw3wldeo0e",
         "information": "",
+        "isLivingPerson": false,
+        "key_node": false,
         "name": "Майсак Василий Степанович",
         "parents": {
             "parents": [
@@ -49,6 +51,8 @@
         "gender": "F",
         "id": "mozsck37anpj8rb",
         "information": "",
+        "isLivingPerson": false,
+        "key_node": false,
         "name": "Сидоряк Полина Тимофеевна",
         "parents": null,
         "partner": {
@@ -74,6 +78,8 @@
         "gender": "M",
         "id": "ky65ly606kgtxrt",
         "information": "",
+        "isLivingPerson": false,
+        "key_node": false,
         "name": "Майсак Трофим Васильевич",
         "parents": {
             "parents": [
@@ -94,11 +100,13 @@
         "collectionId": "djal98a7q4a4nnq",
         "collectionName": "genealogy",
         "created": "2024-07-08 17:14:08.251Z",
-        "date_of_birth": "15.05.2021",
+        "date_of_birth": "15.05.1921",
         "date_of_death": "01.05.1991",
         "gender": "M",
         "id": "czci7e5rgxdpj23",
-        "information": "",
+        "information": "<p>Lorem ipsum odor amet, consectetuer adipiscing elit. Leo placerat molestie lacinia; leo lacinia montes erat. Molestie ac vehicula senectus blandit fusce integer eros. Gravida dictum urna aptent; laoreet et habitasse? Augue finibus aenean ultricies penatibus tellus curabitur! Turpis etiam pulvinar nisi elit fames luctus ac convallis eu. Imperdiet himenaeos euismod; eros ornare lobortis malesuada. Adipiscing integer imperdiet quam condimentum ut sem. Et sapien ullamcorper malesuada gravida nisi nullam ligula eget quam.</p>\r\n<p>Augue tincidunt urna sapien scelerisque ultricies condimentum sollicitudin libero massa. Aliquet velit iaculis sollicitudin sollicitudin tincidunt. Ipsum sagittis dignissim ac aenean lacinia morbi dis pharetra urna. Quis interdum himenaeos laoreet ipsum venenatis nascetur class. Amet erat turpis habitasse mi condimentum risus libero. Maximus enim fames elit vulputate dolor; vitae ridiculus. <strong>Tincidunt at ex </strong>dis fusce inceptos porta vivamus.</p>\r\n<p style=\"text-align: left;\">Class taciti dignissim dictum varius tellus dui fames suscipit. Sollicitudin ligula fusce fringilla ad convallis bibendum eros. Ante justo lobortis egestas augue lobortis fames ullamcorper at. Curae placerat nec commodo ultrices gravida? Magnis rhoncus suspendisse tempus luctus; tempus vehicula ornare aliquet habitant. Auctor mauris viverra integer semper luctus. Etiam inceptos iaculis <em>lorem integer molestie aliquet</em>.<br><br>один<br>два<br>три</p>",
+        "isLivingPerson": false,
+        "key_node": false,
         "name": "Майсак Владимир Трофимович",
         "parents": {
             "parents": [
@@ -110,7 +118,7 @@
         "place_of_birth": "с. Старобогдановка",
         "place_of_death": "г. Таллин",
         "portret": "",
-        "updated": "2024-08-26 13:52:32.338Z"
+        "updated": "2024-09-11 16:32:19.694Z"
     },
     {
         "children": null,
@@ -122,6 +130,8 @@
         "gender": "M",
         "id": "7pm24fx98gzk5na",
         "information": "<p>Год рождения в документах изменен отцом Михаила.</p>",
+        "isLivingPerson": true,
+        "key_node": false,
         "name": "Майсак Михаил Трофимович",
         "parents": {
             "parents": [
@@ -132,8 +142,8 @@
         "partner": null,
         "place_of_birth": "с. Старобогдановка",
         "place_of_death": "с. Бурчак",
-        "portret": "",
-        "updated": "2024-08-26 13:52:21.048Z"
+        "portret": "portret_CrFiLsum5y.jpeg",
+        "updated": "2024-09-09 18:33:53.804Z"
     },
     {
         "children": {
@@ -150,6 +160,8 @@
         "gender": "F",
         "id": "bv3fu3513z7s5np",
         "information": "",
+        "isLivingPerson": false,
+        "key_node": false,
         "name": "Дятлова Евдокия Митрофановна",
         "parents": {
             "parents": [
@@ -174,6 +186,8 @@
         "gender": "F",
         "id": "ci6xtdknm4hi1f7",
         "information": "<p>Взяла фамилию Рыкун.</p>",
+        "isLivingPerson": false,
+        "key_node": false,
         "name": "Майсак  Татьяна Васильевна",
         "parents": {
             "parents": [
@@ -197,6 +211,8 @@
         "gender": "F",
         "id": "15rp7z8gdhk6xc4",
         "information": "<p>Взяла фамилию Сидоряк.</p>",
+        "isLivingPerson": false,
+        "key_node": false,
         "name": "Майсак Антонина Васильевна",
         "parents": {
             "parents": [
@@ -220,6 +236,8 @@
         "gender": "F",
         "id": "om8nmdww43rx3f5",
         "information": "",
+        "isLivingPerson": false,
+        "key_node": false,
         "name": "Майсак Ольга Васильевна",
         "parents": {
             "parents": [
@@ -243,6 +261,8 @@
         "gender": "M",
         "id": "20hvelzg9cw7nsn",
         "information": "",
+        "isLivingPerson": false,
+        "key_node": false,
         "name": "Майсак Даниил Васильевич",
         "parents": {
             "parents": [
@@ -270,6 +290,8 @@
         "gender": "M",
         "id": "zt1ykgxh6e52162",
         "information": "",
+        "isLivingPerson": false,
+        "key_node": false,
         "name": "Дятлов Митрофан Александрович",
         "parents": null,
         "partner": null,
@@ -281,7 +303,9 @@
     {
         "children": {
             "children": [
-                "773cwxw3wldeo0e"
+                "773cwxw3wldeo0e",
+                "mpdod7c1xtvl4ts",
+                "avas4imludho0gh"
             ]
         },
         "collectionId": "djal98a7q4a4nnq",
@@ -292,13 +316,15 @@
         "gender": "M",
         "id": "leg4jk4qpwxwrrs",
         "information": "",
+        "isLivingPerson": false,
+        "key_node": true,
         "name": "Майсак Степан Алексеевич",
         "parents": null,
         "partner": null,
         "place_of_birth": "с. Старобогдановка",
         "place_of_death": "",
         "portret": "",
-        "updated": "2024-08-28 18:02:20.969Z"
+        "updated": "2024-08-29 11:13:01.869Z"
     },
     {
         "children": null,
@@ -310,6 +336,8 @@
         "gender": "M",
         "id": "avas4imludho0gh",
         "information": "",
+        "isLivingPerson": false,
+        "key_node": false,
         "name": "Майсак Терентий Степанович",
         "parents": {
             "parents": [
@@ -332,6 +360,8 @@
         "gender": "M",
         "id": "mpdod7c1xtvl4ts",
         "information": "",
+        "isLivingPerson": false,
+        "key_node": false,
         "name": "Майсак Гавриил Степанович",
         "parents": {
             "parents": [
@@ -343,5 +373,104 @@
         "place_of_death": "",
         "portret": "",
         "updated": "2024-08-28 18:07:38.391Z"
+    },
+    {
+        "children": {
+            "children": [
+                "mozsck37anpj8rb"
+            ]
+        },
+        "collectionId": "djal98a7q4a4nnq",
+        "collectionName": "genealogy",
+        "created": "2024-09-11 17:38:53.623Z",
+        "date_of_birth": "",
+        "date_of_death": "",
+        "gender": "M",
+        "id": "r0enfu0wevg7eml",
+        "information": "<p>Из духоборов (высланы в Таврическую губернию в 1814 году).</p>",
+        "isLivingPerson": false,
+        "key_node": false,
+        "name": "Сидоряк Тимофей Михайлович",
+        "parents": null,
+        "partner": null,
+        "place_of_birth": "г. Орел",
+        "place_of_death": "",
+        "portret": "",
+        "updated": "2024-09-11 17:41:38.047Z"
+    },
+    {
+        "children": null,
+        "collectionId": "djal98a7q4a4nnq",
+        "collectionName": "genealogy",
+        "created": "2024-09-11 17:58:38.731Z",
+        "date_of_birth": "19.03.1926",
+        "date_of_death": "20.08.1985",
+        "gender": "F",
+        "id": "gwboaw6hx7bnxzp",
+        "information": "<p>Взяла фамилию Брюховецкая.</p>",
+        "isLivingPerson": false,
+        "key_node": false,
+        "name": "Майсак Клавдия Трофимовна",
+        "parents": {
+            "parents": [
+                "ky65ly606kgtxrt",
+                "bv3fu3513z7s5np"
+            ]
+        },
+        "partner": null,
+        "place_of_birth": "с. Старобогдановка",
+        "place_of_death": "г. Днепр",
+        "portret": "",
+        "updated": "2024-09-11 18:01:01.020Z"
+    },
+    {
+        "children": null,
+        "collectionId": "djal98a7q4a4nnq",
+        "collectionName": "genealogy",
+        "created": "2024-09-11 18:07:31.170Z",
+        "date_of_birth": "22.12.1923",
+        "date_of_death": "04.12.1994",
+        "gender": "F",
+        "id": "nmxa1bv2xvlkfzr",
+        "information": "<p>Взяла фамилию Феденко.</p>",
+        "isLivingPerson": false,
+        "key_node": false,
+        "name": "Майсак Варвара Трофимовна",
+        "parents": {
+            "parents": [
+                "ky65ly606kgtxrt",
+                "bv3fu3513z7s5np"
+            ]
+        },
+        "partner": null,
+        "place_of_birth": "с. Старобогдановка",
+        "place_of_death": "г. Днепр",
+        "portret": "",
+        "updated": "2024-09-11 18:09:16.334Z"
+    },
+    {
+        "children": null,
+        "collectionId": "djal98a7q4a4nnq",
+        "collectionName": "genealogy",
+        "created": "2024-09-11 18:18:33.464Z",
+        "date_of_birth": "19.09.1939",
+        "date_of_death": "",
+        "gender": "F",
+        "id": "m4nsjv8ga8hiix6",
+        "information": "<p>Взяла фамилию Калинченко.</p>",
+        "isLivingPerson": false,
+        "key_node": false,
+        "name": "Майсак Людмила Трофимовна",
+        "parents": {
+            "parents": [
+                "ky65ly606kgtxrt",
+                "bv3fu3513z7s5np"
+            ]
+        },
+        "partner": null,
+        "place_of_birth": "Донецкая обл., ст. Кутейниково",
+        "place_of_death": "",
+        "portret": "",
+        "updated": "2024-09-11 18:20:13.705Z"
     }
 ]

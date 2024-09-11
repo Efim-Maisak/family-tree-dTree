@@ -41,8 +41,8 @@ function convertToDTreeFormat(data) {
 
     // Находим корневой узел (самый старший предок)
     let oldestPerson = data.reduce((oldest, current) => {
-        const oldestBirth = oldest.date_of_birth ? parseInt(oldest.date_of_birth.split('.')[2] || oldest.date_of_birth) : Infinity;
-        const currentBirth = current.date_of_birth ? parseInt(current.date_of_birth.split('.')[2] || current.date_of_birth) : Infinity;
+        const oldestBirth = oldest.date_of_birth ? new Date(oldest.date_of_birth.split('.').reverse().join('-')) : new Date(0);
+        const currentBirth = current.date_of_birth ? new Date(current.date_of_birth.split('.').reverse().join('-')) : new Date(0);
         return currentBirth < oldestBirth ? current : oldest;
     });
     rootNode = nodeMap.get(oldestPerson.id);
@@ -78,17 +78,33 @@ function convertToDTreeFormat(data) {
 
         // Добавляем детей
         if (person.children && person.children.children) {
+            let marriage = node.marriages[0];
+            if (!marriage) {
+                marriage = { spouse: createUnknownSpouse(), children: [] };
+                node.marriages.push(marriage);
+            }
             person.children.children.forEach(childId => {
                 const childNode = nodeMap.get(childId);
-                if (childNode) {
-                    let marriage = node.marriages.find(m => m.children.some(c => c.extra.id === childId));
+                if (childNode && !marriage.children.some(c => c.extra.id === childId)) {
+                    marriage.children.push(childNode);
+                }
+            });
+        }
+    });
+
+    // Добавляем детей к родителям
+    data.forEach(person => {
+        if (person.parents && person.parents.parents) {
+            person.parents.parents.forEach(parentId => {
+                const parentNode = nodeMap.get(parentId);
+                if (parentNode) {
+                    let marriage = parentNode.marriages[0];
                     if (!marriage) {
-                        if (node.marriages.length === 0) {
-                            node.marriages.push({ spouse: createUnknownSpouse(), children: [] });
-                        }
-                        marriage = node.marriages[0];
+                        marriage = { spouse: createUnknownSpouse(), children: [] };
+                        parentNode.marriages.push(marriage);
                     }
-                    if (!marriage.children.some(c => c.extra.id === childId)) {
+                    const childNode = nodeMap.get(person.id);
+                    if (childNode && !marriage.children.some(c => c.extra.id === person.id)) {
                         marriage.children.push(childNode);
                     }
                 }
@@ -105,8 +121,7 @@ function convertToDTreeFormat(data) {
     }
 
     return [buildTree(rootNode)];
-};
-
+}
 
 
 const showLoadingDiv = () => {
@@ -168,6 +183,18 @@ request("https://coldnaked.pockethost.io/api/collections/genealogy/records")
                 height: 800,
                 width: 1200,
                 nodeWidth: 130,
+                margin: {
+                    top: 0,
+                    right: 0,
+                    bottom: 0,
+                    left: 0
+                  },
+                  styles: {
+                    node: 'node',
+                    linage: 'linage',
+                    marriage: 'marriage',
+                    text: 'nodeText'
+                  },
                 callbacks: {
                     nodeClick: function(name, extra) {
                         document.getElementById('person-name').textContent = name;
