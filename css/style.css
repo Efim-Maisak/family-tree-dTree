@@ -115,7 +115,7 @@ p {
     }
 }
 
-.popup_close {
+.popup_close, .graph-spouse_close {
     position: absolute;
     top: 15px;
     right: 15px;
@@ -132,6 +132,10 @@ p {
 
 .popup_close:hover {
     transform: scale(1.1);
+}
+
+.graph-spouse_close {
+    display: none;
 }
 
 .person-photo {

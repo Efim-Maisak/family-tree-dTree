@@ -1,8 +1,10 @@
 import httpService from "../services/http.js";
 import modals from "./modules/modals.js";
+import graphs from "./modules/graphs.js";
+import { changeInfoIsLivingPerson } from "../utils/changeInfoIsLivingPerson.js";
+import { changePersonPortret } from "../utils/changePersonPortet.js";
 
 
-const baseImagePath = "https://coldnaked.pockethost.io/api/files/genealogy";
 const { request, isLoading } = httpService();
 
 const loadingDiv = document.createElement("div");
@@ -31,7 +33,8 @@ function convertToDTreeFormat(data) {
                     deathPlace: person.place_of_death,
                     information: person.information,
                     isLiving: person.isLivingPerson,
-                    portret: person.portret
+                    portret: person.portret,
+                    partner: person.partner
                 },
                 marriages: []
             };
@@ -147,33 +150,14 @@ const deleteLoadingDiv = () => {
     }
 };
 
-const changeInfoIsLivingPerson = (extra) => {
-    const personInfoDeath = document.getElementById("person-info-death");
-    const personInfoPlaceOfDeath = document.getElementById("person-info-place-death");
-    if (!extra.isLiving) {
-        personInfoDeath.style.display = "";
-        personInfoPlaceOfDeath.style.display = "";
-        document.getElementById("person-death").textContent = `${extra.deathDate || "неизвестный "} г.`;
-        document.getElementById("place-death").textContent = extra.deathPlace || "неизвестно";
-    } else {
-        personInfoDeath.style.display = "none";
-        personInfoPlaceOfDeath.style.display = "none";
-        document.getElementById("person-death").textContent = "";
-        document.getElementById("place-death").textContent = "";
-    }
-};
 
-const changePersonPortret = (extra) => {
-    if(extra.portret) {
-        document.querySelector(".person-photo").src=`${baseImagePath}/${extra.id}/${extra.portret}`;
-    } else {
-        document.querySelector(".person-photo").src="../assets/avatar-default-512x488.png";
-    }
-};
+
+
 
 request("https://coldnaked.pockethost.io/api/collections/genealogy/records")
     .then( response => {
             console.log(response.items);
+            graphs(convertToDTreeFormat(response.items));
             let treeData = convertToDTreeFormat(response.items);
             dTree.init(treeData, {
                 target: "#graph",
@@ -202,6 +186,11 @@ request("https://coldnaked.pockethost.io/api/collections/genealogy/records")
                         document.getElementById('person-birth').textContent = `${extra.birthDate || "неизвестный "} г.`;
                         document.getElementById('place-birth').textContent = extra.birthPlace || "неизвестно";
                         document.getElementById('person-info').innerHTML = extra.information || "информация отсутствует";
+                        if(extra.gender === "F" && extra.partner) {
+                            document.querySelector(".popup_bottom").style.display = "block";
+                        } else {
+                            document.querySelector(".popup_bottom").style.display = "none";
+                        }
                         changeInfoIsLivingPerson(extra);
                         changePersonPortret(extra);
                         modalControls.openModal();
