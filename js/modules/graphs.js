@@ -4,15 +4,15 @@ import { changePersonPortret } from "../../utils/changePersonPortet.js";
 
 const modalControls = modals();
 
-const graphs = (treeData) => {
-    const spouseGraph = document.getElementById("graph-spouse");
+const graphs = (elementId, treeData) => {
+    const spouseGraph = document.querySelector(elementId);
     const mainGraph = document.getElementById("graph");
     const spouseGraphButton = document.querySelector(".popup_bottom__button");
     const spouseGraphClose = document.querySelector(".graph-spouse_close");
 
     const generateSpouseGraph = () => {
         dTree.init(treeData, {
-            target: "#graph-spouse",
+            target: elementId,
             debug: true,
             hideMarriageNodes: true,
             marriageNodeSize: 5,
@@ -82,14 +82,8 @@ const graphs = (treeData) => {
         mainGraph.style.display = "block";
     }
 
-    spouseGraphButton.addEventListener("click", () => {
-        graphOpen();
-    });
-
-    spouseGraphClose.addEventListener("click", () => {
-        graphClose();
-    });
-
+    spouseGraphButton.addEventListener("click", graphOpen);
+    spouseGraphClose.addEventListener("click", graphClose);
 
     return {
         graphOpen,

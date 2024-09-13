@@ -3,13 +3,15 @@ import modals from "./modules/modals.js";
 import graphs from "./modules/graphs.js";
 import { changeInfoIsLivingPerson } from "../utils/changeInfoIsLivingPerson.js";
 import { changePersonPortret } from "../utils/changePersonPortet.js";
+import { filterSpouseFamily } from "../utils/filterSpouseFamily.js";
+import { baseDBpath } from "../config/apiConfig.js";
+import { dataTable } from "../config/apiConfig.js";
 
 
 const { request, isLoading } = httpService();
-
 const loadingDiv = document.createElement("div");
-
 const modalControls = modals();
+let genealogyData = [];
 
 
 function convertToDTreeFormat(data) {
@@ -150,15 +152,11 @@ const deleteLoadingDiv = () => {
     }
 };
 
-
-
-
-
-request("https://coldnaked.pockethost.io/api/collections/genealogy/records")
+request(`${baseDBpath}/${dataTable}/records`)
     .then( response => {
             console.log(response.items);
-            graphs(convertToDTreeFormat(response.items));
-            let treeData = convertToDTreeFormat(response.items);
+            genealogyData = response.items;
+            let treeData = convertToDTreeFormat(genealogyData);
             dTree.init(treeData, {
                 target: "#graph",
                 debug: true,
@@ -188,6 +186,8 @@ request("https://coldnaked.pockethost.io/api/collections/genealogy/records")
                         document.getElementById('person-info').innerHTML = extra.information || "информация отсутствует";
                         if(extra.gender === "F" && extra.partner) {
                             document.querySelector(".popup_bottom").style.display = "block";
+                            console.log(filterSpouseFamily(genealogyData, name));
+                            graphs("#graph-spouse", convertToDTreeFormat(filterSpouseFamily(genealogyData, name)));
                         } else {
                             document.querySelector(".popup_bottom").style.display = "none";
                         }
