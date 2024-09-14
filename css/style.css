@@ -4,6 +4,44 @@ body {
     font: 10px sans-serif;
 }
 
+.zoom-panel {
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+    align-items: center;
+    width: 106px;
+    height: 48px;
+    position: absolute;
+    bottom: 30px;
+    left: 30px;
+    font-size: 30px;
+    z-index: 101;
+}
+
+.zoom-panel-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 48px;
+    height: 48px;
+    cursor: pointer;
+    border-radius: 50%;
+    background-color: #e0e0e0;
+    opacity: 0.9;
+}
+
+.zoom-panel-button:hover {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.button_reset {
+    height: 32px;
+}
+.button_tofit {
+    height: 32px;
+}
+
 svg {
     width: 100%;
     height: 100vh;
