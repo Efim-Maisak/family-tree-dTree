@@ -61,7 +61,7 @@ p {
     font-size: 18px;
 }
 
-.error {
+.error, .empty {
     display: flex;
     height: 100%;
     flex-direction: row;

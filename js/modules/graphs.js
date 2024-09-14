@@ -11,6 +11,9 @@ const graphs = (elementId, treeData) => {
     const spouseGraphClose = document.querySelector(".graph-spouse_close");
 
     const generateSpouseGraph = () => {
+
+        d3.select(elementId).select("svg").remove();
+
         dTree.init(treeData, {
             target: elementId,
             debug: true,
@@ -74,6 +77,7 @@ const graphs = (elementId, treeData) => {
         spouseGraph.style.cssText = "position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 100;";
         spouseGraphClose.style.display = "block";
         generateSpouseGraph();
+
     }
 
     const graphClose = () => {

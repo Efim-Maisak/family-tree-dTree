@@ -21,7 +21,6 @@ const httpService = () => {
                 let result = await response.json();
                 isLoading = false;
                 isError = false;
-                console.log(result);
                 return result;
               } else {
                 isError = true;
