@@ -1,8 +1,16 @@
 import modals from "./modals.js";
+import mainTree from "../script.js";
 import { changeInfoIsLivingPerson } from "../../utils/changeInfoIsLivingPerson.js";
 import { changePersonPortret } from "../../utils/changePersonPortet.js";
+import { keyGraph } from "./main-graph.js";
+import { zoomControl } from "../../utils/zoomControl.js";
+import { genealogyData } from "../script.js";
 
+const pageWidth = document.documentElement.scrollWidth
+const pageHeight = document.documentElement.scrollHeight
 const modalControls = modals();
+let spouseTree = null;
+
 
 const graphs = (elementId, treeData) => {
     const spouseGraph = document.querySelector(elementId);
@@ -14,13 +22,13 @@ const graphs = (elementId, treeData) => {
 
         d3.select(elementId).select("svg").remove();
 
-        dTree.init(treeData, {
+        spouseTree = dTree.init(treeData, {
             target: elementId,
             debug: true,
             hideMarriageNodes: true,
             marriageNodeSize: 5,
-            height: 800,
-            width: 1200,
+            height: pageHeight,
+            width: pageWidth,
             nodeWidth: 130,
             margin: {
                 top: 0,
@@ -74,16 +82,23 @@ const graphs = (elementId, treeData) => {
     const graphOpen = () => {
         modalControls.closeModal();
         mainGraph.style.display = "none";
-        spouseGraph.style.cssText = "position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 100;";
+        d3.select("#graph").select("svg").remove();
+        spouseGraph.style.cssText = `position: fixed; top: 0; left: 0; width: ${pageWidth}px; height: ${pageHeight}px; z-index: 100;`;
         spouseGraphClose.style.display = "block";
         generateSpouseGraph();
-
+        zoomControl(spouseTree);
     }
 
     const graphClose = () => {
         spouseGraph.style.cssText = "";
+        d3.select(elementId).select("svg").remove();
         spouseGraphClose.style.display = "none";
+        d3.select("#graph").select("svg").remove();
         mainGraph.style.display = "block";
+        if(genealogyData && genealogyData.length > 0) {
+            keyGraph(genealogyData);
+        }
+        zoomControl(mainTree);
     }
 
     spouseGraphButton.addEventListener("click", graphOpen);
