@@ -1,33 +1,40 @@
-export const zoomControl = (tree) => {
-    const resetButton = document.querySelector(".button_reset");
-    const zoomToFitButton = document.querySelector(".button_tofit");
+import { customZoomToFit } from "./customZoomToFit.js";
+
+export const zoomControl = (tree, graph) => {
+
+    const zoomPanel = document.querySelector(".zoom-panel");
 
     const reset = () => {
         if(tree) {
-            try {
-                tree.resetZoom(500);
-            } catch(e) {
-                throw new Error("Ошибка зума:", e);
-            }
+            tree.resetZoom(500);
         }
     };
 
     const toFit = () => {
         if(tree) {
-            try {
-                tree.zoomToFit(500);
-            } catch (e) {
-                throw new Error("Ошибка зума:", e);
-            }
-
+            customZoomToFit(tree, graph);
         }
     };
 
+    const zoomPanelClickHandler = (e) => {
+        const button = e.target.closest('.zoom-panel-button');
+            if(button) {
+                const action = button.dataset.action;
+                if(action === "reset") {
+                    reset();
+                }else if(action === "tofit") {
+                    toFit();
+                }
+            }
+    }
 
-    resetButton.addEventListener("click", () => {
-        reset();
-    });
-    zoomToFitButton.addEventListener("click", () => {
-        toFit();
-    });
+    zoomPanel.addEventListener("click", zoomPanelClickHandler);
+
+    const removeZoomListener = () => {
+        zoomPanel.removeEventListener("click", zoomPanelClickHandler);
+    }
+
+    return {
+        removeZoomListener
+    }
 };

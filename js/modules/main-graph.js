@@ -8,14 +8,16 @@ import { genealogyData } from "../script.js";
 import { zoomControl } from "../../utils/zoomControl.js";
 
 
+let mainTree;
 
 export const keyGraph = (treeData) => {
 
-    const pageWidth = document.documentElement.scrollWidth
-    const pageHeight = document.documentElement.scrollHeight
+    let pageWidth = window.innerWidth;
+    let pageHeight = window.innerHeight;
+
     const modalControls = modals();
 
-    const tree = dTree.init( convertToDTreeFormat(treeData), {
+    mainTree = dTree.init( convertToDTreeFormat(treeData), {
         target: "#graph",
         debug: true,
         hideMarriageNodes: true,
@@ -44,8 +46,6 @@ export const keyGraph = (treeData) => {
                 document.getElementById('person-info').innerHTML = extra.information || "информация отсутствует";
                 if(extra.gender === "F" && extra.partner) {
                     document.querySelector(".popup_bottom").style.display = "block";
-                    console.log(filterSpouseFamily(genealogyData, name));
-                    console.log(filterSpouseFamily(genealogyData, extra.id));
                     if(genealogyData && genealogyData.length > 0) {
                         graphs("#graph-spouse", convertToDTreeFormat(filterSpouseFamily(genealogyData, extra.id)));
                     }
@@ -79,5 +79,5 @@ export const keyGraph = (treeData) => {
             },
         }
     });
-    zoomControl(tree);
+    zoomControl(mainTree, "#graph");
 };

@@ -2,19 +2,22 @@ import modals from "./modals.js";
 import mainTree from "../script.js";
 import { changeInfoIsLivingPerson } from "../../utils/changeInfoIsLivingPerson.js";
 import { changePersonPortret } from "../../utils/changePersonPortet.js";
+import { changeHeaderInfo } from "../../utils/changeHeaderInfo.js";
 import { keyGraph } from "./main-graph.js";
 import { zoomControl } from "../../utils/zoomControl.js";
 import { genealogyData } from "../script.js";
 
-const pageWidth = document.documentElement.scrollWidth
-const pageHeight = document.documentElement.scrollHeight
+
+let pageWidth = window.innerWidth;
+let pageHeight = window.innerHeight;
+
 const modalControls = modals();
+const { removeZoomListener } = zoomControl();
 let spouseTree = null;
 
 
 const graphs = (elementId, treeData) => {
     const spouseGraph = document.querySelector(elementId);
-    const mainGraph = document.getElementById("graph");
     const spouseGraphButton = document.querySelector(".popup_bottom__button");
     const spouseGraphClose = document.querySelector(".graph-spouse_close");
 
@@ -81,12 +84,12 @@ const graphs = (elementId, treeData) => {
 
     const graphOpen = () => {
         modalControls.closeModal();
-        mainGraph.style.display = "none";
         d3.select("#graph").select("svg").remove();
         spouseGraph.style.cssText = `position: fixed; top: 0; left: 0; width: ${pageWidth}px; height: ${pageHeight}px; z-index: 100;`;
         spouseGraphClose.style.display = "block";
         generateSpouseGraph();
-        zoomControl(spouseTree);
+        removeZoomListener();
+        zoomControl(spouseTree, elementId);
     }
 
     const graphClose = () => {
@@ -94,11 +97,11 @@ const graphs = (elementId, treeData) => {
         d3.select(elementId).select("svg").remove();
         spouseGraphClose.style.display = "none";
         d3.select("#graph").select("svg").remove();
-        mainGraph.style.display = "block";
         if(genealogyData && genealogyData.length > 0) {
             keyGraph(genealogyData);
+            removeZoomListener();
+            zoomControl(mainTree, "#graph");
         }
-        zoomControl(mainTree);
     }
 
     spouseGraphButton.addEventListener("click", graphOpen);

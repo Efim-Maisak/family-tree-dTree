@@ -2,6 +2,98 @@ body {
     margin: 0;
     height: 100vh;
     font: 10px sans-serif;
+    background-color: #f2f0ef;
+}
+
+.header-panel {
+    display: flex;
+    justify-content: space-between;
+    height: 48px;
+    width: calc(100% - 30px);
+    position: fixed;
+    top: 30px;
+    left: 30px;
+    z-index: 101;
+    font-size: 18px;
+    color: #5f6368;
+}
+
+.header-panel__info {
+    display: flex;
+    justify-content: center;
+    padding: 6px 24px;
+    border-radius: 30px;
+    background-color: #ffff;
+    opacity: 0.9;
+    margin-right: 12px;
+}
+
+.header-panel__info p {
+    align-self: center;
+}
+
+.header-panel__search {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 400px;
+    margin-right: 12px;
+    margin-left: 12px;
+    padding: 6px 6px;
+    border-radius: 30px;
+    background-color: #fff;
+    opacity: 0.9;
+    position: relative;
+}
+
+.input_search {
+    width: 100%;
+    height: 42px;
+    border-radius: 30px;
+    padding: 0 48px 0 24px;
+    background-color: #fff;
+    border: none;
+    outline: 0;
+    font-size: 18px;
+    color: #5f6368;
+}
+
+.header-panel-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 42px;
+    height: 42px;
+    cursor: pointer;
+    border-radius: 50%;
+    background-color: #f2f0ef;
+    opacity: 0.9;
+    position: absolute;
+    right: 3px;
+}
+
+.header-panel-button:hover {
+    background-color: #e0e0e0;
+}
+
+.header-panel-button:active {
+    transform: scale(0.9);
+    transition: transform 0.1s ease;
+}
+
+.header-panel-button img {
+    height: 30px;
+}
+
+.header-panel__user {
+    margin-right: 60px;
+    margin-left: 12px;
+    padding: 6px 24px;
+    border-radius: 30px;
+    background-color: #fff;
+    opacity: 0.9;
+
 }
 
 .zoom-panel {
@@ -11,10 +103,10 @@ body {
     align-items: center;
     width: 106px;
     height: 48px;
+    font-size: 30px;
     position: absolute;
     bottom: 30px;
     left: 30px;
-    font-size: 30px;
     z-index: 101;
 }
 
@@ -24,12 +116,11 @@ body {
     align-items: center;
     width: 48px;
     height: 48px;
-    cursor: pointer;
     border-radius: 50%;
-    background-color: #e0e0e0;
+    background-color: #fff;
     opacity: 0.9;
+    cursor: pointer;
 }
-
 .zoom-panel-button:hover {
     opacity: 1;
     transform: scale(1.1);
@@ -153,7 +244,7 @@ p {
     }
 }
 
-.popup_close, .graph-spouse_close {
+.popup_close {
     position: absolute;
     top: 30px;
     right: 30px;
@@ -169,6 +260,7 @@ p {
     opacity: 0.9;
 }
 
+
 .popup_close:hover  {
     transform: scale(1.1);
 }
@@ -180,6 +272,20 @@ p {
 
 .graph-spouse_close {
     display: none;
+    font-size: 30px;
+    color: #888;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    background-color: #ffff;
+    border-radius: 50%;
+    opacity: 0.9;
+    position: absolute;
+    top: 120px;
+    right: 60px;
+    z-index: 102;
+    cursor: pointer;
 }
 
 .person-photo {

@@ -12,14 +12,26 @@
 </head>
 <script type="module" src="./js/script.js"></script>
 <script src="https://cdn.jsdelivr.net/lodash/4.17.4/lodash.min.js"></script>
-<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="https://d3js.org/d3.v5.min.js"></script>
 <script src="./lib/dTree.js"></script>
 <body>
+    <div class="header-panel">
+        <div class="header-panel__info">
+            <p>Семейное древо</p>
+        </div>
+        <div class="header-panel__search">
+            <input type="text" class="input_search" name="search-person" placeholder="поиск..." autofocus>
+            <span class="header-panel-button">
+                <img class="button_search" src="/assets/icons/person_search-material.svg" alt="search">
+            </span>
+        </div>
+        <div class="header-panel__user"></div>
+    </div>
     <div class="zoom-panel">
-        <span class="zoom-panel-button">
+        <span class="zoom-panel-button" data-action="reset">
             <img class="button_reset" src="/assets/icons/zoom_in_map-material.svg" alt="reset">
         </span>
-        <span class="zoom-panel-button">
+        <span class="zoom-panel-button" data-action="tofit">
             <img class="button_tofit" src="/assets/icons/center_focus_strong-material.svg" alt="tofit">
         </span>
     </div>
