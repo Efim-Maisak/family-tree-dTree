@@ -2,10 +2,12 @@ import modals from "./modals.js";
 import mainTree from "../script.js";
 import { changeInfoIsLivingPerson } from "../../utils/changeInfoIsLivingPerson.js";
 import { changePersonPortret } from "../../utils/changePersonPortet.js";
-import { changeHeaderInfo } from "../../utils/changeHeaderInfo.js";
+import searchPearsonList from "./search-person-list.js";
+import { filterMainTreePerson } from "../../utils/filterMainTreePerson.js";
 import { keyGraph } from "./main-graph.js";
 import { zoomControl } from "../../utils/zoomControl.js";
 import { genealogyData } from "../script.js";
+import { filteredSpouseFamily } from "./main-graph.js";
 
 
 let pageWidth = window.innerWidth;
@@ -71,13 +73,7 @@ const graphs = (elementId, treeData) => {
                         if (extra.birthPlace) text += "<p align='center'>" + extra.birthPlace + "</p>";
                     }
                     return text;
-                },
-                marriageClick: function(extra, id) {
-                    alert('Clicked marriage node ' + id);
-                },
-                marriageRightClick: function(extra, id) {
-                    alert('Right-clicked marriage node ' + id);
-                },
+                }
             }
         });
     }
@@ -90,6 +86,7 @@ const graphs = (elementId, treeData) => {
         generateSpouseGraph();
         removeZoomListener();
         zoomControl(spouseTree, elementId);
+        searchPearsonList(filteredSpouseFamily);
     }
 
     const graphClose = () => {
@@ -101,6 +98,7 @@ const graphs = (elementId, treeData) => {
             keyGraph(genealogyData);
             removeZoomListener();
             zoomControl(mainTree, "#graph");
+            searchPearsonList(filterMainTreePerson(genealogyData));
         }
     }
 

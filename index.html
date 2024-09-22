@@ -1,56 +1,59 @@
 <!DOCTYPE html>
 <html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Родовое дерево</title>
-    <link rel="shortcut icon" type="image/svg" href="./assets/favicon.svg"/>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./css/style.css">
-</head>
-<script type="module" src="./js/script.js"></script>
-<script src="https://cdn.jsdelivr.net/lodash/4.17.4/lodash.min.js"></script>
-<script src="https://d3js.org/d3.v5.min.js"></script>
-<script src="./lib/dTree.js"></script>
-<body>
-    <div class="header-panel">
-        <div class="header-panel__info">
-            <p>Семейное древо</p>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Родовое дерево</title>
+        <link rel="shortcut icon" type="image/svg" href="./assets/favicon.svg"/>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="./css/style.css">
+    </head>
+    <script type="module" src="./js/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/lodash/4.17.4/lodash.min.js"></script>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="./lib/dTree.js"></script>
+    <body>
+        <div class="header-panel">
+            <div class="header-panel__info">
+                <p>Семейное древо</p>
+            </div>
+            <div class="header-panel__search">
+                <div class="search-wrapper">
+                    <input type="text" class="input_search" name="search-person" placeholder="поиск..." autofocus autocomplete="off" autocorrect="off">
+                    <span class="header-panel-button">
+                        <img class="button_search" src="/assets/icons/person_search-material.svg" alt="search">
+                    </span>
+                </div>
+                <div class="list-wrapper"></div>
+            </div>
+            <div class="header-panel__user"></div>
         </div>
-        <div class="header-panel__search">
-            <input type="text" class="input_search" name="search-person" placeholder="поиск..." autofocus>
-            <span class="header-panel-button">
-                <img class="button_search" src="/assets/icons/person_search-material.svg" alt="search">
+        <div class="zoom-panel">
+            <span class="zoom-panel-button" data-action="reset">
+                <img class="button_reset" src="/assets/icons/zoom_in_map-material.svg" alt="reset">
+            </span>
+            <span class="zoom-panel-button" data-action="tofit">
+                <img class="button_tofit" src="/assets/icons/center_focus_strong-material.svg" alt="tofit">
             </span>
         </div>
-        <div class="header-panel__user"></div>
-    </div>
-    <div class="zoom-panel">
-        <span class="zoom-panel-button" data-action="reset">
-            <img class="button_reset" src="/assets/icons/zoom_in_map-material.svg" alt="reset">
-        </span>
-        <span class="zoom-panel-button" data-action="tofit">
-            <img class="button_tofit" src="/assets/icons/center_focus_strong-material.svg" alt="tofit">
-        </span>
-    </div>
-    <div id="graph"></div>
-    <div id="graph-spouse">
-        <span class="graph-spouse_close">&times;</span>
-    </div>
-    <div id="modal" class="popup">
-        <div class="popup_content">
-            <span class="popup_close">&times;</span>
-            <img alt="Портрет" class="person-photo">
-            <div class="person-info" id="person-info-name"><span id="person-name"></span><span class="gender-tag" id="person-gender"></span></div>
-            <div class="person-info"><strong>Дата рождения:</strong> <span id="person-birth"></span></div>
-            <div class="person-info" id="person-info-death"><strong>Дата смерти:</strong> <span id="person-death"></span></div>
-            <div class="person-info"><strong>Место рождения:</strong> <span id="place-birth"></span></div>
-            <div class="person-info" id="person-info-place-death"><strong>Место смерти:</strong> <span id="place-death"></span></div>
-            <div class="person-info"><strong>Общая информация:</strong><div class="person-info__content"><span id="person-info"></span></div></div>
-            <div class="popup_bottom"><button class="popup_bottom__button">Показать древо</button></div>
+        <div id="graph"></div>
+        <div id="graph-spouse">
+            <span class="graph-spouse_close">&times;</span>
         </div>
-    </div>
-</body>
+        <div id="modal" class="popup">
+            <div class="popup_content">
+                <span class="popup_close">&times;</span>
+                <img alt="Портрет" class="person-photo">
+                <div class="person-info" id="person-info-name"><span id="person-name"></span><span class="gender-tag" id="person-gender"></span></div>
+                <div class="person-info"><strong>Дата рождения:</strong> <span id="person-birth"></span></div>
+                <div class="person-info" id="person-info-death"><strong>Дата смерти:</strong> <span id="person-death"></span></div>
+                <div class="person-info"><strong>Место рождения:</strong> <span id="place-birth"></span></div>
+                <div class="person-info" id="person-info-place-death"><strong>Место смерти:</strong> <span id="place-death"></span></div>
+                <div class="person-info"><strong>Общая информация:</strong><div class="person-info__content"><span id="person-info"></span></div></div>
+                <div class="popup_bottom"><button class="popup_bottom__button">Показать древо</button></div>
+            </div>
+        </div>
+    </body>
 </html>

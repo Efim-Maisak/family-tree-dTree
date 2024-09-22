@@ -4,11 +4,15 @@ import { convertToDTreeFormat } from "../../utils/convertToDTreeFormat.js";
 import { changeInfoIsLivingPerson } from "../../utils/changeInfoIsLivingPerson.js";
 import { changePersonPortret } from "../../utils/changePersonPortet.js";
 import { filterSpouseFamily } from "../../utils/filterSpouseFamily.js";
-import { genealogyData } from "../script.js";
+import { filterMainTreePerson } from "../../utils/filterMainTreePerson.js";
 import { zoomControl } from "../../utils/zoomControl.js";
+import { genealogyData } from "../script.js";
+
 
 
 let mainTree;
+export let filteredSpouseFamily;
+export let genealogyDataWithNodeId = [];
 
 export const keyGraph = (treeData) => {
 
@@ -16,8 +20,9 @@ export const keyGraph = (treeData) => {
     let pageHeight = window.innerHeight;
 
     const modalControls = modals();
+    const filteredTreeData = filterMainTreePerson(treeData);
 
-    mainTree = dTree.init( convertToDTreeFormat(treeData), {
+    mainTree = dTree.init( convertToDTreeFormat(filteredTreeData), {
         target: "#graph",
         debug: true,
         hideMarriageNodes: true,
@@ -30,13 +35,13 @@ export const keyGraph = (treeData) => {
             right: 0,
             bottom: 0,
             left: 0
-          },
-          styles: {
+            },
+            styles: {
             node: 'node',
             linage: 'linage',
             marriage: 'marriage',
             text: 'nodeText'
-          },
+            },
         callbacks: {
             nodeClick: function(name, extra) {
                 document.getElementById('person-name').textContent = name;
@@ -47,7 +52,8 @@ export const keyGraph = (treeData) => {
                 if(extra.gender === "F" && extra.partner) {
                     document.querySelector(".popup_bottom").style.display = "block";
                     if(genealogyData && genealogyData.length > 0) {
-                        graphs("#graph-spouse", convertToDTreeFormat(filterSpouseFamily(genealogyData, extra.id)));
+                        filteredSpouseFamily = filterSpouseFamily(genealogyData, extra.id);
+                        graphs("#graph-spouse", convertToDTreeFormat(filteredSpouseFamily));
                     }
                 } else {
                     document.querySelector(".popup_bottom").style.display = "none";
@@ -71,12 +77,32 @@ export const keyGraph = (treeData) => {
                 }
                 return text;
             },
-            marriageClick: function(extra, id) {
-                alert('Clicked marriage node ' + id);
-            },
-            marriageRightClick: function(extra, id) {
-                alert('Right-clicked marriage node ' + id);
-            },
+                nodeRenderer: function(name, x, y, height, width, extra, id, nodeClass, textClass, textRenderer) {
+                    if(genealogyDataWithNodeId.length <= filteredTreeData.length) {
+                        genealogyDataWithNodeId.push({
+                            name: name,
+                            id: extra.id,
+                            gender: extra.gender,
+                            birthDate: extra.birthDate,
+                            deathDate: extra.deathDate,
+                            birthPlace: extra.birthPlace,
+                            deathPlace: extra.deathPlace,
+                            information: extra.information,
+                            isLiving: extra.isLiving,
+                            portret: extra.portret,
+                            partner: extra.partner,
+                            nodeId: id
+                        });
+                    }
+                    let node = '';
+                    node += '<div ';
+                    node += 'style="height:100%;width:100%;" ';
+                    node += 'class="' + nodeClass + '" ';
+                    node += 'id="node' + id + '">\n';
+                    node += textRenderer(name, extra, textClass);
+                    node += '</div>';
+                    return node;
+            }
         }
     });
     zoomControl(mainTree, "#graph");
