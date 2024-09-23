@@ -101,6 +101,20 @@ body {
     top: 58px;
     left: 24px;
     z-index: 101;
+    text-overflow: ellipsis;
+    animation-name: listScroll;
+    animation-duration: 0.3s
+}
+
+@keyframes listScroll {
+    0% {
+        opacity: 0.5;
+        transform: translateY(-15%);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0%);
+    }
 }
 
 .list-item {
@@ -115,20 +129,11 @@ body {
     white-space: nowrap;
     overflow: hidden;
     cursor: pointer;
-    text-overflow: ellipsis;
-    animation-name: listScroll;
-    animation-duration: 0.3s;
 }
 
-@keyframes listScroll {
-    0% {
-        opacity: 0.5;
-        transform: translateY(-90%);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0%);
-    }
+.list-item:active {
+    transform: scale(0.95);
+    transition: transform 0.1s ease;
 }
 
 .header-panel__user {

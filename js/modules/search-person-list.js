@@ -1,6 +1,7 @@
 import { filterPersonList } from "../../utils/filterPersonList.js";
+import { genealogyDataWithNodeId } from "./main-graph.js";
 
-const searchPearsonList = (personList) => {
+const searchPearsonList = (personList, tree) => {
     const listWrapperBlock = document.querySelector(".list-wrapper");
     const personInput = document.querySelector(".input_search");
     const searchButton = document.querySelector(".header-panel-button");
@@ -10,7 +11,7 @@ const searchPearsonList = (personList) => {
             return
         };
         let elementPersonList = persons.map( item => {
-            return `<div class="list-item">${item.name}</div>`
+            return `<div class="list-item" data-id="${item.id}">${item.name}</div>`
         });
         listWrapperBlock.innerHTML = elementPersonList.join("");
         listWrapperBlock.style.display = "flex";
@@ -33,6 +34,15 @@ const searchPearsonList = (personList) => {
         }
     });
 
+    listWrapperBlock.addEventListener("click", (e) => {
+        if(e.target.className === "list-item") {
+            const idAttribute = e.target.getAttribute("data-id");
+            const person = genealogyDataWithNodeId.find( item => item.id === idAttribute);
+            const nodeId = person.nodeId;
+            tree.zoomToNode(nodeId, 2, 500);
+        }
+    });
+
     document.body.addEventListener("click", (e) => {
         if (!listWrapperBlock.contains(e.target) && !personInput.contains(e.target)) {
             hideList();
@@ -43,6 +53,7 @@ const searchPearsonList = (personList) => {
     searchButton.addEventListener("click", (e) => {
         e.stopPropagation();
     });
+
 };
 
 export default searchPearsonList;

@@ -1,8 +1,8 @@
 import modals from "./modals.js";
 import mainTree from "../script.js";
+import searchPearsonList from "./search-person-list.js";
 import { changeInfoIsLivingPerson } from "../../utils/changeInfoIsLivingPerson.js";
 import { changePersonPortret } from "../../utils/changePersonPortet.js";
-import searchPearsonList from "./search-person-list.js";
 import { filterMainTreePerson } from "../../utils/filterMainTreePerson.js";
 import { keyGraph } from "./main-graph.js";
 import { zoomControl } from "../../utils/zoomControl.js";
@@ -86,8 +86,8 @@ const graphs = (elementId, treeData) => {
         generateSpouseGraph();
         removeZoomListener();
         zoomControl(spouseTree, elementId);
-        searchPearsonList(filteredSpouseFamily);
-    }
+        searchPearsonList(filteredSpouseFamily, spouseTree);
+    };
 
     const graphClose = () => {
         spouseGraph.style.cssText = "";
@@ -95,12 +95,15 @@ const graphs = (elementId, treeData) => {
         spouseGraphClose.style.display = "none";
         d3.select("#graph").select("svg").remove();
         if(genealogyData && genealogyData.length > 0) {
-            keyGraph(genealogyData);
-            removeZoomListener();
-            zoomControl(mainTree, "#graph");
-            searchPearsonList(filterMainTreePerson(genealogyData));
+            keyGraph(genealogyData)
+            .then(tree => {
+                const newMainTree = tree;
+                searchPearsonList(filterMainTreePerson(genealogyData), newMainTree);
+                removeZoomListener();
+                zoomControl(newMainTree, "#graph");
+            });
         }
-    }
+    };
 
     spouseGraphButton.addEventListener("click", graphOpen);
     spouseGraphClose.addEventListener("click", graphClose);

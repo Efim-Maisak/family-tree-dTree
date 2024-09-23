@@ -51,9 +51,15 @@ request(`${baseDBpath}/${dataTable}/records?perPage=${maxItems}`)
                 console.log(response);
                 console.log(response.items);
                 genealogyData = response.items;
-                mainTree = keyGraph(genealogyData);
-                searchPearsonList(filterMainTreePerson(genealogyData));
 
+                keyGraph(genealogyData)
+                    .then(tree => {
+                        mainTree = tree;
+                        searchPearsonList(filterMainTreePerson(genealogyData), mainTree);
+                    })
+                    .catch( error => {
+                        throw new Error("Ошибка инициализации дерева: ", error);
+                    })
             }
         })
         .catch(e => showErrorDiv(e))
