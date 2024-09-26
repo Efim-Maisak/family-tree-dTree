@@ -1,5 +1,4 @@
 import modals from "./modals.js";
-import mainTree from "../script.js";
 import searchPearsonList from "./search-person-list.js";
 import { changeInfoIsLivingPerson } from "../../utils/changeInfoIsLivingPerson.js";
 import { changePersonPortret } from "../../utils/changePersonPortet.js";
@@ -8,14 +7,17 @@ import { keyGraph } from "./main-graph.js";
 import { zoomControl } from "../../utils/zoomControl.js";
 import { genealogyData } from "../script.js";
 import { filteredSpouseFamily } from "./main-graph.js";
+import { genealogyDataWithNodeId } from "./main-graph.js";
 
+
+export let spouseFamilyDataWithNodeId = [];
+let spouseTree = null;
+const modalControls = modals();
+const { removeZoomListener } = zoomControl();
+const { removeHandlers } = searchPearsonList();
 
 let pageWidth = window.innerWidth;
 let pageHeight = window.innerHeight;
-
-const modalControls = modals();
-const { removeZoomListener } = zoomControl();
-let spouseTree = null;
 
 
 const graphs = (elementId, treeData) => {
@@ -73,6 +75,32 @@ const graphs = (elementId, treeData) => {
                         if (extra.birthPlace) text += "<p align='center'>" + extra.birthPlace + "</p>";
                     }
                     return text;
+                },
+                nodeRenderer: function(name, x, y, height, width, extra, id, nodeClass, textClass, textRenderer) {
+                    if(spouseFamilyDataWithNodeId.length <= filteredSpouseFamily.length) {
+                        spouseFamilyDataWithNodeId.push({
+                            name: name,
+                            id: extra.id,
+                            gender: extra.gender,
+                            birthDate: extra.birthDate,
+                            deathDate: extra.deathDate,
+                            birthPlace: extra.birthPlace,
+                            deathPlace: extra.deathPlace,
+                            information: extra.information,
+                            isLiving: extra.isLiving,
+                            portret: extra.portret,
+                            partner: extra.partner,
+                            nodeId: id
+                        });
+                    }
+                    let node = '';
+                    node += '<div ';
+                    node += 'style="height:100%;width:100%;" ';
+                    node += 'class="' + nodeClass + '" ';
+                    node += 'id="node' + id + '">\n';
+                    node += textRenderer(name, extra, textClass);
+                    node += '</div>';
+                    return node;
                 }
             }
         });
@@ -86,7 +114,8 @@ const graphs = (elementId, treeData) => {
         generateSpouseGraph();
         removeZoomListener();
         zoomControl(spouseTree, elementId);
-        searchPearsonList(filteredSpouseFamily, spouseTree);
+        removeHandlers();
+        searchPearsonList(filteredSpouseFamily, spouseTree, spouseFamilyDataWithNodeId);
     };
 
     const graphClose = () => {
@@ -98,7 +127,8 @@ const graphs = (elementId, treeData) => {
             keyGraph(genealogyData)
             .then(tree => {
                 const newMainTree = tree;
-                searchPearsonList(filterMainTreePerson(genealogyData), newMainTree);
+                removeHandlers();
+                searchPearsonList(filterMainTreePerson(genealogyData), newMainTree, genealogyDataWithNodeId);
                 removeZoomListener();
                 zoomControl(newMainTree, "#graph");
             });

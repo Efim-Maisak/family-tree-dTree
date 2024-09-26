@@ -5,6 +5,7 @@ import { maxItems } from "../config/apiConfig.js";
 import { keyGraph } from "./modules/main-graph.js";
 import { filterMainTreePerson } from "../utils/filterMainTreePerson.js";
 import searchPearsonList from "./modules/search-person-list.js";
+import { genealogyDataWithNodeId } from "./modules/main-graph.js";
 
 
 export let genealogyData = [];
@@ -55,7 +56,7 @@ request(`${baseDBpath}/${dataTable}/records?perPage=${maxItems}`)
                 keyGraph(genealogyData)
                     .then(tree => {
                         mainTree = tree;
-                        searchPearsonList(filterMainTreePerson(genealogyData), mainTree);
+                        searchPearsonList(filterMainTreePerson(genealogyData), mainTree, genealogyDataWithNodeId);
                     })
                     .catch( error => {
                         throw new Error("Ошибка инициализации дерева: ", error);

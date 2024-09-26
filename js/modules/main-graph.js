@@ -53,6 +53,7 @@ export const keyGraph = (treeData) => {
                         document.getElementById('person-info').innerHTML = extra.information || "информация отсутствует";
                         if(extra.gender === "F" && extra.partner) {
                             document.querySelector(".popup_bottom").style.display = "block";
+                            document.querySelector(".popup_bottom__button").textContent = `Показать древо ${name.split(" ")[0]}`;
                             if(genealogyData && genealogyData.length > 0) {
                                 filteredSpouseFamily = filterSpouseFamily(genealogyData, extra.id);
                                 graphs("#graph-spouse", convertToDTreeFormat(filteredSpouseFamily));
