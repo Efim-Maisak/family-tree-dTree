@@ -5,6 +5,7 @@ import { changeInfoIsLivingPerson } from "../../utils/changeInfoIsLivingPerson.j
 import { changePersonPortret } from "../../utils/changePersonPortet.js";
 import { filterSpouseFamily } from "../../utils/filterSpouseFamily.js";
 import { filterMainTreePerson } from "../../utils/filterMainTreePerson.js";
+import { fillPersonsWithNodeId } from "../../utils/fillPersonsWithNodeId.js";
 import { zoomControl } from "../../utils/zoomControl.js";
 import { genealogyData } from "../script.js";
 
@@ -76,27 +77,17 @@ export const keyGraph = (treeData) => {
                         }
                         if (extra) {
                             text += "<p align='center' style='margin-bottom: 3px;'>" + (extra.birthDate || '') + " - " + (extra.deathDate || '') + "</p>";
-                            if (extra.birthPlace) text += "<p align='center'>" + extra.birthPlace + "</p>";
+                            // if (extra.birthPlace) text += `<p align='center'>${extra.birthPlace || 'м.р. неизвестно'}</p>`;
+                            if (extra.birthPlace === "" || extra.birthPlace == null) {
+                                text += "<p align='center'>м.р. неизвестно</p>";
+                            } else {
+                                text += `<p align='center'>${extra.birthPlace}</p>`;
+                            }
                         }
                         return text;
                     },
                         nodeRenderer: function(name, x, y, height, width, extra, id, nodeClass, textClass, textRenderer) {
-                            if(genealogyDataWithNodeId.length <= filteredTreeData.length) {
-                                genealogyDataWithNodeId.push({
-                                    name: name,
-                                    id: extra.id,
-                                    gender: extra.gender,
-                                    birthDate: extra.birthDate,
-                                    deathDate: extra.deathDate,
-                                    birthPlace: extra.birthPlace,
-                                    deathPlace: extra.deathPlace,
-                                    information: extra.information,
-                                    isLiving: extra.isLiving,
-                                    portret: extra.portret,
-                                    partner: extra.partner,
-                                    nodeId: id
-                                });
-                            }
+                            genealogyDataWithNodeId = fillPersonsWithNodeId(genealogyDataWithNodeId, filteredTreeData, extra, id);
                             let node = '';
                             node += '<div ';
                             node += 'style="height:100%;width:100%;" ';

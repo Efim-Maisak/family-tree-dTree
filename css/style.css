@@ -26,6 +26,7 @@ body {
     background-color: #ffff;
     opacity: 0.9;
     margin-right: 12px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 }
 
 .header-panel__info p {
@@ -50,6 +51,8 @@ body {
     background-color: #fff;
     opacity: 0.9;
     position: relative;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+    overflow: hidden;
 }
 
 .input_search {
@@ -119,6 +122,7 @@ body {
 
 .list-item {
     display: flex;
+    justify-content: space-between;
     align-items: center;
     width: 100%;
     height: 36px;
@@ -128,12 +132,22 @@ body {
     opacity: 0.99;
     white-space: nowrap;
     overflow: hidden;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
     cursor: pointer;
 }
 
 .list-item:active {
     transform: scale(0.95);
     transition: transform 0.1s ease;
+}
+
+.list-item__birthtext {
+    margin-left: 6px;
+    padding: 3px 6px;
+    font-size: 11px;
+    color: #f2f0ef;
+    background-color: goldenrod;
+    border-radius: 8px;
 }
 
 .header-panel__user {
@@ -143,7 +157,7 @@ body {
     border-radius: 30px;
     background-color: #fff;
     opacity: 0.9;
-
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 }
 
 .zoom-panel {
@@ -169,6 +183,7 @@ body {
     border-radius: 50%;
     background-color: #fff;
     opacity: 0.9;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
     cursor: pointer;
 }
 .zoom-panel-button:hover {

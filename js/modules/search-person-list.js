@@ -12,9 +12,16 @@ const searchPearsonList = (personList, tree, dataWithNodeId) => {
         };
 
         let elementPersonList = persons.map( item => {
-            return `<div class="list-item" data-id="${item.id}">${item.name}</div>`
+            return `<div class="list-item" data-id="${item.id}">${item.name}
+                <span class="list-item__birthtext">${item.date_of_birth.split(".")[2] || item.date_of_birth}</span>
+            </div>`
         });
-        listWrapperBlock.innerHTML = elementPersonList.join("");
+
+        if(persons.length === 0) {
+            listWrapperBlock.innerHTML = '<div class="list-item">Ничего не найдено</div>';
+        } else {
+            listWrapperBlock.innerHTML = elementPersonList.join("");
+        }
         listWrapperBlock.style.display = "flex";
     };
 

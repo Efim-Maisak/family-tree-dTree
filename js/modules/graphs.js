@@ -3,15 +3,15 @@ import searchPearsonList from "./search-person-list.js";
 import { changeInfoIsLivingPerson } from "../../utils/changeInfoIsLivingPerson.js";
 import { changePersonPortret } from "../../utils/changePersonPortet.js";
 import { filterMainTreePerson } from "../../utils/filterMainTreePerson.js";
-import { keyGraph } from "./main-graph.js";
 import { zoomControl } from "../../utils/zoomControl.js";
-import { genealogyData } from "../script.js";
+import { fillPersonsWithNodeId } from "../../utils/fillPersonsWithNodeId.js";
+import { keyGraph } from "./main-graph.js";
 import { filteredSpouseFamily } from "./main-graph.js";
 import { genealogyDataWithNodeId } from "./main-graph.js";
+import { genealogyData } from "../script.js";
 
 
 export let spouseFamilyDataWithNodeId = [];
-let spouseTree = null;
 const modalControls = modals();
 const { removeZoomListener } = zoomControl();
 const { removeHandlers } = searchPearsonList();
@@ -27,95 +27,94 @@ const graphs = (elementId, treeData) => {
 
     const generateSpouseGraph = () => {
 
-        d3.select(elementId).select("svg").remove();
+        return new Promise((resolve, reject) => {
+            try {
+                let spouseTree = null;
+                d3.select(elementId).select("svg").remove();
 
-        spouseTree = dTree.init(treeData, {
-            target: elementId,
-            debug: true,
-            hideMarriageNodes: true,
-            marriageNodeSize: 5,
-            height: pageHeight,
-            width: pageWidth,
-            nodeWidth: 130,
-            margin: {
-                top: 0,
-                right: 0,
-                bottom: 0,
-                left: 0
-              },
-              styles: {
-                node: 'node',
-                linage: 'linage',
-                marriage: 'marriage',
-                text: 'nodeText'
-              },
-            callbacks: {
-                nodeClick: function(name, extra) {
-                    document.getElementById('person-name').textContent = name;
-                    document.getElementById('person-gender').textContent = name === "неизвестно" ? "?" : (extra.gender === "M" ? "М" : "Ж");
-                    document.getElementById('person-birth').textContent = `${extra.birthDate || "неизвестный "} г.`;
-                    document.getElementById('place-birth').textContent = extra.birthPlace || "неизвестно";
-                    document.getElementById('person-info').innerHTML = extra.information || "информация отсутствует";
-                    document.querySelector(".popup_bottom").style.display = "none";
-                    changeInfoIsLivingPerson(extra);
-                    changePersonPortret(extra);
-                    modalControls.openModal();
-                },
-                nodeRightClick: function(name, extra) {
-                    alert('Right-click: ' + name);
-                },
-                textRenderer: function(name, extra, textClass) {
-                    var text = "<div style='width: 120px; padding: 5px; word-wrap: break-word;'>";
-                    text += "<p align='center' class='" + textClass + "' style='margin-bottom: 5px; font-weight: bold;'>" + name + "</p>";
-                    if(name == "неизвестно") {
-                        return text;
+                spouseTree = dTree.init(treeData, {
+                    target: elementId,
+                    debug: true,
+                    hideMarriageNodes: true,
+                    marriageNodeSize: 5,
+                    height: pageHeight,
+                    width: pageWidth,
+                    nodeWidth: 130,
+                    margin: {
+                        top: 0,
+                        right: 0,
+                        bottom: 0,
+                        left: 0
+                      },
+                      styles: {
+                        node: 'node',
+                        linage: 'linage',
+                        marriage: 'marriage',
+                        text: 'nodeText'
+                      },
+                    callbacks: {
+                        nodeClick: function(name, extra) {
+                            document.getElementById('person-name').textContent = name;
+                            document.getElementById('person-gender').textContent = name === "неизвестно" ? "?" : (extra.gender === "M" ? "М" : "Ж");
+                            document.getElementById('person-birth').textContent = `${extra.birthDate || "неизвестный "} г.`;
+                            document.getElementById('place-birth').textContent = extra.birthPlace || "неизвестно";
+                            document.getElementById('person-info').innerHTML = extra.information || "информация отсутствует";
+                            document.querySelector(".popup_bottom").style.display = "none";
+                            changeInfoIsLivingPerson(extra);
+                            changePersonPortret(extra);
+                            modalControls.openModal();
+                        },
+                        nodeRightClick: function(name, extra) {
+                            alert('Right-click: ' + name);
+                        },
+                        textRenderer: function(name, extra, textClass) {
+                            var text = "<div style='width: 120px; padding: 5px; word-wrap: break-word;'>";
+                            text += "<p align='center' class='" + textClass + "' style='margin-bottom: 5px; font-weight: bold;'>" + name + "</p>";
+                            if(name == "неизвестно") {
+                                return text;
+                            }
+                            if (extra) {
+                                text += "<p align='center' style='margin-bottom: 3px;'>" + (extra.birthDate || '') + " - " + (extra.deathDate || '') + "</p>";
+                                if (extra.birthPlace === "" || extra.birthPlace == null) {
+                                    text += "<p align='center'>м.р. неизвестно</p>";
+                                } else {
+                                    text += `<p align='center'>${extra.birthPlace}</p>`;
+                                }
+                            }
+                            return text;
+                        },
+                        nodeRenderer: function(name, x, y, height, width, extra, id, nodeClass, textClass, textRenderer) {
+                            spouseFamilyDataWithNodeId = fillPersonsWithNodeId(spouseFamilyDataWithNodeId, filteredSpouseFamily, extra, id);
+                            let node = '';
+                            node += '<div ';
+                            node += 'style="height:100%;width:100%;" ';
+                            node += 'class="' + nodeClass + '" ';
+                            node += 'id="node' + id + '">\n';
+                            node += textRenderer(name, extra, textClass);
+                            node += '</div>';
+                            return node;
+                        }
                     }
-                    if (extra) {
-                        text += "<p align='center' style='margin-bottom: 3px;'>" + (extra.birthDate || '') + " - " + (extra.deathDate || '') + "</p>";
-                        if (extra.birthPlace) text += "<p align='center'>" + extra.birthPlace + "</p>";
-                    }
-                    return text;
-                },
-                nodeRenderer: function(name, x, y, height, width, extra, id, nodeClass, textClass, textRenderer) {
-                    if(spouseFamilyDataWithNodeId.length <= filteredSpouseFamily.length) {
-                        spouseFamilyDataWithNodeId.push({
-                            name: name,
-                            id: extra.id,
-                            gender: extra.gender,
-                            birthDate: extra.birthDate,
-                            deathDate: extra.deathDate,
-                            birthPlace: extra.birthPlace,
-                            deathPlace: extra.deathPlace,
-                            information: extra.information,
-                            isLiving: extra.isLiving,
-                            portret: extra.portret,
-                            partner: extra.partner,
-                            nodeId: id
-                        });
-                    }
-                    let node = '';
-                    node += '<div ';
-                    node += 'style="height:100%;width:100%;" ';
-                    node += 'class="' + nodeClass + '" ';
-                    node += 'id="node' + id + '">\n';
-                    node += textRenderer(name, extra, textClass);
-                    node += '</div>';
-                    return node;
-                }
+                });
+                resolve(spouseTree);
+            } catch(error) {
+                reject(error)
             }
         });
-    }
+    };
 
     const graphOpen = () => {
         modalControls.closeModal();
         d3.select("#graph").select("svg").remove();
         spouseGraph.style.cssText = `position: fixed; top: 0; left: 0; width: ${pageWidth}px; height: ${pageHeight}px; z-index: 100;`;
         spouseGraphClose.style.display = "block";
-        generateSpouseGraph();
-        removeZoomListener();
-        zoomControl(spouseTree, elementId);
-        removeHandlers();
-        searchPearsonList(filteredSpouseFamily, spouseTree, spouseFamilyDataWithNodeId);
+        generateSpouseGraph()
+        .then( spouseTree => {
+            removeZoomListener();
+            zoomControl(spouseTree, elementId);
+            removeHandlers();
+            searchPearsonList(filteredSpouseFamily, spouseTree, spouseFamilyDataWithNodeId);
+        });
     };
 
     const graphClose = () => {

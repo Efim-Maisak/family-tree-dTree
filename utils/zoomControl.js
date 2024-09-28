@@ -26,15 +26,16 @@ export const zoomControl = (tree, graph) => {
                     toFit();
                 }
             }
-    }
+    };
 
     zoomPanel.addEventListener("click", zoomPanelClickHandler);
 
     const removeZoomListener = () => {
+        console.log("Удален обработчик клика!");
         zoomPanel.removeEventListener("click", zoomPanelClickHandler);
-    }
+    };
 
     return {
         removeZoomListener
-    }
+    };
 };
