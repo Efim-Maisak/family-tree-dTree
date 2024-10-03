@@ -8,6 +8,7 @@ import { filterMainTreePerson } from "../../utils/filterMainTreePerson.js";
 import { fillPersonsWithNodeId } from "../../utils/fillPersonsWithNodeId.js";
 import { zoomControl } from "../../utils/zoomControl.js";
 import { genealogyData } from "../script.js";
+import { treeMainFamily } from "../script.js";
 
 
 export let filteredSpouseFamily;
@@ -52,7 +53,7 @@ export const keyGraph = (treeData) => {
                         document.getElementById('person-birth').textContent = `${extra.birthDate || "неизвестный "} г.`;
                         document.getElementById('place-birth').textContent = extra.birthPlace || "неизвестно";
                         document.getElementById('person-info').innerHTML = extra.information || "информация отсутствует";
-                        if(extra.gender === "F" && extra.partner) {
+                        if(extra.gender === "F" && extra.partner && !extra.name.includes(treeMainFamily)) {
                             document.querySelector(".popup_bottom").style.display = "block";
                             document.querySelector(".popup_bottom__button").textContent = `Показать древо ${name.split(" ")[0]}`;
                             if(genealogyData && genealogyData.length > 0) {
@@ -77,7 +78,6 @@ export const keyGraph = (treeData) => {
                         }
                         if (extra) {
                             text += "<p align='center' style='margin-bottom: 3px;'>" + (extra.birthDate || '') + " - " + (extra.deathDate || '') + "</p>";
-                            // if (extra.birthPlace) text += `<p align='center'>${extra.birthPlace || 'м.р. неизвестно'}</p>`;
                             if (extra.birthPlace === "" || extra.birthPlace == null) {
                                 text += "<p align='center'>м.р. неизвестно</p>";
                             } else {

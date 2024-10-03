@@ -31,7 +31,6 @@ export const zoomControl = (tree, graph) => {
     zoomPanel.addEventListener("click", zoomPanelClickHandler);
 
     const removeZoomListener = () => {
-        console.log("Удален обработчик клика!");
         zoomPanel.removeEventListener("click", zoomPanelClickHandler);
     };
 

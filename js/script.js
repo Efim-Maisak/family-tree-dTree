@@ -9,6 +9,7 @@ import { genealogyDataWithNodeId } from "./modules/main-graph.js";
 
 
 export let genealogyData = [];
+export let treeMainFamily = null;
 const { request, isLoading } = httpService();
 const loadingDiv = document.createElement("div");
 let mainTree = null;
@@ -52,6 +53,11 @@ request(`${baseDBpath}/${dataTable}/records?perPage=${maxItems}`)
                 console.log(response);
                 console.log(response.items);
                 genealogyData = response.items;
+
+                const treeMainFamilyNode = genealogyData.find( item => {
+                     return item.key_node === true;
+                });
+                treeMainFamily = treeMainFamilyNode.name.split(" ")[0];
 
                 keyGraph(genealogyData)
                     .then(tree => {
