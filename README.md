@@ -23,7 +23,231 @@
     index.html - корневой файл проекта.
 
 ### Схема таблицы с данными в pocketbase
-<Будет дополняться>
+База данных pocketbase позволяет импортировать коллекцию (схему данных) в формате json.
+
+<details> <summary>Скопировать пример коллекции</summary>
+
+```json
+[
+    {
+        "id": "djal99a7q4a4nnb",
+        "name": "genealogy",
+        "type": "base",
+        "system": false,
+        "schema": [
+            {
+                "system": false,
+                "id": "1cpdgevn",
+                "name": "name",
+                "type": "text",
+                "required": true,
+                "presentable": false,
+                "unique": false,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "system": false,
+                "id": "3oxskp1c",
+                "name": "gender",
+                "type": "select",
+                "required": true,
+                "presentable": false,
+                "unique": false,
+                "options": {
+                    "maxSelect": 1,
+                    "values": [
+                        "M",
+                        "F"
+                    ]
+                }
+            },
+            {
+                "system": false,
+                "id": "y7f7i70j",
+                "name": "portret",
+                "type": "file",
+                "required": false,
+                "presentable": false,
+                "unique": false,
+                "options": {
+                    "mimeTypes": [
+                        "image/jpeg",
+                        "image/vnd.mozilla.apng",
+                        "image/png"
+                    ],
+                    "thumbs": [
+                        "200x200f"
+                    ],
+                    "maxSelect": 1,
+                    "maxSize": 5242880,
+                    "protected": false
+                }
+            },
+            {
+                "system": false,
+                "id": "rjs05tyj",
+                "name": "date_of_birth",
+                "type": "text",
+                "required": true,
+                "presentable": false,
+                "unique": false,
+                "options": {
+                    "min": null,
+                    "max": 20,
+                    "pattern": ""
+                }
+            },
+            {
+                "system": false,
+                "id": "wh80oml2",
+                "name": "date_of_death",
+                "type": "text",
+                "required": false,
+                "presentable": false,
+                "unique": false,
+                "options": {
+                    "min": null,
+                    "max": 20,
+                    "pattern": ""
+                }
+            },
+            {
+                "system": false,
+                "id": "hj19lfca",
+                "name": "place_of_birth",
+                "type": "text",
+                "required": false,
+                "presentable": false,
+                "unique": false,
+                "options": {
+                    "min": null,
+                    "max": 50,
+                    "pattern": ""
+                }
+            },
+            {
+                "system": false,
+                "id": "12xua8gn",
+                "name": "place_of_birth_coordinates",
+                "type": "text",
+                "required": false,
+                "presentable": false,
+                "unique": false,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "system": false,
+                "id": "qfatge8n",
+                "name": "place_of_death",
+                "type": "text",
+                "required": false,
+                "presentable": false,
+                "unique": false,
+                "options": {
+                    "min": null,
+                    "max": 50,
+                    "pattern": ""
+                }
+            },
+            {
+                "system": false,
+                "id": "n3tnaasl",
+                "name": "information",
+                "type": "editor",
+                "required": false,
+                "presentable": false,
+                "unique": false,
+                "options": {
+                    "convertUrls": false
+                }
+            },
+            {
+                "system": false,
+                "id": "t5b1guf8",
+                "name": "parents",
+                "type": "json",
+                "required": false,
+                "presentable": false,
+                "unique": false,
+                "options": {
+                    "maxSize": 2000000
+                }
+            },
+            {
+                "system": false,
+                "id": "uanxbdqu",
+                "name": "children",
+                "type": "json",
+                "required": false,
+                "presentable": false,
+                "unique": false,
+                "options": {
+                    "maxSize": 2000000
+                }
+            },
+            {
+                "system": false,
+                "id": "vgdxarjd",
+                "name": "partner",
+                "type": "json",
+                "required": false,
+                "presentable": false,
+                "unique": false,
+                "options": {
+                    "maxSize": 2000000
+                }
+            },
+            {
+                "system": false,
+                "id": "2tmbacn5",
+                "name": "key_node",
+                "type": "bool",
+                "required": false,
+                "presentable": false,
+                "unique": false,
+                "options": {}
+            },
+            {
+                "system": false,
+                "id": "5xbc2aun",
+                "name": "isLivingPerson",
+                "type": "bool",
+                "required": false,
+                "presentable": false,
+                "unique": false,
+                "options": {}
+            },
+            {
+                "system": false,
+                "id": "hpittoif",
+                "name": "isMainTree",
+                "type": "bool",
+                "required": false,
+                "presentable": false,
+                "unique": false,
+                "options": {}
+            }
+        ],
+        "indexes": [],
+        "listRule": "",
+        "viewRule": null,
+        "createRule": null,
+        "updateRule": null,
+        "deleteRule": null,
+        "options": {}
+    }
+]
+```
+</details>
+
 
 ### Запуск приложения на локальном компьютере
 <Будет дополняться>

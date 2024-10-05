@@ -8,11 +8,12 @@ const searchPearsonList = (personList, tree, dataWithNodeId) => {
 
     const showList = (persons) => {
         if(personInput.value === "") {
-            return
+            return;
         };
 
         let elementPersonList = persons.map( item => {
-            return `<div class="list-item" data-id="${item.id}">${item.name}
+            return `<div class="list-item" data-id="${item.id}">
+                <span class="list-item__nametext">${item.name}</span>
                 <span class="list-item__birthtext">${item.date_of_birth.split(".")[2] || item.date_of_birth}</span>
             </div>`
         });
@@ -56,8 +57,9 @@ const searchPearsonList = (personList, tree, dataWithNodeId) => {
     };
 
     const personListItemClickHandler = (e) => {
-        if(e.target.className === "list-item") {
-            const idAttribute = e.target.getAttribute("data-id");
+        const listItem = e.target.closest(".list-item");
+        if(listItem) {
+            const idAttribute = listItem.getAttribute("data-id");
             if(dataWithNodeId) {
                 const person = dataWithNodeId.find( item => item.id === idAttribute);
                 if(person) {
@@ -83,15 +85,11 @@ const searchPearsonList = (personList, tree, dataWithNodeId) => {
     };
 
     searchButton.addEventListener("click", searchButtonClickHandler);
-
     personInput.addEventListener("keypress", enterButtonHandler);
-
     personInput.addEventListener("input", inputHandler);
-
-
     listWrapperBlock.addEventListener("click", personListItemClickHandler);
-
     document.body.addEventListener("click", outsideClickHandler );
+
 
     searchButton.addEventListener("click", (e) => {
         e.stopPropagation();

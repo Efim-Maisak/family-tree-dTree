@@ -97,7 +97,7 @@ body {
 .list-wrapper {
     display: none;
     flex-direction: column;
-    width: 342px;
+    width: 350px;
     gap: 6px;
     padding: 8px;
     position: absolute;
@@ -130,8 +130,6 @@ body {
     background-color: #fff;
     border-radius: 10px;
     opacity: 0.99;
-    white-space: nowrap;
-    overflow: hidden;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
     cursor: pointer;
 }
@@ -141,8 +139,15 @@ body {
     transition: transform 0.1s ease;
 }
 
+.list-item__nametext {
+    max-width: 350px;
+    white-space: nowrap;
+    overflow:hidden;
+    text-overflow: ellipsis;
+}
+
 .list-item__birthtext {
-    margin-left: 6px;
+    margin-left: 8px;
     padding: 3px 6px;
     font-size: 11px;
     color: #f2f0ef;
@@ -189,6 +194,11 @@ body {
 .zoom-panel-button:hover {
     opacity: 1;
     transform: scale(1.1);
+}
+
+.zoom-panel-button:active {
+    transform: scale(0.9);
+    transition: transform 0.1s ease;
 }
 
 .button_reset {
@@ -309,6 +319,25 @@ p {
     }
 }
 
+.popup_bottom__button {
+    padding: 8px 14px;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    color: #5f6368;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+.popup_bottom__button:hover {
+    background-color: #ccc;
+}
+
+.popup_bottom__button:active {
+    transform: scale(0.9);
+    transition: transform 0.1s ease;
+}
+
 .popup_close {
     position: absolute;
     top: 30px;
@@ -324,7 +353,6 @@ p {
     border-radius: 50%;
     opacity: 0.9;
 }
-
 
 .popup_close:hover  {
     transform: scale(1.1);
@@ -398,4 +426,17 @@ p {
     -webkit-box-shadow: 1px 1px 5px 1px rgba(34, 60, 80, 0.5) inset;
     -moz-box-shadow: 1px 1px 5px 1px rgba(34, 60, 80, 0.5) inset;
     box-shadow: 1px 1px 5px 1px rgba(34, 60, 80, 0.5) inset;
+}
+
+.person-info a {
+    color: inherit;
+    cursor: pointer;
+};
+
+.person-info a:visited {
+    color: inherit;
+};
+
+.person-info a:hover {
+    text-decoration: underline;
 }

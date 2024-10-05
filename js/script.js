@@ -4,8 +4,8 @@ import { dataTable } from "../config/apiConfig.js";
 import { maxItems } from "../config/apiConfig.js";
 import { keyGraph } from "./modules/main-graph.js";
 import { filterMainTreePerson } from "../utils/filterMainTreePerson.js";
-import searchPearsonList from "./modules/search-person-list.js";
 import { genealogyDataWithNodeId } from "./modules/main-graph.js";
+import searchPearsonList from "./modules/search-person-list.js";
 
 
 export let genealogyData = [];

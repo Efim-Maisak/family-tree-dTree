@@ -51,8 +51,17 @@ export const keyGraph = (treeData) => {
                         document.getElementById('person-name').textContent = name;
                         document.getElementById('person-gender').textContent = name === "неизвестно" ? "?" : (extra.gender === "M" ? "М" : "Ж");
                         document.getElementById('person-birth').textContent = `${extra.birthDate || "неизвестный "} г.`;
-                        document.getElementById('place-birth').textContent = extra.birthPlace || "неизвестно";
                         document.getElementById('person-info').innerHTML = extra.information || "информация отсутствует";
+                        const placeBirthElem =  document.getElementById("place-birth");
+                        placeBirthElem.textContent = extra.birthPlace || "неизвестно";
+                        if(extra.coordinates) {
+                            placeBirthElem.href = `https://www.google.com/maps/@${extra.coordinates},10z?q=${extra.coordinates}`;
+                            placeBirthElem.style.textDecoration = "underline";
+                            placeBirthElem.style.pointerEvents = "";
+                        } else {
+                            placeBirthElem.style.pointerEvents = "none";
+                            placeBirthElem.style.textDecoration = "none";
+                        };
                         if(extra.gender === "F" && extra.partner && !extra.name.includes(treeMainFamily)) {
                             document.querySelector(".popup_bottom").style.display = "block";
                             document.querySelector(".popup_bottom__button").textContent = `Показать древо ${name.split(" ")[0]}`;

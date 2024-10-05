@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Родовое дерево</title>
+        <title>Генеалогическое дерево</title>
         <link rel="shortcut icon" type="image/svg" href="./assets/favicon.svg"/>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -45,11 +45,11 @@
         <div id="modal" class="popup">
             <div class="popup_content">
                 <span class="popup_close">&times;</span>
-                <img alt="Портрет" class="person-photo">
+                <img alt="портрет" class="person-photo">
                 <div class="person-info" id="person-info-name"><span id="person-name"></span><span class="gender-tag" id="person-gender"></span></div>
                 <div class="person-info"><strong>Дата рождения:</strong> <span id="person-birth"></span></div>
                 <div class="person-info" id="person-info-death"><strong>Дата смерти:</strong> <span id="person-death"></span></div>
-                <div class="person-info"><strong>Место рождения:</strong> <span id="place-birth"></span></div>
+                <div class="person-info"><strong>Место рождения:</strong> <a id="place-birth" target="_blank"></div>
                 <div class="person-info" id="person-info-place-death"><strong>Место смерти:</strong> <span id="place-death"></span></div>
                 <div class="person-info"><strong>Общая информация:</strong><div class="person-info__content"><span id="person-info"></span></div></div>
                 <div class="popup_bottom"><button class="popup_bottom__button">Показать древо</button></div>
