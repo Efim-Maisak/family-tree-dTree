@@ -1,15 +1,18 @@
 export const changeInfoIsLivingPerson = (extra) => {
     const personInfoDeath = document.getElementById("person-info-death");
     const personInfoPlaceOfDeath = document.getElementById("person-info-place-death");
+    const personDeathSpan = document.getElementById("person-death");
+    const personPlaceDeathSpan = document.getElementById("place-death");
+
     if (!extra.isLiving) {
         personInfoDeath.style.display = "";
         personInfoPlaceOfDeath.style.display = "";
-        document.getElementById("person-death").textContent = `${extra.deathDate || "неизвестный "} г.`;
-        document.getElementById("place-death").textContent = extra.deathPlace || "неизвестно";
+        personDeathSpan.textContent = `${extra.deathDate || "неизвестный "} г.`;
+        personPlaceDeathSpan.textContent = extra.deathPlace || "неизвестно";
     } else {
         personInfoDeath.style.display = "none";
         personInfoPlaceOfDeath.style.display = "none";
-        document.getElementById("person-death").textContent = "";
-        document.getElementById("place-death").textContent = "";
+        personDeathSpan.textContent = "";
+        personPlaceDeathSpan.textContent = "";
     }
 };
