@@ -70,6 +70,8 @@ export const convertToDTreeFormat = (data) => {
                 }
             } else {
                 console.warn(`Не найден супруг для ${person.name} (ID: ${person.id})`);
+                const unknownSpouse = createUnknownSpouse(person.gender === 'M' ? 'F' : 'M');
+                node.marriages.push({ spouse: unknownSpouse, children: [] });
             }
         }
 
@@ -82,33 +84,41 @@ export const convertToDTreeFormat = (data) => {
                 marriage = { spouse: unknownSpouse, children: [] };
                 node.marriages.push(marriage);
             }
-            person.children.children.forEach(childId => {
-                const childNode = nodeMap.get(childId);
-                if (childNode && !marriage.children.some(c => c.extra.id === childId)) {
-                    marriage.children.push(childNode);
-                }
-            });
+            if (Array.isArray(person.children.children)) {
+                person.children.children.forEach(childId => {
+                    const childNode = nodeMap.get(childId);
+                    if (childNode && !marriage.children.some(c => c.extra.id === childId)) {
+                        marriage.children.push(childNode);
+                    }
+                });
+            } else {
+                console.warn(`Некорректный формат детей для ${person.name} (ID: ${person.id})`);
+            }
         }
     });
 
     // Добавляем детей к родителям
     data.forEach(person => {
         if (person.parents && person.parents.parents) {
-            person.parents.parents.forEach(parentId => {
-                const parentNode = nodeMap.get(parentId);
-                if (parentNode) {
-                    let marriage = parentNode.marriages[0];
-                    if (!marriage) {
-                        const unknownSpouse = createUnknownSpouse(parentNode.extra.gender === 'M' ? 'F' : 'M');
-                        marriage = { spouse: unknownSpouse, children: [] };
-                        parentNode.marriages.push(marriage);
+            if (Array.isArray(person.parents.parents)) {
+                person.parents.parents.forEach(parentId => {
+                    const parentNode = nodeMap.get(parentId);
+                    if (parentNode) {
+                        let marriage = parentNode.marriages[0];
+                        if (!marriage) {
+                            const unknownSpouse = createUnknownSpouse(parentNode.extra.gender === 'M' ? 'F' : 'M');
+                            marriage = { spouse: unknownSpouse, children: [] };
+                            parentNode.marriages.push(marriage);
+                        }
+                        const childNode = nodeMap.get(person.id);
+                        if (childNode && !marriage.children.some(c => c.extra.id === person.id)) {
+                            marriage.children.push(childNode);
+                        }
                     }
-                    const childNode = nodeMap.get(person.id);
-                    if (childNode && !marriage.children.some(c => c.extra.id === person.id)) {
-                        marriage.children.push(childNode);
-                    }
-                }
-            });
+                });
+            } else {
+                console.warn(`Некорректный формат родителей для ${person.name} (ID: ${person.id})`);
+            }
         }
     });
 
@@ -120,5 +130,12 @@ export const convertToDTreeFormat = (data) => {
         return node;
     }
 
-    return [buildTree(rootNode)];
+    try {
+        const result = [buildTree(rootNode)];
+        console.warn("Дерево успешно построено:", result);
+        return result;
+    } catch (error) {
+        console.error("Ошибка при построении дерева:", error);
+        return null;
+    }
 }

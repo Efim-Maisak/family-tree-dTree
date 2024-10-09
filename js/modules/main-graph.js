@@ -109,7 +109,6 @@ export const keyGraph = (treeData) => {
                 }
             });
             zoomControl(mainTree, "#graph");
-
             resolve(mainTree);
 
         } catch(error) {
