@@ -65,14 +65,42 @@
                 <div class="person-info" id="person-info-place-death">
                     <strong>Место смерти:</strong>
                     <span id="place-death"></span>
+
                 </div>
-                <div class="person-info"><strong>Общая информация:</strong>
+                <div class="person-info person-info__about">
+                    <strong>Общая информация:</strong>
                     <div class="person-info__content">
                         <span id="person-info"></span>
                     </div>
                 </div>
                 <div class="popup_bottom">
                     <button class="popup_bottom__button">Показать древо</button>
+                </div>
+                <div class="popup_content__edit" style="display: none;">
+                    <label for="person-name-input">Имя:</label>
+                    <input type="text" id="person-name-input" autocomplete="off" autocorrect="off">
+                    <label for="person-gender-select">Пол:</label>
+                    <select id="person-gender-select">
+                        <option value="M">М</option>
+                        <option value="F">Ж</option>
+                    </select>
+                    <label for="person-birth-input">Дата рождения:</label>
+                    <input type="text" id="person-birth-input" autocomplete="off" autocorrect="off">
+                    <label for="person-death-input">Дата смерти:</label>
+                    <input type="text" id="person-death-input" autocomplete="off" autocorrect="off">
+                    <label for="place-birth-input">Место рождения:</label>
+                    <input type="text" id="place-birth-input" autocomplete="off" autocorrect="off">
+                    <label for="place-death-input">Место смерти:</label>
+                    <input type="text" id="place-death-input" autocomplete="off" autocorrect="off">
+                    <label for="coordinates-input">Координаты мета рождения (широта,долгота):</label>
+                    <input type="text" id="coordinates-input" autocomplete="off" autocorrect="off">
+                    <label for="cperson-info-input">Общая информация:</label>
+                    <textarea id="person-info-input"></textarea>
+                </div>
+                <div class="edit-buttons">
+                    <button class="edit-button">Редактировать</button>
+                    <button class="save-button" style="display: none;">Сохранить</button>
+                    <button class="cancel-button" style="display: none;">Отмена</button>
                 </div>
             </div>
         </div>

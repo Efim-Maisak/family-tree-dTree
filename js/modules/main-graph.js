@@ -1,5 +1,6 @@
 import graphs from "./graphs.js";
 import modals from "./modals.js";
+import editPerson from "./edit-person.js";
 import { convertToDTreeFormat } from "../../utils/convertToDTreeFormat.js";
 import { changeInfoIsLivingPerson } from "../../utils/changeInfoIsLivingPerson.js";
 import { changePersonPortret } from "../../utils/changePersonPortet.js";
@@ -74,6 +75,7 @@ export const keyGraph = (treeData) => {
                         }
                         changeInfoIsLivingPerson(extra);
                         changePersonPortret(extra);
+                        editPerson(extra);
                         modalControls.openModal();
                     },
                     nodeRightClick: function(name, extra) {

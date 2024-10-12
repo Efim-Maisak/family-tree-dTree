@@ -1,6 +1,10 @@
+import editPerson from "./edit-person.js";
 import { calcScroll } from "../../utils/calcScroll.js";
 
 const modals = () => {
+
+    const { toggleEditMode } = editPerson();
+
     const modalElement = document.getElementById("modal");
     const modalContent = modalElement.querySelector(".popup_content");
     const closeElement = modalElement.querySelector(".popup_close");
@@ -21,17 +25,22 @@ const modals = () => {
         document.body.style.paddingRight = "";
     }
 
-    closeElement.addEventListener("click", closeModal);
+    closeElement.addEventListener("click", () => {
+        closeModal();
+        toggleEditMode(false);
+    });
 
     modalElement.addEventListener("click", (event) => {
         if (event.target === modalElement) {
             closeModal();
+            toggleEditMode(false);
         }
     });
 
     document.addEventListener('keydown', (event) => {
         if (event.key === "Escape") {
             closeModal();
+            toggleEditMode(false);
         }
     });
 

@@ -46,6 +46,7 @@ export const convertToDTreeFormat = (data) => {
             textClass: "nodeText",
             extra: {
                 id: "unknown-" + Math.random().toString(36).substr(2, 9),
+                name: "неизвестно",
                 gender: gender,
                 birthDate: "",
                 deathDate: "",
