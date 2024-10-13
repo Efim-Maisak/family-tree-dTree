@@ -90,11 +90,18 @@
                     <input type="text" id="person-death-input" autocomplete="off" autocorrect="off">
                     <label for="place-birth-input">Место рождения:</label>
                     <input type="text" id="place-birth-input" autocomplete="off" autocorrect="off">
+                    <label for="coordinates-input">Координаты места рождения (широта, долгота):</label>
+                    <input type="text" id="coordinates-input" autocomplete="off" autocorrect="off">
                     <label for="place-death-input">Место смерти:</label>
                     <input type="text" id="place-death-input" autocomplete="off" autocorrect="off">
-                    <label for="coordinates-input">Координаты мета рождения (широта,долгота):</label>
-                    <input type="text" id="coordinates-input" autocomplete="off" autocorrect="off">
-                    <label for="cperson-info-input">Общая информация:</label>
+                    <div class="toggle-container">
+                        <span class="toggle-label">Жив:</span>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="isLivingToggle" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <label for="person-info-input">Общая информация:</label>
                     <textarea id="person-info-input"></textarea>
                 </div>
                 <div class="edit-buttons">
