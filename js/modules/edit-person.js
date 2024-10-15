@@ -1,7 +1,7 @@
 import httpService from "../../services/http.js";
 import { baseDBpath } from "../../config/apiConfig.js";
 import { dataTable } from "../../config/apiConfig.js";
-
+import { lastClickedPersonId } from "./main-graph.js";
 
 const editPerson = (extra) => {
 
@@ -39,9 +39,6 @@ const editPerson = (extra) => {
         ];
     };
 
-    const handleLivingToggle = (e) => {
-        const isLiving = e.target.checked;
-    };
 
     function toggleEditMode(isEditing) {
         personInfo.forEach( element => {
@@ -52,12 +49,6 @@ const editPerson = (extra) => {
         editBtn.style.display = isEditing ? "none" : "inline-block";
         saveBtn.style.display = isEditing ? "inline-block" : "none";
         cancelBtn.style.display = isEditing ? "inline-block" : "none";
-
-        if(isEditing) {
-            isLivingToggle.addEventListener("change", handleLivingToggle);
-        } else {
-            isLivingToggle.removeEventListener("change", handleLivingToggle);
-        }
     };
 
     editBtn.addEventListener("click", () => {
@@ -77,35 +68,40 @@ const editPerson = (extra) => {
         toggleEditMode(false);
     });
 
+    saveBtn.removeEventListener("click", saveChanges);
+    saveBtn.addEventListener("click", saveChanges);
 
-    saveBtn.addEventListener("click", () => {
+    function saveChanges() {
+        console.log(extra.id + " - " + lastClickedPersonId);
+        if(extra && extra.id === lastClickedPersonId) {
+            const data = {
+                "name": document.getElementById("person-name-input").value,
+                "gender": document.getElementById("person-gender-select").value,
+                "date_of_birth": document.getElementById("person-birth-input").value,
+                "date_of_death": document.getElementById("person-death-input").value,
+                "place_of_birth": document.getElementById("place-birth-input").value,
+                "place_of_birth_coordinates": document.getElementById("coordinates-input").value,
+                "place_of_death": document.getElementById("place-death-input").value,
+                "information": document.getElementById("person-info-input").value,
+                "isLivingPerson": isLivingToggle.checked
+            }
 
-        const data = {
-            "name": document.getElementById("person-name-input").value,
-            "gender": document.getElementById("person-gender-select").value,
-            "date_of_birth": document.getElementById("person-birth-input").value,
-            "date_of_death": document.getElementById("person-death-input").value,
-            "place_of_birth": document.getElementById("place-birth-input").value,
-            "place_of_birth_coordinates": document.getElementById("coordinates-input").value,
-            "place_of_death": document.getElementById("place-death-input").value,
-            "information": document.getElementById("person-info-input").value,
-            "isLivingPerson": isLivingToggle.checked
+            if(extra) {
+                request(
+                    `${baseDBpath}/${dataTable}/records/${extra.id}`,
+                    "PATCH",
+                    data
+                )
+                .then((response) => {
+                    if(!response.hasOwnProperty("code")) {
+                        toggleEditMode(false);
+                        location.reload();
+                    }
+                })
+            }
         }
+    }
 
-        if(extra) {
-            request(
-                `${baseDBpath}/${dataTable}/records/${extra.id}`,
-                "PATCH",
-                data
-            )
-            .then((response) => {
-                if(!response.hasOwnProperty("code")) {
-                    toggleEditMode(false);
-                    location.reload();
-                }
-            })
-        }
-    });
 
     return {
         toggleEditMode
