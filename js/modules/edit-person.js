@@ -3,6 +3,7 @@ import { baseDBpath } from "../../config/apiConfig.js";
 import { dataTable } from "../../config/apiConfig.js";
 import { lastClickedPersonId } from "./main-graph.js";
 
+
 const editPerson = (extra) => {
 
     const { request } = httpService();
@@ -17,14 +18,13 @@ const editPerson = (extra) => {
 
 
     let fields = null;
+    let originalData = {};
 
     if(extra && extra.name === "неизвестно") {
         editBtn.style.display = "none";
     } else {
         editBtn.style.display = "block";
     }
-
-    console.log(extra);
 
     if(extra) {
         fields = [
@@ -35,10 +35,16 @@ const editPerson = (extra) => {
             { input: "place-birth-input", key: "place_of_birth", value: extra.birthPlace },
             { input: "place-death-input", key: "place_of_death", value: extra.deathPlace },
             { input: "person-info-input", key: "information", value: extra.information },
-            { input: "coordinates-input", key: "coordinates", value: extra.coordinates }
+            { input: "coordinates-input", key: "place_of_birth_coordinates", value: extra.coordinates }
         ];
     };
 
+    if(fields) {
+        fields.forEach(field => {
+            originalData[field.key] = field.value;
+            originalData.isLivingPerson = extra.isLiving;
+        });
+    }
 
     function toggleEditMode(isEditing) {
         personInfo.forEach( element => {
@@ -72,9 +78,9 @@ const editPerson = (extra) => {
     saveBtn.addEventListener("click", saveChanges);
 
     function saveChanges() {
-        console.log(extra.id + " - " + lastClickedPersonId);
         if(extra && extra.id === lastClickedPersonId) {
-            const data = {
+            console.log(extra.id + " - " + lastClickedPersonId);
+            const newData = {
                 "name": document.getElementById("person-name-input").value,
                 "gender": document.getElementById("person-gender-select").value,
                 "date_of_birth": document.getElementById("person-birth-input").value,
@@ -86,22 +92,30 @@ const editPerson = (extra) => {
                 "isLivingPerson": isLivingToggle.checked
             }
 
-            if(extra) {
+            const hasChanges = Object.keys(newData).some( key => {
+                return newData[key] !== originalData[key];
+            });
+
+
+            if(hasChanges) {
+                saveBtn.disabled = true;
                 request(
                     `${baseDBpath}/${dataTable}/records/${extra.id}`,
                     "PATCH",
-                    data
+                    newData
                 )
                 .then((response) => {
                     if(!response.hasOwnProperty("code")) {
+                        saveBtn.disabled = false;
                         toggleEditMode(false);
                         location.reload();
                     }
-                })
+                });
+            } else {
+                toggleEditMode(false);
             }
         }
     }
-
 
     return {
         toggleEditMode
