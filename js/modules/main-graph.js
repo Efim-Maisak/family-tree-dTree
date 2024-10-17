@@ -14,7 +14,7 @@ import { treeMainFamily } from "../script.js";
 
 export let filteredSpouseFamily;
 export let genealogyDataWithNodeId = [];
-export let lastClickedPersonId = null;
+export let lastClickedNodeTime = null;
 
 
 export const keyGraph = (treeData) => {
@@ -77,8 +77,8 @@ export const keyGraph = (treeData) => {
                         }
                         changeInfoIsLivingPerson(extra);
                         changePersonPortret(extra);
-                        lastClickedPersonId = extra.id;
-                        editPerson(extra);
+                        lastClickedNodeTime = new Date().getTime();
+                        editPerson(extra, lastClickedNodeTime);
                         modalControls.openModal();
                     },
                     nodeRightClick: function(name, extra) {

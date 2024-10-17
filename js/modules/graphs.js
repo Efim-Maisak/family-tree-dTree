@@ -6,6 +6,7 @@ import { filterMainTreePerson } from "../../utils/filterMainTreePerson.js";
 import { zoomControl } from "../../utils/zoomControl.js";
 import { fillPersonsWithNodeId } from "../../utils/fillPersonsWithNodeId.js";
 import { keyGraph } from "./main-graph.js";
+import editPerson from "./edit-person.js";
 import { filteredSpouseFamily } from "./main-graph.js";
 import { genealogyDataWithNodeId } from "./main-graph.js";
 import { genealogyData } from "../script.js";
@@ -15,6 +16,7 @@ export let spouseFamilyDataWithNodeId = [];
 const modalControls = modals();
 const { removeZoomListener } = zoomControl();
 const { removeHandlers } = searchPearsonList();
+let lastClickedSpouseNodeTime = new Date().getTime();
 
 let pageWidth = window.innerWidth;
 let pageHeight = window.innerHeight;
@@ -71,6 +73,9 @@ const graphs = (elementId, treeData) => {
                             };
                             changeInfoIsLivingPerson(extra);
                             changePersonPortret(extra);
+                            lastClickedSpouseNodeTime = new Date().getTime();
+                            console.log(lastClickedSpouseNodeTime);
+                            editPerson(extra, lastClickedSpouseNodeTime);
                             modalControls.openModal();
                         },
                         nodeRightClick: function(name, extra) {

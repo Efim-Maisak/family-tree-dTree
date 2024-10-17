@@ -1,10 +1,10 @@
 import httpService from "../../services/http.js";
 import { baseDBpath } from "../../config/apiConfig.js";
 import { dataTable } from "../../config/apiConfig.js";
-import { lastClickedPersonId } from "./main-graph.js";
+import { lastClickedNodeTime as time } from "./main-graph.js";
 
 
-const editPerson = (extra) => {
+const editPerson = (extra, lastClickedNodeTime) => {
 
     const { request } = httpService();
 
@@ -78,8 +78,8 @@ const editPerson = (extra) => {
     saveBtn.addEventListener("click", saveChanges);
 
     function saveChanges() {
-        if(extra && extra.id === lastClickedPersonId) {
-            console.log(extra.id + " - " + lastClickedPersonId);
+        if(time === lastClickedNodeTime) {
+            console.log(time + " - " + lastClickedNodeTime);
             const newData = {
                 "name": document.getElementById("person-name-input").value,
                 "gender": document.getElementById("person-gender-select").value,
