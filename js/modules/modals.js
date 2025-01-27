@@ -3,7 +3,7 @@ import { calcScroll } from "../../utils/calcScroll.js";
 
 const modals = () => {
 
-    const { toggleEditMode } = editPerson();
+    const { toggleEditMode, togglePhotoOverlay } = editPerson();
 
     const modalElement = document.getElementById("modal");
     const modalContent = modalElement.querySelector(".popup_content");
@@ -28,12 +28,14 @@ const modals = () => {
     closeElement.addEventListener("click", () => {
         closeModal();
         toggleEditMode(false);
+        togglePhotoOverlay(false);
     });
 
     modalElement.addEventListener("click", (event) => {
         if (event.target === modalElement) {
             closeModal();
             toggleEditMode(false);
+            togglePhotoOverlay(false);
         }
     });
 
@@ -41,6 +43,7 @@ const modals = () => {
         if (event.key === "Escape") {
             closeModal();
             toggleEditMode(false);
+            togglePhotoOverlay(false);
         }
     });
 

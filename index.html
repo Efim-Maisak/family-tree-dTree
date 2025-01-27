@@ -45,7 +45,11 @@
         <div id="modal" class="popup">
             <div class="popup_content">
                 <span class="popup_close">&times;</span>
-                <img alt="портрет" class="person-photo">
+                <div class="photo-wrapper">
+                    <img alt="портрет" class="person-photo">
+                    <div class="photo-overlay" style="display: none;">Загрузить фото</div>
+                </div>
+                <input type="file" id="photo-input" style="display: none;" accept=".jpeg, .jpg, .png">
                 <div class="person-info" id="person-info-name">
                     <span id="person-name"></span>
                     <span class="gender-tag" id="person-gender"></span>

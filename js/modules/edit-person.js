@@ -1,24 +1,31 @@
 import httpService from "../../services/http.js";
 import { baseDBpath } from "../../config/apiConfig.js";
 import { dataTable } from "../../config/apiConfig.js";
+import { baseUrl } from "../../config/apiConfig.js";
+import { baseImagePath } from "../../config/apiConfig.js";
 import { lastClickedNodeTime as time } from "./main-graph.js";
+import PocketBase from "../../lib/pocketbase.es.mjs";
 
 
 const editPerson = (extra, lastClickedNodeTime) => {
-
+    const pb = new PocketBase(`${baseUrl}`);
     const { request } = httpService();
 
+    const personPhoto = document.querySelector(".person-photo");
+    const photoOverlay = document.querySelector(".photo-overlay");
+    const photoInput = document.getElementById("photo-input");
     const personInfo = document.querySelectorAll(".person-info");
     const inputsBlock = document.querySelector(".popup_content__edit");
     const showTreeBtn = document.querySelector(".popup_bottom__button");
-    const isLivingToggle = document.getElementById('isLivingToggle');
+    const isLivingToggle = document.getElementById("isLivingToggle");
     const editBtn = document.querySelector(".edit-button");
     const saveBtn = document.querySelector(".save-button");
     const cancelBtn = document.querySelector(".cancel-button");
 
-
     let fields = null;
     let originalData = {};
+    let photoIsChanged = false;
+    let isPhotoUploading = false;
 
     if(extra && extra.name === "неизвестно") {
         editBtn.style.display = "none";
@@ -57,6 +64,48 @@ const editPerson = (extra, lastClickedNodeTime) => {
         cancelBtn.style.display = isEditing ? "inline-block" : "none";
     };
 
+    function togglePhotoOverlay(isEditing) {
+        photoOverlay.style.display = isEditing ? "flex" : "none";
+    }
+
+    photoOverlay.onclick = (e) => {
+        e.preventDefault();
+        if (!isPhotoUploading) {
+            photoInput.click();
+        }
+    };
+
+    photoInput.onchange = async (event) => {
+        if (isPhotoUploading) return; // Если уже идёт загрузка, игнорируем новые события
+
+        const file = event.target.files[0];
+        if (!file) return;
+
+        // Валидация формата файла
+        const validFormats = ["image/jpeg", "image/png"];
+        if (!validFormats.includes(file.type)) {
+            alert("Пожалуйста, выберите файл в формате JPEG или PNG.");
+            photoInput.value = "";
+            return;
+        }
+
+        isPhotoUploading = true;
+
+        const formData = new FormData();
+        formData.append("portret", file);
+
+        try {
+            const updatedFoto = await pb.collection("genealogy").update(extra.id, formData);
+            personPhoto.src = `${baseImagePath}/${dataTable}/${extra.id}/${updatedFoto.portret}`;
+            photoIsChanged = true;
+        } catch (error) {
+            console.error("Ошибка загрузки фото: ", error);
+        } finally {
+            isPhotoUploading = false;
+            photoInput.value = "";
+        }
+    };
+
     editBtn.addEventListener("click", () => {
         if(fields) {
             fields.forEach(field => {
@@ -67,11 +116,13 @@ const editPerson = (extra, lastClickedNodeTime) => {
             });
             isLivingToggle.checked = extra.isLiving;
             toggleEditMode(true);
+            togglePhotoOverlay(true);
         };
     });
 
     cancelBtn.addEventListener("click", () => {
         toggleEditMode(false);
+        togglePhotoOverlay(false);
     });
 
     saveBtn.removeEventListener("click", saveChanges);
@@ -79,7 +130,6 @@ const editPerson = (extra, lastClickedNodeTime) => {
 
     function saveChanges() {
         if(time === lastClickedNodeTime) {
-            console.log(time + " - " + lastClickedNodeTime);
             const newData = {
                 "name": document.getElementById("person-name-input").value,
                 "gender": document.getElementById("person-gender-select").value,
@@ -92,10 +142,9 @@ const editPerson = (extra, lastClickedNodeTime) => {
                 "isLivingPerson": isLivingToggle.checked
             }
 
-            const hasChanges = Object.keys(newData).some( key => {
+            const hasChanges = Object.keys(newData).some(key => {
                 return newData[key] !== originalData[key];
             });
-
 
             if(hasChanges) {
                 saveBtn.disabled = true;
@@ -111,14 +160,19 @@ const editPerson = (extra, lastClickedNodeTime) => {
                         location.reload();
                     }
                 });
+            } else if(photoIsChanged) {
+                toggleEditMode(false);
+                location.reload();
             } else {
                 toggleEditMode(false);
+                togglePhotoOverlay(false);
             }
         }
     }
 
     return {
-        toggleEditMode
+        toggleEditMode,
+        togglePhotoOverlay
     }
 }
 
