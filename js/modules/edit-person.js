@@ -1,5 +1,3 @@
-import httpService from "../../services/http.js";
-import { baseDBpath } from "../../config/apiConfig.js";
 import { dataTable } from "../../config/apiConfig.js";
 import { baseUrl } from "../../config/apiConfig.js";
 import { baseImagePath } from "../../config/apiConfig.js";
@@ -7,9 +5,13 @@ import { lastClickedNodeTime as time } from "./main-graph.js";
 import PocketBase from "../../lib/pocketbase.es.mjs";
 
 
+let currentPersonId = null;
+let photoIsChanged = false;
+let originalData = {};
+
 const editPerson = (extra, lastClickedNodeTime) => {
+
     const pb = new PocketBase(`${baseUrl}`);
-    const { request } = httpService();
 
     const personPhoto = document.querySelector(".person-photo");
     const photoOverlay = document.querySelector(".photo-overlay");
@@ -23,8 +25,6 @@ const editPerson = (extra, lastClickedNodeTime) => {
     const cancelBtn = document.querySelector(".cancel-button");
 
     let fields = null;
-    let originalData = {};
-    let photoIsChanged = false;
     let isPhotoUploading = false;
 
     if(extra && extra.name === "неизвестно") {
@@ -45,13 +45,6 @@ const editPerson = (extra, lastClickedNodeTime) => {
             { input: "coordinates-input", key: "place_of_birth_coordinates", value: extra.coordinates }
         ];
     };
-
-    if(fields) {
-        fields.forEach(field => {
-            originalData[field.key] = field.value;
-            originalData.isLivingPerson = extra.isLiving;
-        });
-    }
 
     function toggleEditMode(isEditing) {
         personInfo.forEach( element => {
@@ -106,19 +99,24 @@ const editPerson = (extra, lastClickedNodeTime) => {
         }
     };
 
-    editBtn.addEventListener("click", () => {
-        if(fields) {
+    editBtn.removeEventListener("click", editBtn.handler);
+    editBtn.handler = () => {
+        if (fields) {
             fields.forEach(field => {
-                const input = document.getElementById(field.input);
-                if (input) {
-                    input.value = field.value;
-                }
+                originalData[field.key] = field.value;
+            });
+            originalData.isLivingPerson = extra.isLiving;
+
+            fields.forEach(field => {
+                document.getElementById(field.input).value = field.value;
             });
             isLivingToggle.checked = extra.isLiving;
             toggleEditMode(true);
             togglePhotoOverlay(true);
-        };
-    });
+            currentPersonId = extra.id;
+        }
+    };
+    editBtn.addEventListener("click", editBtn.handler);
 
     cancelBtn.addEventListener("click", () => {
         toggleEditMode(false);
@@ -128,7 +126,7 @@ const editPerson = (extra, lastClickedNodeTime) => {
     saveBtn.removeEventListener("click", saveChanges);
     saveBtn.addEventListener("click", saveChanges);
 
-    function saveChanges() {
+    async function saveChanges() {
         if(time === lastClickedNodeTime) {
             const newData = {
                 "name": document.getElementById("person-name-input").value,
@@ -148,24 +146,21 @@ const editPerson = (extra, lastClickedNodeTime) => {
 
             if(hasChanges) {
                 saveBtn.disabled = true;
-                request(
-                    `${baseDBpath}/${dataTable}/records/${extra.id}`,
-                    "PATCH",
-                    newData
-                )
-                .then((response) => {
-                    if(!response.hasOwnProperty("code")) {
+                try {
+                    const response = await pb.collection('genealogy').update(currentPersonId, newData);
+                    if (response.id) {
                         saveBtn.disabled = false;
                         toggleEditMode(false);
                         location.reload();
-                    }
-                });
+                    };
+                } catch(e) {
+                    toggleEditMode(false);
+                    togglePhotoOverlay(false);
+                    alert(`Возникла ошибка при изменении данных: ${e}`);
+                }
             } else if(photoIsChanged) {
                 toggleEditMode(false);
                 location.reload();
-            } else {
-                toggleEditMode(false);
-                togglePhotoOverlay(false);
             }
         }
     }
