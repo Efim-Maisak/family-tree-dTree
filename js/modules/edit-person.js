@@ -2,7 +2,9 @@ import { dataTable } from "../../config/apiConfig.js";
 import { baseUrl } from "../../config/apiConfig.js";
 import { baseImagePath } from "../../config/apiConfig.js";
 import { lastClickedNodeTime as time } from "./main-graph.js";
+import { changeInfoIsLivingPerson } from "../../utils/changeInfoIsLivingPerson.js";
 import PocketBase from "../../lib/pocketbase.es.mjs";
+import { quill } from "./editor.js";
 
 
 let currentPersonId = null;
@@ -41,7 +43,7 @@ const editPerson = (extra, lastClickedNodeTime) => {
             { input: "person-death-input", key: "date_of_death", value: extra.deathDate },
             { input: "place-birth-input", key: "place_of_birth", value: extra.birthPlace },
             { input: "place-death-input", key: "place_of_death", value: extra.deathPlace },
-            { input: "person-info-input", key: "information", value: extra.information },
+            { input: "person-info-input", key: "information", value: quill.clipboard.dangerouslyPasteHTML(extra.information) },
             { input: "coordinates-input", key: "place_of_birth_coordinates", value: extra.coordinates }
         ];
     };
@@ -121,6 +123,7 @@ const editPerson = (extra, lastClickedNodeTime) => {
     cancelBtn.addEventListener("click", () => {
         toggleEditMode(false);
         togglePhotoOverlay(false);
+        changeInfoIsLivingPerson(extra);
     });
 
     saveBtn.removeEventListener("click", saveChanges);
@@ -136,7 +139,7 @@ const editPerson = (extra, lastClickedNodeTime) => {
                 "place_of_birth": document.getElementById("place-birth-input").value,
                 "place_of_birth_coordinates": document.getElementById("coordinates-input").value,
                 "place_of_death": document.getElementById("place-death-input").value,
-                "information": document.getElementById("person-info-input").value,
+                "information": quill.root.innerHTML,
                 "isLivingPerson": isLivingToggle.checked
             }
 

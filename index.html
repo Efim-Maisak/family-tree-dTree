@@ -8,9 +8,11 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
         <link rel="stylesheet" href="./css/style.css">
     </head>
     <script type="module" src="./js/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
     <script src="https://cdn.jsdelivr.net/lodash/4.17.4/lodash.min.js"></script>
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <script src="./lib/dTree.js"></script>
@@ -106,7 +108,7 @@
                         </label>
                     </div>
                     <label for="person-info-input">Общая информация:</label>
-                    <textarea id="person-info-input"></textarea>
+                    <div tabindex="0" id="person-info-input"></div>
                 </div>
                 <div class="edit-buttons">
                     <button class="edit-button">Редактировать</button>

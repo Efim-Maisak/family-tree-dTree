@@ -4,7 +4,7 @@ export const changeInfoIsLivingPerson = (extra) => {
     const personDeathSpan = document.getElementById("person-death");
     const personPlaceDeathSpan = document.getElementById("place-death");
 
-    if (!extra.isLiving) {
+    if (extra && !extra.isLiving) {
         personInfoDeath.style.display = "";
         personInfoPlaceOfDeath.style.display = "";
         personDeathSpan.textContent = `${extra.deathDate || "неизвестный "} г.`;
