@@ -10,6 +10,7 @@ import { quill } from "./editor.js";
 let currentPersonId = null;
 let photoIsChanged = false;
 let originalData = {};
+let quillContentChanged = false;
 
 const editPerson = (extra, lastClickedNodeTime) => {
 
@@ -116,6 +117,14 @@ const editPerson = (extra, lastClickedNodeTime) => {
             toggleEditMode(true);
             togglePhotoOverlay(true);
             currentPersonId = extra.id;
+
+            // Важно: сбрасываем флаг при входе в режим редактирования
+            quillContentChanged = false;
+
+            // Добавляем слушатель событий к редактору
+            quill.on('text-change', function() {
+                quillContentChanged = true;
+            });
         }
     };
     editBtn.addEventListener("click", editBtn.handler);
@@ -124,6 +133,12 @@ const editPerson = (extra, lastClickedNodeTime) => {
         toggleEditMode(false);
         togglePhotoOverlay(false);
         changeInfoIsLivingPerson(extra);
+
+        // Сбрасываем флаг при отмене
+        quillContentChanged = false;
+
+        // Удаляем слушатель событий
+        quill.off('text-change');
     });
 
     saveBtn.removeEventListener("click", saveChanges);
@@ -131,39 +146,87 @@ const editPerson = (extra, lastClickedNodeTime) => {
 
     async function saveChanges() {
         if(time === lastClickedNodeTime) {
+            // Формируем новые данные из всех полей
             const newData = {
-                "name": document.getElementById("person-name-input").value,
+                "name": document.getElementById("person-name-input").value.trim(),
                 "gender": document.getElementById("person-gender-select").value,
-                "date_of_birth": document.getElementById("person-birth-input").value,
-                "date_of_death": document.getElementById("person-death-input").value,
-                "place_of_birth": document.getElementById("place-birth-input").value,
-                "place_of_birth_coordinates": document.getElementById("coordinates-input").value,
-                "place_of_death": document.getElementById("place-death-input").value,
-                "information": quill.root.innerHTML,
+                "date_of_birth": document.getElementById("person-birth-input").value.trim(),
+                "date_of_death": document.getElementById("person-death-input").value.trim(),
+                "place_of_birth": document.getElementById("place-birth-input").value.trim(),
+                "place_of_birth_coordinates": document.getElementById("coordinates-input").value.trim(),
+                "place_of_death": document.getElementById("place-death-input").value.trim(),
                 "isLivingPerson": isLivingToggle.checked
+            };
+
+            // Создаём объект только с изменёнными данными
+            const changedData = {};
+            let hasChanges = false;
+
+            // Проверяем все поля кроме information
+            for (const key in newData) {
+                const isChanged = typeof newData[key] === "boolean"
+                    ? newData[key] !== originalData[key]
+                    : String(newData[key]) != String(originalData[key]);
+
+                if (isChanged) {
+                    changedData[key] = newData[key];
+                    hasChanges = true;
+                }
             }
 
-            const hasChanges = Object.keys(newData).some(key => {
-                return newData[key] !== originalData[key];
-            });
+            // Добавляем информацию только если были реальные изменения в редакторе
+            if (quillContentChanged) {
+                changedData.information = quill.root.innerHTML;
+                hasChanges = true;
+            }
 
-            if(hasChanges) {
-                saveBtn.disabled = true;
-                try {
-                    const response = await pb.collection('genealogy').update(currentPersonId, newData);
-                    if (response.id) {
+            // Отправляем запрос только если есть изменения или изменено фото
+            if (hasChanges || photoIsChanged) {
+                if (hasChanges) {
+                    saveBtn.disabled = true;
+                    try {
+                        const response = await pb.collection('genealogy').update(currentPersonId, changedData);
+                        if (response.id) {
+                            saveBtn.disabled = false;
+                            toggleEditMode(false);
+                            togglePhotoOverlay(false);
+
+                            // Очищаем слушатель изменений
+                            quill.off('text-change');
+                            quillContentChanged = false;
+
+                            location.reload();
+                        }
+                    } catch(e) {
+                        console.error("Ошибка при обновлении:", e);
                         saveBtn.disabled = false;
                         toggleEditMode(false);
-                        location.reload();
-                    };
-                } catch(e) {
+                        togglePhotoOverlay(false);
+                        if(changedData.name == "" || changedData.date_of_birth == "") {
+                            alert('Поля "Имя" и "Дата рождения" нельзя оставлять пустыми');
+                        } else {
+                            alert(`Возникла ошибка при изменении данных: ${e}`);
+                        }
+                    }
+                } else {
+                    // Если изменено только фото
                     toggleEditMode(false);
                     togglePhotoOverlay(false);
-                    alert(`Возникла ошибка при изменении данных: ${e}`);
+
+                    // Очищаем слушатель изменений
+                    quill.off('text-change');
+                    quillContentChanged = false;
+
+                    location.reload();
                 }
-            } else if(photoIsChanged) {
+            } else {
+                // Никаких изменений не было
                 toggleEditMode(false);
-                location.reload();
+                togglePhotoOverlay(false);
+
+                // Очищаем слушатель изменений
+                quill.off('text-change');
+                quillContentChanged = false;
             }
         }
     }

@@ -10,6 +10,7 @@ import { fillPersonsWithNodeId } from "../../utils/fillPersonsWithNodeId.js";
 import { zoomControl } from "../../utils/zoomControl.js";
 import { genealogyData } from "../script.js";
 import { treeMainFamily } from "../script.js";
+import conextMenu from "./context-menu.js";
 
 
 export let filteredSpouseFamily;
@@ -82,7 +83,7 @@ export const keyGraph = (treeData) => {
                         modalControls.openModal();
                     },
                     nodeRightClick: function(name, extra) {
-                        alert('Right-click: ' + name);
+                        conextMenu(name, extra);
                     },
                     textRenderer: function(name, extra, textClass) {
                         var text = "<div style='width: 120px; padding: 5px; word-wrap: break-word;'>";

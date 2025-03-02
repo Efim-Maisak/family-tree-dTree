@@ -22,6 +22,8 @@ export const convertToDTreeFormat = (data) => {
                     isLiving: person.isLivingPerson,
                     portret: person.portret,
                     partner: person.partner,
+                    children: person.children,
+                    parents: person.parents,
                     coordinates: person.place_of_birth_coordinates
                 },
                 marriages: []
