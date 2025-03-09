@@ -17,6 +17,42 @@
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <script src="./lib/dTree.js"></script>
     <body>
+        <!-- Форма логина -->
+        <div id="login-overlay" class="login-container">
+            <div id="login-content" class="login-panel">
+                <div class="login-header">
+                    <div class="app-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/>
+                        </svg>
+                    </div>
+                    <h1 class="app-title">Генеалогическое древо</h1>
+                </div>
+                <form id="loginForm" >
+                    <div class="form-group">
+                        <label for="email">Электронная почта</label>
+                        <input type="email" id="email" class="form-control" placeholder="Введите ваш email" autocomplete="email">
+                        <div id="emailError" class="error-message">Введите корректный email</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Пароль</label>
+                        <div class="password-wrapper">
+                            <input type="password" id="password" class="form-control" placeholder="Введите пароль" autocomplete="current-password">
+                            <button type="button" id="togglePassword" class="password-toggle">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                </svg>
+                            </button>
+                        </div>
+                        <div id="passwordError" class="error-message">Пароль должен содержать минимум 8 символов</div>
+                    </div>
+                    <div id="loginStatus" class="status-message"></div>
+                    <button type="submit" class="login-button" id="loginButton" disabled>Войти</button>
+                </form>
+            </div>
+        </div>
+        <!-- Верхняя панель -->
         <div class="header-panel">
             <div class="header-panel__info">
                 <p>Семейное древо</p>
@@ -32,6 +68,7 @@
             </div>
             <div class="header-panel__user"></div>
         </div>
+        <!-- Нижнее зум меню -->
         <div class="zoom-panel">
             <span class="zoom-panel-button" data-action="reset">
                 <img class="button_reset" src="/assets/icons/zoom_in_map-material.svg" alt="reset">
@@ -40,10 +77,12 @@
                 <img class="button_tofit" src="/assets/icons/center_focus_strong-material.svg" alt="tofit">
             </span>
         </div>
+        <!-- Дерево -->
         <div id="graph"></div>
         <div id="graph-spouse">
             <span class="graph-spouse_close">&times;</span>
         </div>
+        <!-- Модальное окно -->
         <div id="modal" class="popup">
             <div class="popup_content">
                 <span class="popup_close">&times;</span>
@@ -66,7 +105,7 @@
                 </div>
                 <div class="person-info">
                     <strong>Место рождения:</strong>
-                    <a id="place-birth" target="_blank">
+                    <a id="place-birth" target="_blank"></a>
                 </div>
                 <div class="person-info" id="person-info-place-death">
                     <strong>Место смерти:</strong>
@@ -82,6 +121,7 @@
                 <div class="popup_bottom">
                     <button class="popup_bottom__button">Показать древо</button>
                 </div>
+                <!-- Окно редактирования данных -->
                 <div class="popup_content__edit" style="display: none;">
                     <label for="person-name-input">Имя:</label>
                     <input type="text" id="person-name-input" autocomplete="off" autocorrect="off">
@@ -117,6 +157,7 @@
                 </div>
             </div>
         </div>
+        <!-- Контекстное меню -->
         <div class="context-menu"></div>
     </body>
 </html>

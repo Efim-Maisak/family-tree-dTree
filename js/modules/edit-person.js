@@ -1,10 +1,9 @@
 import { dataTable } from "../../config/apiConfig.js";
-import { baseUrl } from "../../config/apiConfig.js";
 import { baseImagePath } from "../../config/apiConfig.js";
 import { lastClickedNodeTime as time } from "./main-graph.js";
 import { changeInfoIsLivingPerson } from "../../utils/changeInfoIsLivingPerson.js";
-import PocketBase from "../../lib/pocketbase.es.mjs";
 import { quill } from "./editor.js";
+import { pb } from "../script.js";
 
 
 let currentPersonId = null;
@@ -13,8 +12,6 @@ let originalData = {};
 let quillContentChanged = false;
 
 const editPerson = (extra, lastClickedNodeTime) => {
-
-    const pb = new PocketBase(`${baseUrl}`);
 
     const personPhoto = document.querySelector(".person-photo");
     const photoOverlay = document.querySelector(".photo-overlay");
