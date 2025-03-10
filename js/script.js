@@ -13,6 +13,7 @@ import { deleteLoadingDiv } from "../utils/deleteLoadingDiv.js";
 import { showMainContent } from "../utils/showMainContent.js";
 import { showLoginForm } from "../utils/showLoginForm.js";
 import login from "./modules/login.js";
+import logout from "./modules/logout.js";
 import PocketBase from "../lib/pocketbase.es.mjs";
 import { baseUrl } from "../config/apiConfig.js";
 
@@ -21,8 +22,9 @@ export const pb = new PocketBase(`${baseUrl}`);
 export let genealogyData = [];
 export let treeMainFamily = null;
 const { request, isLoading } = httpService();
-const userInfoBlock = document.querySelector(".header-panel__user");
+const userInfoSpan = document.querySelector(".header-user-text");
 const loadingDiv = document.createElement("div");
+
 let mainTree = null;
 
 
@@ -30,7 +32,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.log(pb.authStore);
     if (pb.authStore.isValid) {
         showMainContent();
-        userInfoBlock.textContent = pb.authStore.model.email;
+        userInfoSpan.textContent = pb.authStore.model.email;
+        logout();
         await initApp();
     } else {
         showLoginForm();

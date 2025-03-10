@@ -39,10 +39,7 @@
                         <div class="password-wrapper">
                             <input type="password" id="password" class="form-control" placeholder="Введите пароль" autocomplete="current-password">
                             <button type="button" id="togglePassword" class="password-toggle">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                                    <circle cx="12" cy="12" r="3"></circle>
-                                </svg>
+                                <img class="button_visible" src="/assets/icons/visibility_material.svg" alt="visible">
                             </button>
                         </div>
                         <div id="passwordError" class="error-message">Пароль должен содержать минимум 8 символов</div>
@@ -66,7 +63,12 @@
                 </div>
                 <div class="list-wrapper"></div>
             </div>
-            <div class="header-panel__user"></div>
+            <div class="header-panel__user">
+                <span class="header-user-text"></span>
+                <span class="header-user-button">
+                    <img class="button_exit" src="/assets/icons/logout_material.svg" alt="exit">
+                </span>
+            </div>
         </div>
         <!-- Нижнее зум меню -->
         <div class="zoom-panel">

@@ -307,19 +307,6 @@ body {
     right: 3px;
 }
 
-.header-panel-button:hover {
-    background-color: #e0e0e0;
-}
-
-.header-panel-button:active {
-    transform: scale(0.9);
-    transition: transform 0.1s ease;
-}
-
-.header-panel-button img {
-    height: 30px;
-}
-
 .list-wrapper {
     display: none;
     flex-direction: column;
@@ -382,16 +369,50 @@ body {
 }
 
 .header-panel__user {
+    width: 300px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     margin-right: 60px;
     margin-left: 12px;
-    padding: 6px 24px;
+    padding: 6px 3px 6px 24px;
     border-radius: 30px;
     background-color: #fff;
     opacity: 0.9;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
-    font-size: 16px;
+    font-size: 18px;
+}
+
+.header-user-text {
+    padding-right: 8px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.header-user-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 42px;
+    height: 42px;
+    cursor: pointer;
+    border-radius: 50%;
+    background-color: #f2f0ef;
+    opacity: 0.9;
+}
+
+.header-panel-button:hover, .header-user-button:hover {
+    background-color: #e0e0e0;
+}
+
+.header-panel-button:active, .header-user-button:active {
+    transform: scale(0.9);
+    transition: transform 0.1s ease;
+}
+
+.header-panel-button img, .header-user-button img {
+    height: 30px;
 }
 
 /* Стили зум панели */

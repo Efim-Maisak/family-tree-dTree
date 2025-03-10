@@ -1,6 +1,7 @@
 import { initApp } from "../script.js";
 import { pb } from "../script.js";
 import { showMainContent } from "../../utils/showMainContent.js";
+import logout from "./logout.js";
 
 
 const login = () => {
@@ -13,7 +14,7 @@ const login = () => {
     const loginButton = document.getElementById("loginButton");
     const loginStatus = document.getElementById("loginStatus");
     const togglePassword = document.getElementById("togglePassword");
-    const userInfoBlock = document.querySelector(".header-panel__user");
+    const userInfoSpan = document.querySelector(".header-user-text");
 
     const validateEmail = (email) => {
         const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -50,9 +51,9 @@ const login = () => {
 
     // Обработчик переключения видимости пароля
     togglePassword.addEventListener("click", () => {
-        const type = passwordInput.getAttribute("type") === 'password' ? 'text' : 'password';
+        const type = passwordInput.getAttribute("type") === "password" ? "text" : "password";
         passwordInput.setAttribute("type", type);
-        togglePassword.querySelector("svg").style.opacity = type === 'password' ? '0.5' : '1';
+        togglePassword.querySelector("img").style.opacity = type === "password" ? "0.6" : "1";
     });
 
     // Обработчик отправки формы
@@ -74,8 +75,9 @@ const login = () => {
             );
 
             if (authData.token) {
-                userInfoBlock.textContent = authData.record.email;
+                userInfoSpan.textContent = authData.record.email;
                 showMainContent();
+                logout();
                 await initApp();
             }
         } catch (error) {
