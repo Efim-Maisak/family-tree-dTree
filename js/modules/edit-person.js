@@ -2,8 +2,8 @@ import { dataTable } from "../../config/apiConfig.js";
 import { baseImagePath } from "../../config/apiConfig.js";
 import { lastClickedNodeTime as time } from "./main-graph.js";
 import { changeInfoIsLivingPerson } from "../../utils/changeInfoIsLivingPerson.js";
+import applyRoleAccess from "./role-access.js";
 import { quill } from "./editor.js";
-import { pb } from "../script.js";
 
 
 let currentPersonId = null;
@@ -11,7 +11,8 @@ let photoIsChanged = false;
 let originalData = {};
 let quillContentChanged = false;
 
-const editPerson = (extra, lastClickedNodeTime) => {
+const editPerson = (extra, lastClickedNodeTime, pocketBase) => {
+    const pb = pocketBase;
 
     const personPhoto = document.querySelector(".person-photo");
     const photoOverlay = document.querySelector(".photo-overlay");
@@ -26,6 +27,10 @@ const editPerson = (extra, lastClickedNodeTime) => {
 
     let fields = null;
     let isPhotoUploading = false;
+
+    if (pb?.authStore?.isValid) {
+        applyRoleAccess(pb);
+    }
 
     if(extra && extra.name === "неизвестно") {
         editBtn.style.display = "none";

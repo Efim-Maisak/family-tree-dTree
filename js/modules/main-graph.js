@@ -11,6 +11,8 @@ import { zoomControl } from "../../utils/zoomControl.js";
 import { genealogyData } from "../script.js";
 import { treeMainFamily } from "../script.js";
 import conextMenu from "./context-menu.js";
+import { pb } from "../script.js";
+
 
 
 export let filteredSpouseFamily;
@@ -79,7 +81,7 @@ export const keyGraph = (treeData) => {
                         changeInfoIsLivingPerson(extra);
                         changePersonPortret(extra);
                         lastClickedNodeTime = new Date().getTime();
-                        editPerson(extra, lastClickedNodeTime);
+                        editPerson(extra, lastClickedNodeTime, pb);
                         modalControls.openModal();
                     },
                     nodeRightClick: function(name, extra) {

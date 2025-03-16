@@ -10,6 +10,7 @@ import editPerson from "./edit-person.js";
 import { filteredSpouseFamily } from "./main-graph.js";
 import { genealogyDataWithNodeId } from "./main-graph.js";
 import { genealogyData } from "../script.js";
+import { pb } from "../script.js";
 
 
 export let spouseFamilyDataWithNodeId = [];
@@ -75,7 +76,7 @@ const graphs = (elementId, treeData) => {
                             changePersonPortret(extra);
                             lastClickedSpouseNodeTime = new Date().getTime();
                             console.log(lastClickedSpouseNodeTime);
-                            editPerson(extra, lastClickedSpouseNodeTime);
+                            editPerson(extra, lastClickedSpouseNodeTime, pb);
                             modalControls.openModal();
                         },
                         nodeRightClick: function(name, extra) {

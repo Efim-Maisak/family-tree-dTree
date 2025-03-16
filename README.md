@@ -2,7 +2,7 @@
 
 Отображает семейное дерево и дополнительные сведения о человеке, включая его портрет. Прямые родственники супруг отображаются в отдельных деревьях.
 Имеется функционал поиска человека и перехода к найденной ноде.
-Также позволяет редактировать данные о человеке.
+Также позволяет редактировать данные о человеке при наличии соответствующих прав у пользователя (role = "editor").
 
 В данном проекте используется библиотека для построения семейных деревьев [dTree](https://github.com/ErikGartner/dTree) версии 2.4.1 и база данных [pocketbase](https://pocketbase.io/).
 
@@ -31,7 +31,7 @@
 ```json
 [
     {
-        "id": "djal99a7q4a4nnb",
+        "id": "djal98a7q4a4nnq",
         "name": "genealogy",
         "type": "base",
         "system": false,
@@ -240,8 +240,8 @@
         "indexes": [],
         "listRule": "",
         "viewRule": null,
-        "createRule": null,
-        "updateRule": null,
+        "createRule": "@request.auth.id != \"\" && @request.auth.role = \"editor\"",
+        "updateRule": "@request.auth.id != \"\" && @request.auth.role = \"editor\"",
         "deleteRule": null,
         "options": {}
     }
@@ -285,6 +285,94 @@
 }
 ```
 
+### Схема таблицы "пользователи" в pocketbase
+
+Для доступа к редактированию данных о человеке и добавления детей/супруга/родителя созданы роли в таблице users.
+
+<details> <summary>Скопировать пример коллекции users</summary>
+
+```json
+[
+    {
+        "id": "_pb_users_auth_",
+        "name": "users",
+        "type": "auth",
+        "system": false,
+        "schema": [
+            {
+                "system": false,
+                "id": "users_avatar",
+                "name": "avatar",
+                "type": "file",
+                "required": false,
+                "presentable": false,
+                "unique": false,
+                "options": {
+                    "mimeTypes": [
+                        "image/jpeg",
+                        "image/png",
+                        "image/svg+xml",
+                        "image/gif",
+                        "image/webp"
+                    ],
+                    "thumbs": null,
+                    "maxSelect": 1,
+                    "maxSize": 5242880,
+                    "protected": false
+                }
+            },
+            {
+                "system": false,
+                "id": "tqrvqkyv",
+                "name": "role",
+                "type": "select",
+                "required": true,
+                "presentable": false,
+                "unique": false,
+                "options": {
+                    "maxSelect": 1,
+                    "values": [
+                        "viewer",
+                        "editor"
+                    ]
+                }
+            },
+            {
+                "system": false,
+                "id": "u822yrfz",
+                "name": "name",
+                "type": "text",
+                "required": false,
+                "presentable": false,
+                "unique": false,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            }
+        ],
+        "indexes": [],
+        "listRule": "id = @request.auth.id",
+        "viewRule": "id = @request.auth.id",
+        "createRule": null,
+        "updateRule": null,
+        "deleteRule": null,
+        "options": {
+            "allowEmailAuth": true,
+            "allowOAuth2Auth": false,
+            "allowUsernameAuth": false,
+            "exceptEmailDomains": null,
+            "manageRule": null,
+            "minPasswordLength": 8,
+            "onlyEmailDomains": null,
+            "onlyVerified": false,
+            "requireEmail": true
+        }
+    }
+]
+```
+</details>
 
 ### Запуск приложения на локальном компьютере
 <Будет дополняться>

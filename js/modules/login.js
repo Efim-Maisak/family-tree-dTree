@@ -1,7 +1,7 @@
 import { initApp } from "../script.js";
 import { pb } from "../script.js";
 import { showMainContent } from "../../utils/showMainContent.js";
-import logout from "./logout.js";
+import addLogoutListener from "./logout.js";
 
 
 const login = () => {
@@ -45,7 +45,6 @@ const login = () => {
         return isEmailValid && isPasswordValid;
     };
 
-    // Добавляем обработчики событий
     emailInput.addEventListener("input", validateForm);
     passwordInput.addEventListener("input", validateForm);
 
@@ -56,7 +55,7 @@ const login = () => {
         togglePassword.querySelector("img").style.opacity = type === "password" ? "0.6" : "1";
     });
 
-    // Обработчик отправки формы
+
     loginForm.addEventListener("submit", async (e) => {
         e.preventDefault();
 
@@ -77,7 +76,7 @@ const login = () => {
             if (authData.token) {
                 userInfoSpan.textContent = authData.record.email;
                 showMainContent();
-                logout();
+                addLogoutListener();
                 await initApp();
             }
         } catch (error) {

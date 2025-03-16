@@ -2,6 +2,7 @@ import httpService from "../services/http.js";
 import { baseDBpath } from "../config/apiConfig.js";
 import { dataTable } from "../config/apiConfig.js";
 import { maxItems } from "../config/apiConfig.js";
+import { baseUrl } from "../config/apiConfig.js";
 import { keyGraph } from "./modules/main-graph.js";
 import { filterMainTreePerson } from "../utils/filterMainTreePerson.js";
 import { genealogyDataWithNodeId } from "./modules/main-graph.js";
@@ -13,9 +14,8 @@ import { deleteLoadingDiv } from "../utils/deleteLoadingDiv.js";
 import { showMainContent } from "../utils/showMainContent.js";
 import { showLoginForm } from "../utils/showLoginForm.js";
 import login from "./modules/login.js";
-import logout from "./modules/logout.js";
+import addLogoutListener from "./modules/logout.js";
 import PocketBase from "../lib/pocketbase.es.mjs";
-import { baseUrl } from "../config/apiConfig.js";
 
 
 export const pb = new PocketBase(`${baseUrl}`);
@@ -29,11 +29,10 @@ let mainTree = null;
 
 
 document.addEventListener("DOMContentLoaded", async () => {
-    console.log(pb.authStore);
     if (pb.authStore.isValid) {
         showMainContent();
         userInfoSpan.textContent = pb.authStore.model.email;
-        logout();
+        addLogoutListener();
         await initApp();
     } else {
         showLoginForm();

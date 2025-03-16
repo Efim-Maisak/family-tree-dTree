@@ -1,6 +1,6 @@
 import { pb } from "../script.js";
 
-const logout = () => {
+const addLogoutListener = () => {
     const exitButton = document.querySelector(".header-user-button");
     exitButton.addEventListener("click", () => {
         pb.authStore.clear();
@@ -8,4 +8,4 @@ const logout = () => {
     });
 }
 
-export default logout;
+export default addLogoutListener;
