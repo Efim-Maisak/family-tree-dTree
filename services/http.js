@@ -1,3 +1,5 @@
+import { pb } from "../js/script.js";
+
 const httpService = () => {
     let isLoading = true;
     let isError = false;
@@ -10,6 +12,10 @@ const httpService = () => {
                   'Content-Type': 'application/json'
                 }
             }
+
+            if (typeof pb !== "undefined" && pb.authStore.isValid) {
+              options.headers["Authorization"] = `Bearer ${pb.authStore.token}`;
+          }
 
             if(method !== "GET") {
                 options.body = JSON.stringify(body)

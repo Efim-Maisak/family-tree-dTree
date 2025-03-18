@@ -4,7 +4,7 @@
 Имеется функционал поиска человека и перехода к найденной ноде.
 Также позволяет редактировать данные о человеке при наличии соответствующих прав у пользователя (role = "editor").
 
-В данном проекте используется библиотека для построения семейных деревьев [dTree](https://github.com/ErikGartner/dTree) версии 2.4.1 и база данных [pocketbase](https://pocketbase.io/).
+В проекте используется библиотека для построения семейных деревьев [dTree](https://github.com/ErikGartner/dTree) версии 2.4.1 и база данных [pocketbase](https://pocketbase.io/).
 
 ### Зависимости
 Для работы dTree необходимы следующие библиотеки:
@@ -26,7 +26,7 @@
 ### Схема таблицы с данными в pocketbase
 База данных pocketbase позволяет импортировать коллекцию (схему данных) в формате json.
 
-<details> <summary>Скопировать пример коллекции</summary>
+<details> <summary>**Скопировать пример коллекции**</summary>
 
 ```json
 [
@@ -238,8 +238,8 @@
             }
         ],
         "indexes": [],
-        "listRule": "",
-        "viewRule": null,
+        "listRule": "@request.auth.id != \"\"",
+        "viewRule": "@request.auth.id != \"\"",
         "createRule": "@request.auth.id != \"\" && @request.auth.role = \"editor\"",
         "updateRule": "@request.auth.id != \"\" && @request.auth.role = \"editor\"",
         "deleteRule": null,
@@ -251,7 +251,7 @@
 
 Поле "isMainTree" принимает true для отображения ноды в основном дереве.
 
-Поле "isLivingPerson" принимает true отображения информации о живом человеке.
+Поле "isLivingPerson" принимает true отображения информации о живом человеке, скрывает дату и место смерти.
 
 Поле "key_node" устанавливает корневую ноду (единственная со значением true).
 
@@ -289,7 +289,7 @@
 
 Для доступа к редактированию данных о человеке и добавления детей/супруга/родителя созданы роли в таблице users.
 
-<details> <summary>Скопировать пример коллекции users</summary>
+<details> <summary>**Скопировать пример коллекции users**</summary>
 
 ```json
 [
