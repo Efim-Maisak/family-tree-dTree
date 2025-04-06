@@ -64,6 +64,7 @@ const searchPearsonList = (personList, tree, dataWithNodeId) => {
                 const person = dataWithNodeId.find( item => item.id === idAttribute);
                 if(person) {
                     const nodeId = person.nodeId;
+                    console.log(nodeId);
                     tree.zoomToNode(nodeId, 2, 500);
                 }
             }

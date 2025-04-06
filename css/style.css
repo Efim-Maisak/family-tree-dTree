@@ -755,14 +755,14 @@ p {
     min-height: 240px;
   }
 
-.popup_content__edit label {
+.popup_content__add-spouse, .popup_content__edit label {
     display: block;
     margin-top: 15px;
     margin-bottom: 5px;
     font-size: 14px;
 }
 
-.popup_content__edit {
+.popup_content__add-spouse, .popup_content__edit {
     margin-top: 16px;
     padding-right: 8px;
     flex-direction: column;
@@ -781,10 +781,23 @@ p {
     box-sizing: border-box;
 }
 
+.popup_content__add-spouse input,
+.popup_content__add-spouse select {
+    font-size: 16px;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+
+.popup_content__add-spouse label:first-of-type,
 .popup_content__edit label:first-of-type {
     margin-top: 20px;
 }
 
+.popup_content__add-spouse label:first-of-type,
 .popup_content__edit label:last-of-type {
     margin-top: 0;
 }

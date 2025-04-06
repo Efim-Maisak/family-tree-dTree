@@ -5,14 +5,14 @@ export const changeInfoIsLivingPerson = (extra) => {
     const personPlaceDeathSpan = document.getElementById("place-death");
 
     if (extra && !extra.isLiving) {
-        personInfoDeath.style.display = "";
-        personInfoPlaceOfDeath.style.display = "";
-        personDeathSpan.textContent = `${extra.deathDate || "неизвестный "} г.`;
-        personPlaceDeathSpan.textContent = extra.deathPlace || "неизвестно";
+        if(personInfoDeath) personInfoDeath.style.display = "";
+        if(personInfoDeath) personInfoPlaceOfDeath.style.display = "";
+        if(personDeathSpan) personDeathSpan.textContent = `${extra.deathDate || "неизвестный "} г.`;
+        if(personPlaceDeathSpan) personPlaceDeathSpan.textContent = extra.deathPlace || "неизвестно";
     } else {
-        personInfoDeath.style.display = "none";
-        personInfoPlaceOfDeath.style.display = "none";
-        personDeathSpan.textContent = "";
-        personPlaceDeathSpan.textContent = "";
+        if(personInfoDeath) personInfoDeath.style.display = "none";
+        if(personInfoDeath) personInfoPlaceOfDeath.style.display = "none";
+        if(personDeathSpan) personDeathSpan.textContent = "";
+        if(personPlaceDeathSpan) personPlaceDeathSpan.textContent = "";
     }
 };

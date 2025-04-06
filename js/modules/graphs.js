@@ -7,7 +7,7 @@ import { zoomControl } from "../../utils/zoomControl.js";
 import { fillPersonsWithNodeId } from "../../utils/fillPersonsWithNodeId.js";
 import { keyGraph } from "./main-graph.js";
 import editPerson from "./edit-person.js";
-import { filteredSpouseFamily } from "./main-graph.js";
+import { filteredSpouseFamily } from  "../../utils/fillDataPersonModal.js";
 import { genealogyDataWithNodeId } from "./main-graph.js";
 import { genealogyData } from "../script.js";
 import { pb } from "../script.js";
@@ -34,6 +34,7 @@ const graphs = (elementId, treeData) => {
             try {
                 let spouseTree = null;
                 d3.select(elementId).select("svg").remove();
+                spouseFamilyDataWithNodeId = [];
 
                 spouseTree = dTree.init(treeData, {
                     target: elementId,

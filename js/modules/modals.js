@@ -7,7 +7,6 @@ const modals = () => {
 
     const modalElement = document.getElementById("modal");
     const modalContent = modalElement.querySelector(".popup_content");
-    const closeElement = modalElement.querySelector(".popup_close");
 
     const scrollWidth = calcScroll();
 
@@ -25,21 +24,21 @@ const modals = () => {
         document.body.style.paddingRight = "";
     }
 
-    closeElement.addEventListener("click", () => {
-        closeModal();
-        toggleEditMode(false);
-        togglePhotoOverlay(false);
-    });
-
     modalElement.addEventListener("click", (event) => {
         if (event.target === modalElement) {
             closeModal();
             toggleEditMode(false);
             togglePhotoOverlay(false);
         }
+
+        if (event.target.classList.contains("popup_close")) {
+            closeModal();
+            toggleEditMode(false);
+            togglePhotoOverlay(false);
+        }
     });
 
-    document.addEventListener('keydown', (event) => {
+    document.addEventListener("keydown", (event) => {
         if (event.key === "Escape") {
             closeModal();
             toggleEditMode(false);

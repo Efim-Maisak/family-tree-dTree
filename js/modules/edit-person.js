@@ -25,6 +25,10 @@ const editPerson = (extra, lastClickedNodeTime, pocketBase) => {
     const saveBtn = document.querySelector(".save-button");
     const cancelBtn = document.querySelector(".cancel-button");
 
+    if (!editBtn || !personPhoto || !photoOverlay) {
+        return {};
+    }
+
     let fields = null;
     let isPhotoUploading = false;
 
