@@ -746,7 +746,7 @@ p {
     flex-direction: column;
 }
 
-#person-info-input {
+#person-info-input, #added-person-info-input {
     font-size: 16px;
     border: 1px solid #ddd;
     border-radius: 4px;

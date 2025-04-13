@@ -3,13 +3,14 @@ import { baseImagePath } from "../../config/apiConfig.js";
 import { lastClickedNodeTime as time } from "./main-graph.js";
 import { changeInfoIsLivingPerson } from "../../utils/changeInfoIsLivingPerson.js";
 import applyRoleAccess from "./role-access.js";
-import { quill } from "./editor.js";
+import { createQuill } from "./editor.js";
 
 
 let currentPersonId = null;
 let photoIsChanged = false;
 let originalData = {};
 let quillContentChanged = false;
+let quillInstance = null;
 
 const editPerson = (extra, lastClickedNodeTime, pocketBase) => {
     const pb = pocketBase;
@@ -24,6 +25,10 @@ const editPerson = (extra, lastClickedNodeTime, pocketBase) => {
     const editBtn = document.querySelector(".edit-button");
     const saveBtn = document.querySelector(".save-button");
     const cancelBtn = document.querySelector(".cancel-button");
+
+    if (!quillInstance && document.getElementById("person-info-input")) {
+        quillInstance = createQuill("#person-info-input");
+    }
 
     if (!editBtn || !personPhoto || !photoOverlay) {
         return {};
@@ -50,7 +55,7 @@ const editPerson = (extra, lastClickedNodeTime, pocketBase) => {
             { input: "person-death-input", key: "date_of_death", value: extra.deathDate },
             { input: "place-birth-input", key: "place_of_birth", value: extra.birthPlace },
             { input: "place-death-input", key: "place_of_death", value: extra.deathPlace },
-            { input: "person-info-input", key: "information", value: quill.clipboard.dangerouslyPasteHTML(extra.information) },
+            { input: "person-info-input", key: "information", value: quillInstance.clipboard.dangerouslyPasteHTML(extra.information) },
             { input: "coordinates-input", key: "place_of_birth_coordinates", value: extra.coordinates }
         ];
     };
@@ -128,7 +133,7 @@ const editPerson = (extra, lastClickedNodeTime, pocketBase) => {
             quillContentChanged = false;
 
             // Добавляем слушатель событий к редактору
-            quill.on('text-change', function() {
+            quillInstance.on('text-change', function() {
                 quillContentChanged = true;
             });
         }
@@ -144,7 +149,7 @@ const editPerson = (extra, lastClickedNodeTime, pocketBase) => {
         quillContentChanged = false;
 
         // Удаляем слушатель событий
-        quill.off('text-change');
+        quillInstance.off('text-change');
     });
 
     saveBtn.removeEventListener("click", saveChanges);
@@ -182,7 +187,7 @@ const editPerson = (extra, lastClickedNodeTime, pocketBase) => {
 
             // Добавляем информацию только если были реальные изменения в редакторе
             if (quillContentChanged) {
-                changedData.information = quill.root.innerHTML;
+                changedData.information = quillInstance.root.innerHTML;
                 hasChanges = true;
             }
 
@@ -198,7 +203,7 @@ const editPerson = (extra, lastClickedNodeTime, pocketBase) => {
                             togglePhotoOverlay(false);
 
                             // Очищаем слушатель изменений
-                            quill.off('text-change');
+                            quillInstance.off('text-change');
                             quillContentChanged = false;
 
                             location.reload();
@@ -220,7 +225,7 @@ const editPerson = (extra, lastClickedNodeTime, pocketBase) => {
                     togglePhotoOverlay(false);
 
                     // Очищаем слушатель изменений
-                    quill.off('text-change');
+                    quillInstance.off('text-change');
                     quillContentChanged = false;
 
                     location.reload();
@@ -231,7 +236,7 @@ const editPerson = (extra, lastClickedNodeTime, pocketBase) => {
                 togglePhotoOverlay(false);
 
                 // Очищаем слушатель изменений
-                quill.off('text-change');
+                quillInstance.off('text-change');
                 quillContentChanged = false;
             }
         }

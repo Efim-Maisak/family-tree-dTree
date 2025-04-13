@@ -1,4 +1,5 @@
-export const quill = new Quill('#person-info-input', {
+export const createQuill = (selector) => {
+  return new Quill(selector, {
     modules: {
       toolbar: [
         [{ header: [2, 3, 4, false] }],
@@ -11,3 +12,4 @@ export const quill = new Quill('#person-info-input', {
     placeholder: 'Напишите больше о человеке...',
     theme: 'snow',
   });
+};

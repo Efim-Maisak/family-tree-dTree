@@ -1,4 +1,6 @@
 import { calcScroll } from "../../utils/calcScroll.js";
+import { createQuill } from "./editor.js";
+
 
 const contextMenuModals = () => {
     const modalElement = document.getElementById("modal");
@@ -34,54 +36,45 @@ const contextMenuModals = () => {
                 console.error("Неизвестный тип модального окна:", type);
                 closeModal();
         }
-    }
+    };
 
     function renderAddSpouseModal(data) {
         if (!data) return;
 
         const addingSpouseHTML = `
             <span class="popup_close">&times;</span>
-            <h3 class="popup_content__title">${data.name} - добавление супруга</h3>
-            <div class="photo-wrapper">
-                <img alt="портрет" class="person-photo">
-                <div class="photo-overlay" style="display: none;">Загрузить фото</div>
-            </div>
+            <h3 class="popup_content__title" style="margin-right: 48px; margin-bottom: 24px;">${data.name} - добавление ${data.gender == "M" ? "супруги" : "супруга"}</h3>
             <div class="popup_content__add-spouse">
-                <label for="person-name-input">Имя:</label>
+                <label for="person-name-input" style="display: block; margin-top: 8px;">Фамилия, имя, отчество:</label>
+                <p style=" font-style: italic; color: gray;">${data.gender == "M" ? "Желательно указывать девичью фамилию" : ""}<p>
                 <input type="text" id="person-name-input" autocomplete="off" autocorrect="off">
-                <label for="person-gender-select">Пол:</label>
+                <label for="person-gender-select" style="display: block; margin-top: 16px;">Пол:</label>
                 <select id="person-gender-select">
                     <option value="M">М</option>
                     <option value="F">Ж</option>
                 </select>
-                <label for="person-birth-input">Дата рождения:</label>
+                <label for="person-birth-input" style="display: block; margin-top: 16px;">Дата рождения:</label>
                 <input type="text" id="person-birth-input" autocomplete="off" autocorrect="off">
-                <label for="person-death-input">Дата смерти:</label>
+                <label for="person-death-input" style="display: block; margin-top: 16px;">Дата смерти:</label>
                 <input type="text" id="person-death-input" autocomplete="off" autocorrect="off">
-                <label for="place-birth-input">Место рождения:</label>
+                <label for="place-birth-input" style="display: block; margin-top: 16px;">Место рождения:</label>
                 <input type="text" id="place-birth-input" autocomplete="off" autocorrect="off">
-                <label for="coordinates-input">Координаты места рождения (широта, долгота):</label>
+                <label for="coordinates-input" style="display: block; margin-top: 16px;">Координаты места рождения (широта, долгота):</label>
+                <p style=" font-style: italic; color: gray;">Вставьте координаты скопированные из google maps<p>
                 <input type="text" id="coordinates-input" autocomplete="off" autocorrect="off">
-                <label for="place-death-input">Место смерти:</label>
+                <label for="place-death-input" style="display: block; margin-top: 16px;">Место смерти:</label>
                 <input type="text" id="place-death-input" autocomplete="off" autocorrect="off">
                 <div class="toggle-container">
                     <span class="toggle-label">Жив:</span>
-                    <label class="toggle-switch">
+                    <label class="toggle-switch" style="display: block; margin-top: 16px;">
                         <input type="checkbox" id="isLivingToggle" checked>
                         <span class="toggle-slider"></span>
                     </label>
                 </div>
-                <div class="toggle-container">
-                    <span class="toggle-label">Корневая нода:</span>
-                    <label class="toggle-switch">
-                        <input type="checkbox" id="isKeyNode">
-                        <span class="toggle-slider"></span>
-                    </label>
-                </div>
-                <label for="person-info-input">Общая информация:</label>
-                <div tabindex="0" id="person-info-input"></div>
+                <label for="person-info-input" style="display: block; margin-top: 16px;">Общая информация:</label>
+                <div tabindex="0" id="added-person-info-input" style="margin-top: 6px;"></div>
             </div>
-            <div class="edit-buttons">
+            <div class="edit-buttons" style="margin-top: 32px;">
                 <button class="save-button">Сохранить</button>
                 <button class="cancel-button">Отмена</button>
             </div>
@@ -89,30 +82,51 @@ const contextMenuModals = () => {
 
         modalContent.innerHTML = addingSpouseHTML;
         setupEventListeners("addSpouse");
-    }
+    };
 
     function renderAddParentModal(data) {
         if (!data) return;
 
         const addingParentHTML = `
             <span class="popup_close">&times;</span>
-            <h3 class="popup_content__title">${data.name} - добавление родителя</h3>
-            <!-- Аналогичные поля как в addSpouse, но с соответствующими изменениями -->
-            <div class="photo-wrapper">
-                <img alt="портрет" class="person-photo">
-                <div class="photo-overlay" style="display: none;">Загрузить фото</div>
-            </div>
-            <div class="popup_content__add-parent">
-                <label for="person-name-input">Имя:</label>
+            <h3 class="popup_content__title" style="margin-right: 48px; margin-bottom: 24px;">${data.name} - добавление родителя</h3>
+            <div class="popup_content__add-spouse">
+                <label for="person-name-input" style="display: block; margin-top: 8px;">Фамилия, имя, отчество:</label>
                 <input type="text" id="person-name-input" autocomplete="off" autocorrect="off">
-                <label for="person-gender-select">Пол:</label>
+                <label for="person-gender-select" style="display: block; margin-top: 16px;">Пол:</label>
                 <select id="person-gender-select">
                     <option value="M">М</option>
                     <option value="F">Ж</option>
                 </select>
-                <!-- Остальные поля -->
+                <label for="person-birth-input" style="display: block; margin-top: 16px;">Дата рождения:</label>
+                <input type="text" id="person-birth-input" autocomplete="off" autocorrect="off">
+                <label for="person-death-input" style="display: block; margin-top: 16px;">Дата смерти:</label>
+                <input type="text" id="person-death-input" autocomplete="off" autocorrect="off">
+                <label for="place-birth-input" style="display: block; margin-top: 16px;">Место рождения:</label>
+                <input type="text" id="place-birth-input" autocomplete="off" autocorrect="off">
+                <label for="coordinates-input" style="display: block; margin-top: 16px;">Координаты места рождения (широта, долгота):</label>
+                <p style=" font-style: italic; color: gray;">Вставьте координаты скопированные из google maps<p>
+                <input type="text" id="coordinates-input" autocomplete="off" autocorrect="off">
+                <label for="place-death-input" style="display: block; margin-top: 16px;">Место смерти:</label>
+                <input type="text" id="place-death-input" autocomplete="off" autocorrect="off">
+                <div class="toggle-container">
+                    <span class="toggle-label">Жив:</span>
+                    <label class="toggle-switch" style="display: block; margin-top: 16px;">
+                        <input type="checkbox" id="isLivingToggle" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                <div class="toggle-container">
+                    <span class="toggle-label">Корневая нода:</span>
+                    <label class="toggle-switch" style="display: block; margin-top: 16px;">
+                        <input type="checkbox" id="isKeyNode">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                <label for="person-info-input" style="display: block; margin-top: 16px;">Общая информация:</label>
+                <div tabindex="0" id="added-person-info-input" style="margin-top: 6px;"></div>
             </div>
-            <div class="edit-buttons">
+            <div class="edit-buttons" style="margin-top: 32px;">
                 <button class="save-button">Сохранить</button>
                 <button class="cancel-button">Отмена</button>
             </div>
@@ -120,30 +134,44 @@ const contextMenuModals = () => {
 
         modalContent.innerHTML = addingParentHTML;
         setupEventListeners("addParent");
-    }
+    };
 
     function renderAddChildModal(data) {
         if (!data) return;
 
         const addingChildHTML = `
             <span class="popup_close">&times;</span>
-            <h3 class="popup_content__title">${data.name} - добавление ребенка</h3>
-            <!-- Аналогичные поля как в addSpouse, но с соответствующими изменениями -->
-            <div class="photo-wrapper">
-                <img alt="портрет" class="person-photo">
-                <div class="photo-overlay" style="display: none;">Загрузить фото</div>
-            </div>
-            <div class="popup_content__add-child">
-                <label for="person-name-input">Имя:</label>
+            <h3 class="popup_content__title" style="margin-right: 48px; margin-bottom: 24px;">${data.name} - добавление ребенка</h3>
+            <div class="popup_content__add-spouse">
+                <label for="person-name-input" style="display: block; margin-top: 8px;">Фамилия, имя, отчество:</label>
                 <input type="text" id="person-name-input" autocomplete="off" autocorrect="off">
-                <label for="person-gender-select">Пол:</label>
+                <label for="person-gender-select" style="display: block; margin-top: 16px;">Пол:</label>
                 <select id="person-gender-select">
                     <option value="M">М</option>
                     <option value="F">Ж</option>
                 </select>
-                <!-- Остальные поля -->
+                <label for="person-birth-input" style="display: block; margin-top: 16px;">Дата рождения:</label>
+                <input type="text" id="person-birth-input" autocomplete="off" autocorrect="off">
+                <label for="person-death-input" style="display: block; margin-top: 16px;">Дата смерти:</label>
+                <input type="text" id="person-death-input" autocomplete="off" autocorrect="off">
+                <label for="place-birth-input" style="display: block; margin-top: 16px;">Место рождения:</label>
+                <input type="text" id="place-birth-input" autocomplete="off" autocorrect="off">
+                <label for="coordinates-input" style="display: block; margin-top: 16px;">Координаты места рождения (широта, долгота):</label>
+                <p style=" font-style: italic; color: gray;">Вставьте координаты скопированные из google maps<p>
+                <input type="text" id="coordinates-input" autocomplete="off" autocorrect="off">
+                <label for="place-death-input" style="display: block; margin-top: 16px;">Место смерти:</label>
+                <input type="text" id="place-death-input" autocomplete="off" autocorrect="off">
+                <div class="toggle-container">
+                    <span class="toggle-label">Жив:</span>
+                    <label class="toggle-switch" style="display: block; margin-top: 16px;">
+                        <input type="checkbox" id="isLivingToggle" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                <label for="person-info-input" style="display: block; margin-top: 16px;">Общая информация:</label>
+                <div tabindex="0" id="added-person-info-input" style="margin-top: 6px;"></div>
             </div>
-            <div class="edit-buttons">
+            <div class="edit-buttons" style="margin-top: 32px;">
                 <button class="save-button">Сохранить</button>
                 <button class="cancel-button">Отмена</button>
             </div>
@@ -151,7 +179,7 @@ const contextMenuModals = () => {
 
         modalContent.innerHTML = addingChildHTML;
         setupEventListeners("addChild");
-    }
+    };
 
     function setupEventListeners(modalType) {
         // Обработчик для кнопки закрытия
@@ -173,7 +201,9 @@ const contextMenuModals = () => {
         if (cancelButton) {
             cancelButton.addEventListener("click", handleClose);
         }
-    }
+
+        const quillEditor = createQuill("#added-person-info-input");
+    };
 
     function handleClose() {
         const photoOverlay = document.querySelector(".photo-overlay");
@@ -181,7 +211,7 @@ const contextMenuModals = () => {
             photoOverlay.style.display = "none";
         }
         closeModal();
-    }
+    };
 
     function handleSave(modalType) {
         // Здесь логика сохранения данных в зависимости от типа модального окна
@@ -203,8 +233,7 @@ const contextMenuModals = () => {
 
         console.log("Форма данных:", formData);
 
-        // Тут можно добавить отправку данных или обновление дерева
-        // в зависимости от типа модального окна
+        // Тут добавим отправку данных в зависимости от типа модального окна
 
         closeModal();
     }

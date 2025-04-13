@@ -1,21 +1,19 @@
 import contextMenuModals from "./contextMenuModals.js";
-import { changePersonPortret } from "../../utils/changePersonPortet.js";
+
 
 const contextMenu = (name, extra) => {
     const modalControls = contextMenuModals();
 
     const contextMenu = document.querySelector(".context-menu");
+    const parentMenuItem = `<div class="context-menu-item" data-action="add-parent">Добавить родителя</div>`;
+    const childMenuItem = `<div class="context-menu-item" data-action="add-child">Добавить ребенка</div>`;
+    const spouseMenuItem = `<div class="context-menu-item" data-action="add-spouse">Добавить ${extra.gender == "M" ? "супругу" : "супруга"}</div>`;
+    let menuItems = [childMenuItem];
 
     if(!contextMenu) {
         console.warn("Контекстное меню не найдено");
         return;
     }
-
-    const parentMenuItem = `<div class="context-menu-item" data-action="add-parent">Добавить родителя</div>`;
-    const childMenuItem = `<div class="context-menu-item" data-action="add-child">Добавить ребенка</div>`;
-    const spouseMenuItem = `<div class="context-menu-item" data-action="add-spouse">Добавить супруга</div>`;
-
-    let menuItems = [childMenuItem];
 
     const event = d3.event || window.event;
     if(!event) {
@@ -47,22 +45,28 @@ const contextMenu = (name, extra) => {
     contextMenu.style.top = `${event.pageY}px`;
     contextMenu.style.display = "block";
 
-    // Сохранем ссылку на функцию closeContextMenu чтобы удлить ее позже
+    // Сохраняем ID текущего узла для проверки
+    const currentNodeId = extra.id;
+
+    // Удаляем предыдущий обработчик, если он существует
     if(window.currentCloseHandler) {
         document.removeEventListener("click", window.currentCloseHandler);
+        window.currentCloseHandler = null;
     }
 
-    // Функция для закрытия меню при клике вне него и вне узлов
+    // Функция для закрытия меню
     function closeContextMenu(e) {
         const isClickInsideMenu = contextMenu.contains(e.target);
-        const isClickOnNode = e.target.closest(".node"); // Проверяем, кликнули ли на ноду
+        const clickedNode = e.target.closest(".node");
 
-        if (!isClickInsideMenu && !isClickOnNode) {
+        // Закрываем меню, если клик был вне меню
+        // ИЛИ если клик был на другой ноде (не на той, которая вызвала меню)
+        if (!isClickInsideMenu || (clickedNode && !clickedNode.id.includes(currentNodeId))) {
             contextMenu.style.display = "none";
             document.removeEventListener("click", closeContextMenu);
             window.currentCloseHandler = null;
         }
-    };
+    }
 
     // Сохраняем текущий обработчик закрытия меню
     window.currentCloseHandler = closeContextMenu;
@@ -72,15 +76,11 @@ const contextMenu = (name, extra) => {
         document.addEventListener("click", closeContextMenu);
     }, 0);
 
-    // Уделяем предыдущие обработчики событий
-    const newContextMenu = contextMenu.cloneNode(true);
-    contextMenu.parentNode.replaceChild(newContextMenu, contextMenu);
-
-    // Добавляем заново обработчики событий клика на меню
-    newContextMenu.querySelectorAll(".context-menu-item").forEach((item) => {
+    // Добавляем обработчики событий на пункты меню
+    contextMenu.querySelectorAll(".context-menu-item").forEach((item) => {
         item.addEventListener("click", (e) => {
             const action = e.target.dataset.action;
-            newContextMenu.style.display = "none";
+            contextMenu.style.display = "none";
 
             // Удаляем глобальный обработчик
             if (window.currentCloseHandler) {
@@ -89,15 +89,11 @@ const contextMenu = (name, extra) => {
             }
 
             if(action === "add-parent") {
-                console.log(`Добавление родителя для ${name}`);
                 modalControls.openModal("addParent", extra);
             } else if (action === "add-child") {
-                console.log(`Добавление ребенка для ${name}`);
                 modalControls.openModal("addChild", extra);
             } else if (action === "add-spouse") {
-                console.log(`Добавление супруга для ${name}`);
                 modalControls.openModal("addSpouse", extra);
-                changePersonPortret(extra);
             }
         });
     });
