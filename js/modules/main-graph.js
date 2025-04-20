@@ -57,7 +57,7 @@ export const keyGraph = (treeData) => {
                         modalControls.openModal();
                     },
                     nodeRightClick: function(name, extra) {
-                        contextMenu(name, extra);
+                        contextMenu(name, extra, true);
                     },
                     textRenderer: function(name, extra, textClass) {
                         var text = "<div style='width: 120px; padding: 5px; word-wrap: break-word;'>";

@@ -1,19 +1,21 @@
 import { calcScroll } from "../../utils/calcScroll.js";
 import { createQuill } from "./editor.js";
+import { validateSendData } from "../../utils/validateSendData.js";
+import prepareAddSpouseData from "../../utils/prepareAddSpouseData.js";
+import { pb } from "../script.js";
 
-
-const contextMenuModals = () => {
+const contextMenuModals = (isMain) => {
     const modalElement = document.getElementById("modal");
     const modalContent = modalElement.querySelector(".popup_content");
     const modalContentHTML = modalContent.innerHTML;
     const scrollWidth = calcScroll();
 
-    // Сохраняем данные модального окна
-    let currentModalData = null;
+    let quillEditor = null;
+    let currentModalExtra = null;
 
     function openModal(type, data) {
-        // Сохраняем данные
-        currentModalData = data;
+        // Сохраняем данные о человеке из node extra
+        currentModalExtra = data;
 
         // Отображаем модальное окно
         modalElement.style.display = "flex";
@@ -202,7 +204,7 @@ const contextMenuModals = () => {
             cancelButton.addEventListener("click", handleClose);
         }
 
-        const quillEditor = createQuill("#added-person-info-input");
+        quillEditor = createQuill("#added-person-info-input");
     };
 
     function handleClose() {
@@ -213,9 +215,8 @@ const contextMenuModals = () => {
         closeModal();
     };
 
-    function handleSave(modalType) {
-        // Здесь логика сохранения данных в зависимости от типа модального окна
-        console.log(`Сохранение данных для ${modalType}:`, currentModalData);
+    async function handleSave(modalType) {
+        console.log(`Сохранение данных для ${modalType}:`, currentModalExtra);
 
         // Собираем данные из полей формы
         const formData = {
@@ -227,18 +228,41 @@ const contextMenuModals = () => {
             coordinates: document.getElementById("coordinates-input")?.value || "",
             deathPlace: document.getElementById("place-death-input")?.value || "",
             isLiving: document.getElementById("isLivingToggle")?.checked || false,
+            isMainTree: isMain,
             isKeyNode: document.getElementById("isKeyNode")?.checked || false,
-            info: document.getElementById("person-info-input")?.textContent || ""
+            info: quillEditor.root.innerHTML || ""
         };
 
         console.log("Форма данных:", formData);
 
-        // Тут добавим отправку данных в зависимости от типа модального окна
+        // Запись данных в БД
+        if(modalType === "addSpouse") {
+            if(validateSendData(formData)) {
+                const createResponse = await pb.collection("genealogy").create(prepareAddSpouseData(formData, currentModalExtra));
+                if(!createResponse.hasOwnProperty("code")) {
+                    await pb.collection("genealogy").update(currentModalExtra.id, { partner: {spouse: createResponse.id}});
+                    location.reload();
+                } else {
+                    alert(`Код ${createResponse.code}: ${createResponse.message}`);
+                }
+            } else {
+                alert("Поля c именем и датой рождения должны быть заполнены.");
+            }
+        } else if(modalType === "addParent") {
+
+        } else if(modalType === "addChild") {
+
+        };
 
         closeModal();
     }
 
     function closeModal() {
+        if (quillEditor) {
+            quillEditor.setText("");
+            quillEditor = null;
+        };
+
         modalElement.style.display = "none";
         modalContent.style.display = "none";
         document.body.style.overflow = "";

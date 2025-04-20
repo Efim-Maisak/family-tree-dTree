@@ -753,6 +753,12 @@ p {
     width: 100%;
     box-sizing: border-box;
     min-height: 240px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    background-color: white;
+    position: relative;
   }
 
 .popup_content__add-spouse, .popup_content__edit label {

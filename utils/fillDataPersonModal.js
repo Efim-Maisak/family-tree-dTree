@@ -32,7 +32,19 @@ const fillDataPersonModal = (name, extra) => {
         };
     };
 
-    if(extra.gender === "F" && extra.partner && !extra.name.includes(treeMainFamily) && popupBottomEl && popupBottomBtnEl) {
+    const getSpouseData = () => {
+        if (!extra.partner?.spouse) return null;
+        return genealogyData.find(person => person.id === extra.partner.spouse);
+    };
+
+    const spouseData = getSpouseData();
+
+    if(extra.gender === "F" &&
+        extra.partner &&
+        !extra.name.includes(treeMainFamily) &&
+        spouseData?.name.includes(treeMainFamily) &&
+        popupBottomEl &&
+        popupBottomBtnEl) {
         popupBottomEl.style.display = "block";
         popupBottomBtnEl.textContent = `Показать древо ${name.split(" ")[0]}`;
         if(genealogyData && genealogyData.length > 0) {

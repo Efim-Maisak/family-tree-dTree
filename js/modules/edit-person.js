@@ -12,6 +12,7 @@ let originalData = {};
 let quillContentChanged = false;
 let quillInstance = null;
 
+
 const editPerson = (extra, lastClickedNodeTime, pocketBase) => {
     const pb = pocketBase;
 

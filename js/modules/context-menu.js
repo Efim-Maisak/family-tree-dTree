@@ -1,8 +1,8 @@
 import contextMenuModals from "./contextMenuModals.js";
 
 
-const contextMenu = (name, extra) => {
-    const modalControls = contextMenuModals();
+const contextMenu = (name, extra, isMain) => {
+    const modalControls = contextMenuModals(isMain);
 
     const contextMenu = document.querySelector(".context-menu");
     const parentMenuItem = `<div class="context-menu-item" data-action="add-parent">Добавить родителя</div>`;

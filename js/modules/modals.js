@@ -1,6 +1,7 @@
 import editPerson from "./edit-person.js";
 import { calcScroll } from "../../utils/calcScroll.js";
 
+
 const modals = () => {
 
     const { toggleEditMode, togglePhotoOverlay } = editPerson();
