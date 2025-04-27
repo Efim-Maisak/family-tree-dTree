@@ -76,7 +76,6 @@ const graphs = (elementId, treeData) => {
                             changeInfoIsLivingPerson(extra);
                             changePersonPortret(extra);
                             lastClickedSpouseNodeTime = new Date().getTime();
-                            console.log(lastClickedSpouseNodeTime);
                             editPerson(extra, lastClickedSpouseNodeTime, pb);
                             modalControls.openModal();
                         },

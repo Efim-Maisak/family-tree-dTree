@@ -44,12 +44,6 @@ export const customZoomToFit = (tree, graph) => {
             y = 0;
         };
 
-        console.log(bounds);
-        console.log(`fullWidth: ${fullWidth} fullHeight: ${fullHeight}`);
-        console.log(`bounds.width: ${width} bounds.height: ${height}`);
-        console.log(`scale: ${scale}`);
-        console.log(`x: ${x} y: ${y}`);
-
         tree.zoomTo(x, y, scale, 500);
     }
 }
