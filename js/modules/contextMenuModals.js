@@ -1,7 +1,10 @@
 import { calcScroll } from "../../utils/calcScroll.js";
 import { createQuill } from "./editor.js";
+import { genealogyData } from "../script.js";
 import { validateSendData } from "../../utils/validateSendData.js";
 import prepareAddSpouseData from "../../utils/prepareAddSpouseData.js";
+import prepareAddChildData from "../../utils/prepareAddChildData.js";
+import prepareAddParentData from "../../utils/prepareAddParentData.js";
 import { pb } from "../script.js";
 
 const contextMenuModals = (isMain) => {
@@ -215,6 +218,16 @@ const contextMenuModals = (isMain) => {
         closeModal();
     };
 
+    const addChild = (parrent, response) => {
+        if(parrent.children === null) {
+            return { children: { children: [response.id]}}
+        } else {
+            let childrenArr = parrent.children?.children;
+            childrenArr.push(response.id);
+            return { children: { children: childrenArr }};
+        }
+    }
+
     async function handleSave(modalType) {
         console.log(`Сохранение данных для ${modalType}:`, currentModalExtra);
 
@@ -241,21 +254,40 @@ const contextMenuModals = (isMain) => {
                 const createResponse = await pb.collection("genealogy").create(prepareAddSpouseData(formData, currentModalExtra));
                 if(!createResponse.hasOwnProperty("code")) {
                     await pb.collection("genealogy").update(currentModalExtra.id, { partner: {spouse: createResponse.id}});
+                    closeModal();
                     location.reload();
                 } else {
                     alert(`Код ${createResponse.code}: ${createResponse.message}`);
                 }
-            } else {
-                alert("Поля c именем и датой рождения должны быть заполнены.");
             }
         } else if(modalType === "addParent") {
-
+            // if(validateSendData(formData)) {
+            //     const createResponse = await pb.collection("genealogy").create(prepareAddParentData(formData, currentModalExtra));
+            //     if(!createResponse.hasOwnProperty("code")) {
+            //         // Нужно сделать функционал добавления каждому ребенку созданного родителя!
+            //         closeModal();
+            //         location.reload();
+            //     } else {
+            //         alert(`Код ${createResponse.code}: ${createResponse.message}`);
+            //     }
+            // }
         } else if(modalType === "addChild") {
-
+            if(validateSendData(formData)) {
+                const createResponse = await pb.collection("genealogy").create(prepareAddChildData(formData, currentModalExtra));
+                if(!createResponse.hasOwnProperty("code")) {
+                    await pb.collection("genealogy").update(currentModalExtra.id, addChild(currentModalExtra, createResponse));
+                    if(currentModalExtra.partner !== null && currentModalExtra.partner.hasOwnProperty("spouse")) {
+                        const spouseParent = genealogyData.filter( person => person.id == currentModalExtra.partner.spouse);
+                        await pb.collection("genealogy").update(currentModalExtra.partner.spouse, addChild(spouseParent[0], createResponse));
+                    }
+                    closeModal();
+                    location.reload();
+                } else {
+                    alert(`Код ${createResponse.code}: ${createResponse.message}`);
+                }
+            }
         };
-
-        closeModal();
-    }
+    };
 
     function closeModal() {
         if (quillEditor) {

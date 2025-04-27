@@ -1,4 +1,5 @@
 import contextMenuModals from "./contextMenuModals.js";
+import { treeMainFamily } from "../script.js";
 
 
 const contextMenu = (name, extra, isMain) => {
@@ -28,7 +29,13 @@ const contextMenu = (name, extra, isMain) => {
         return;
     };
 
-    if(extra.parents == null || extra.parents.parents.length < 2) {
+    if (
+        (extra.parents == null || extra.parents.parents.length < 2) &&
+        !(
+            treeMainFamily !== extra.name.split(" ")[0].trim() &&
+            extra.gender !== "F"
+        )
+    ) {
         menuItems.unshift(parentMenuItem);
     };
 

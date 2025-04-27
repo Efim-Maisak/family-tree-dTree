@@ -4,5 +4,8 @@ export const validateSendData = (formData) => {
 
     if(isValidName && isValidBirthDate) {
         return true;
+    } else {
+        alert("Поля c именем и датой рождения должны быть заполнены.");
+        return false;
     }
 };
