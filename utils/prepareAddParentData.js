@@ -3,11 +3,11 @@ import { genealogyData } from "../js/script.js";
 const prepareAddParentData = (formData, nodePersonData) => {
 
     const addParentSpouse = (parentObj) => {
-        const parentSpouse = genealogyData.find(person => nodePersonData.parents.parents[0] == person.id);
-        if(parentSpouse[0]) {
-            const childrenArr = parentSpouse[0].children.children;
+        const parentSpouse = genealogyData.find(person => nodePersonData.parents?.parents[0] == person.id);
+        if(parentSpouse) {
+            const childrenArr = parentSpouse.children.children;
             parentObj.children = { children: childrenArr}
-            parentObj.partner = {spouse: parentSpouse[0].partner.spouse};
+            parentObj.partner = {spouse: parentSpouse.id};
         }
     };
 

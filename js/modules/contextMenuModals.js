@@ -5,6 +5,8 @@ import { validateSendData } from "../../utils/validateSendData.js";
 import prepareAddSpouseData from "../../utils/prepareAddSpouseData.js";
 import prepareAddChildData from "../../utils/prepareAddChildData.js";
 import prepareAddParentData from "../../utils/prepareAddParentData.js";
+import disableOldKeyNode from "../../utils/disableOldKeyNode.js";
+import addParentToChildren from "../../utils/addParentToChildren.js";
 import { pb } from "../script.js";
 
 const contextMenuModals = (isMain) => {
@@ -228,6 +230,18 @@ const contextMenuModals = (isMain) => {
         }
     }
 
+    // const addParent = (currentNode, response) => {
+    //     if(currentNode.parents === null) {
+    //         return { parents: { parents: [ response.id ] }}
+    //     } else {
+    //         let parentsArr = currentNode.parents?.parents;
+    //         parentsArr.push(response.id);
+    //         return { parents: { parents: parentsArr }}
+    //     }
+    // };
+
+
+
     async function handleSave(modalType) {
         console.log(`Сохранение данных для ${modalType}:`, currentModalExtra);
 
@@ -261,16 +275,25 @@ const contextMenuModals = (isMain) => {
                 }
             }
         } else if(modalType === "addParent") {
-            // if(validateSendData(formData)) {
-            //     const createResponse = await pb.collection("genealogy").create(prepareAddParentData(formData, currentModalExtra));
-            //     if(!createResponse.hasOwnProperty("code")) {
-            //         // Нужно сделать функционал добавления каждому ребенку созданного родителя!
-            //         closeModal();
-            //         location.reload();
-            //     } else {
-            //         alert(`Код ${createResponse.code}: ${createResponse.message}`);
-            //     }
-            // }
+            if(validateSendData(formData)) {
+                const isNewKeyNode = formData.isKeyNode;
+                disableOldKeyNode(isNewKeyNode, genealogyData);
+                const createResponse = await pb.collection("genealogy").create(prepareAddParentData(formData, currentModalExtra));
+                if(!createResponse.hasOwnProperty("code")) {
+                    if(currentModalExtra.parents === null) {
+                        await pb.collection("genealogy").update(currentModalExtra.id, { parents: { parents: [ createResponse.id ] }});
+                    } else {
+                        addParentToChildren(currentModalExtra, createResponse, genealogyData);
+                        const parentId = currentModalExtra.parents?.parents[0];
+                        // добавляем новосозданного родителя в качестве супруга к первому родителю, если он существует
+                        await pb.collection("genealogy").update(parentId, { partner: { spouse: createResponse.id}});
+                    }
+                    closeModal();
+                    location.reload();
+                } else {
+                    alert(`Код ${createResponse.code}: ${createResponse.message}`);
+                }
+            }
         } else if(modalType === "addChild") {
             if(validateSendData(formData)) {
                 const createResponse = await pb.collection("genealogy").create(prepareAddChildData(formData, currentModalExtra));
