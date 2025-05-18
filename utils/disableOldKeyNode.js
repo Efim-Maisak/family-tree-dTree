@@ -1,4 +1,4 @@
-import { pb } from "../js/script.js";
+import { pb } from "../services/pocketbase-service.js";
 
 
 const disableOldKeyNode = async (isNewKeyNode, genealogyData) => {

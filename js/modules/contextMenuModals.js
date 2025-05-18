@@ -7,7 +7,7 @@ import prepareAddChildData from "../../utils/prepareAddChildData.js";
 import prepareAddParentData from "../../utils/prepareAddParentData.js";
 import disableOldKeyNode from "../../utils/disableOldKeyNode.js";
 import addParentToChildren from "../../utils/addParentToChildren.js";
-import { pb } from "../script.js";
+import { pb } from "../../services/pocketbase-service.js";
 
 const contextMenuModals = (isMain) => {
     const modalElement = document.getElementById("modal");
@@ -229,18 +229,6 @@ const contextMenuModals = (isMain) => {
             return { children: { children: childrenArr }};
         }
     }
-
-    // const addParent = (currentNode, response) => {
-    //     if(currentNode.parents === null) {
-    //         return { parents: { parents: [ response.id ] }}
-    //     } else {
-    //         let parentsArr = currentNode.parents?.parents;
-    //         parentsArr.push(response.id);
-    //         return { parents: { parents: parentsArr }}
-    //     }
-    // };
-
-
 
     async function handleSave(modalType) {
         console.log(`Сохранение данных для ${modalType}:`, currentModalExtra);

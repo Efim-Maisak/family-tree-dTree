@@ -7,7 +7,7 @@ import { filterMainTreePerson } from "../../utils/filterMainTreePerson.js";
 import { fillPersonsWithNodeId } from "../../utils/fillPersonsWithNodeId.js";
 import { zoomControl } from "../../utils/zoomControl.js";
 import contextMenu from "./context-menu.js";
-import { pb } from "../script.js";
+import { pb } from "../../services/pocketbase-service.js";
 import fillDataPersonModal from "../../utils/fillDataPersonModal.js";
 
 

@@ -1,4 +1,4 @@
-import { pb } from "../script.js";
+import { pb } from "../../services/pocketbase-service.js";
 
 const addLogoutListener = () => {
     const exitButton = document.querySelector(".header-user-button");

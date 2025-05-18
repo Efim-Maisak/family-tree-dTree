@@ -1,5 +1,5 @@
 import { initApp } from "../script.js";
-import { pb } from "../script.js";
+import { pb } from "../../services/pocketbase-service.js";
 import { showMainContent } from "../../utils/showMainContent.js";
 import addLogoutListener from "./logout.js";
 

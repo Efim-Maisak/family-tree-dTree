@@ -15,10 +15,9 @@ import { showMainContent } from "../utils/showMainContent.js";
 import { showLoginForm } from "../utils/showLoginForm.js";
 import login from "./modules/login.js";
 import addLogoutListener from "./modules/logout.js";
-import PocketBase from "../lib/pocketbase.es.mjs";
+import { pb } from "../services/pocketbase-service.js";
 
 
-export const pb = new PocketBase(`${baseUrl}`);
 export let genealogyData = [];
 export let treeMainFamily = null;
 const { request, isLoading } = httpService();

@@ -10,7 +10,7 @@ import editPerson from "./edit-person.js";
 import { filteredSpouseFamily } from  "../../utils/fillDataPersonModal.js";
 import { genealogyDataWithNodeId } from "./main-graph.js";
 import { genealogyData } from "../script.js";
-import { pb } from "../script.js";
+import { pb } from "../../services/pocketbase-service.js";
 
 
 export let spouseFamilyDataWithNodeId = [];
