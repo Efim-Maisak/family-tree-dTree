@@ -123,6 +123,7 @@ const contextMenuModals = (isMain) => {
                         <span class="toggle-slider"></span>
                     </label>
                 </div>
+                 ${!isMain ? "" : `
                 <div class="toggle-container">
                     <span class="toggle-label">Корневая нода:</span>
                     <label class="toggle-switch" style="display: block; margin-top: 16px;">
@@ -130,6 +131,7 @@ const contextMenuModals = (isMain) => {
                         <span class="toggle-slider"></span>
                     </label>
                 </div>
+                `}
                 <label for="person-info-input" style="display: block; margin-top: 16px;">Общая информация:</label>
                 <div tabindex="0" id="added-person-info-input" style="margin-top: 6px;"></div>
             </div>
@@ -225,13 +227,16 @@ const contextMenuModals = (isMain) => {
             return { children: { children: [response.id]}}
         } else {
             let childrenArr = parrent.children?.children;
+            console.log('Массив детей: ', childrenArr);
             childrenArr.push(response.id);
+            console.log('Массив детей после: ', childrenArr);
             return { children: { children: childrenArr }};
         }
     }
 
     async function handleSave(modalType) {
-        console.log(`Сохранение данных для ${modalType}:`, currentModalExtra);
+
+        const saveBtn = modalContent.querySelector(".save-button");
 
         // Собираем данные из полей формы
         const formData = {
@@ -248,22 +253,27 @@ const contextMenuModals = (isMain) => {
             info: quillEditor.root.innerHTML || ""
         };
 
-        console.log("Форма данных:", formData);
-
         // Запись данных в БД
         if(modalType === "addSpouse") {
             if(validateSendData(formData)) {
+                saveBtn.disabled = true;
+                saveBtn.textContent = "Сохраняю...";
                 const createResponse = await pb.collection("genealogy").create(prepareAddSpouseData(formData, currentModalExtra));
                 if(!createResponse.hasOwnProperty("code")) {
                     await pb.collection("genealogy").update(currentModalExtra.id, { partner: {spouse: createResponse.id}});
                     closeModal();
+                    saveBtn.disabled = false;
                     location.reload();
                 } else {
+                    saveBtn.disabled = false;
+                    saveBtn.textContent = "Сохранить";
                     alert(`Код ${createResponse.code}: ${createResponse.message}`);
                 }
             }
         } else if(modalType === "addParent") {
             if(validateSendData(formData)) {
+                saveBtn.disabled = true;
+                saveBtn.textContent = "Сохраняю...";
                 const isNewKeyNode = formData.isKeyNode;
                 disableOldKeyNode(isNewKeyNode, genealogyData);
                 const createResponse = await pb.collection("genealogy").create(prepareAddParentData(formData, currentModalExtra));
@@ -277,13 +287,18 @@ const contextMenuModals = (isMain) => {
                         await pb.collection("genealogy").update(parentId, { partner: { spouse: createResponse.id}});
                     }
                     closeModal();
+                    saveBtn.disabled = false;
                     location.reload();
                 } else {
+                    saveBtn.disabled = false;
+                    saveBtn.textContent = "Сохранить";
                     alert(`Код ${createResponse.code}: ${createResponse.message}`);
                 }
             }
         } else if(modalType === "addChild") {
             if(validateSendData(formData)) {
+                saveBtn.disabled = true;
+                saveBtn.textContent = "Сохраняю...";
                 const createResponse = await pb.collection("genealogy").create(prepareAddChildData(formData, currentModalExtra));
                 if(!createResponse.hasOwnProperty("code")) {
                     await pb.collection("genealogy").update(currentModalExtra.id, addChild(currentModalExtra, createResponse));
@@ -292,8 +307,11 @@ const contextMenuModals = (isMain) => {
                         await pb.collection("genealogy").update(currentModalExtra.partner.spouse, addChild(spouseParent[0], createResponse));
                     }
                     closeModal();
+                    saveBtn.disabled = false;
                     location.reload();
                 } else {
+                    saveBtn.disabled = false;
+                    saveBtn.textContent = "Сохранить";
                     alert(`Код ${createResponse.code}: ${createResponse.message}`);
                 }
             }

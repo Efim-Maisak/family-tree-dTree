@@ -2,13 +2,14 @@ import contextMenuModals from "./contextMenuModals.js";
 import { treeMainFamily } from "../script.js";
 
 
-const contextMenu = (name, extra, isMain) => {
+const contextMenu = (name, extra, isMain, rootNodeExtra = null) => {
     const modalControls = contextMenuModals(isMain);
 
     const contextMenu = document.querySelector(".context-menu");
     const parentMenuItem = `<div class="context-menu-item" data-action="add-parent">Добавить родителя</div>`;
     const childMenuItem = `<div class="context-menu-item" data-action="add-child">Добавить ребенка</div>`;
     const spouseMenuItem = `<div class="context-menu-item" data-action="add-spouse">Добавить ${extra.gender == "M" ? "супругу" : "супруга"}</div>`;
+
     let menuItems = [childMenuItem];
 
     if(!contextMenu) {
@@ -25,23 +26,47 @@ const contextMenu = (name, extra, isMain) => {
     event.preventDefault();
     event.stopPropagation();
 
+
+    // Условия отображения пунктов контекстного меню
     if(name == "неизвестно") {
         return;
     };
 
-    if (
+
+    if(isMain) {
+        if (
         (extra.parents == null || extra.parents.parents.length < 2) &&
         !(
             treeMainFamily !== extra.name.split(" ")[0].trim() &&
             extra.gender !== "F"
         )
-    ) {
-        menuItems.unshift(parentMenuItem);
-    };
+        ) {
+            menuItems.unshift(parentMenuItem);
+        };
+    }
 
     if(extra.partner == null) {
         menuItems.push(spouseMenuItem);
     };
+
+
+    // Доп. условия отображения контекстного меню для вторичных деревьев
+    // - если выбранная нода совпадет с нодой на которой вызвали вторичное дерево или это супруг этой ноды
+    if(!isMain && (name === rootNodeExtra.name || extra.id == rootNodeExtra?.partner?.spouse)) {
+        if(extra.parents == null || extra.parents.parents.length < 2) {
+            menuItems = [parentMenuItem];
+        } else {
+            return;
+        }
+    };
+
+    // если выбранная нода не имеет родителей и она не является супругом женского пола
+    if(!isMain && (extra.parents == null || extra.parents.parents.length < 2)) {
+        if(!menuItems.includes(parentMenuItem) && extra.gender !== "F") {
+            menuItems.unshift(parentMenuItem);
+        }
+    };
+
 
     // Очищаем предыдущий контент
     contextMenu.innerHTML = menuItems.join("");

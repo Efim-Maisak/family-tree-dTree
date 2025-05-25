@@ -317,7 +317,7 @@ body {
 .list-wrapper {
     display: none;
     flex-direction: column;
-    width: 350px;
+    width: 360px;
     gap: 6px;
     padding: 8px;
     position: absolute;

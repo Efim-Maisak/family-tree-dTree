@@ -9,6 +9,7 @@ import { keyGraph } from "./main-graph.js";
 import editPerson from "./edit-person.js";
 import { filteredSpouseFamily } from  "../../utils/fillDataPersonModal.js";
 import { genealogyDataWithNodeId } from "./main-graph.js";
+import contextMenu from "./context-menu.js";
 import { genealogyData } from "../script.js";
 import { pb } from "../../services/pocketbase-service.js";
 
@@ -18,12 +19,15 @@ const modalControls = modals();
 const { removeZoomListener } = zoomControl();
 const { removeHandlers } = searchPearsonList();
 let lastClickedSpouseNodeTime = new Date().getTime();
+let graphRootNodeExtra; // данные ноды на которой сформировали вторичное дерево
 
 let pageWidth = window.innerWidth;
 let pageHeight = window.innerHeight;
 
 
-const graphs = (elementId, treeData) => {
+const graphs = (elementId, treeData, rootNodeExtra = null) => {
+    graphRootNodeExtra = rootNodeExtra;
+
     const spouseGraph = document.querySelector(elementId);
     const spouseGraphButton = document.querySelector(".popup_bottom__button");
     const spouseGraphClose = document.querySelector(".graph-spouse_close");
@@ -80,7 +84,7 @@ const graphs = (elementId, treeData) => {
                             modalControls.openModal();
                         },
                         nodeRightClick: function(name, extra) {
-                            alert('Right-click: ' + name);
+                            contextMenu(name, extra, false, graphRootNodeExtra);
                         },
                         textRenderer: function(name, extra, textClass) {
                             var text = "<div style='width: 120px; padding: 5px; word-wrap: break-word;'>";

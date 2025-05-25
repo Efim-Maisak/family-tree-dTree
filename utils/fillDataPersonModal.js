@@ -49,7 +49,7 @@ const fillDataPersonModal = (name, extra) => {
         popupBottomBtnEl.textContent = `Показать древо ${name.split(" ")[0]}`;
         if(genealogyData && genealogyData.length > 0) {
             filteredSpouseFamily = filterSpouseFamily(genealogyData, extra.id);
-            graphs("#graph-spouse", convertToDTreeFormat(filteredSpouseFamily));
+            graphs("#graph-spouse", convertToDTreeFormat(filteredSpouseFamily), extra);
         }
     } else if(popupBottomEl) {
         popupBottomEl.style.display = "none";
