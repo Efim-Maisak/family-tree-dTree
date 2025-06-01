@@ -2,7 +2,6 @@ import httpService from "../services/http.js";
 import { baseDBpath } from "../config/apiConfig.js";
 import { dataTable } from "../config/apiConfig.js";
 import { maxItems } from "../config/apiConfig.js";
-import { baseUrl } from "../config/apiConfig.js";
 import { keyGraph } from "./modules/main-graph.js";
 import { filterMainTreePerson } from "../utils/filterMainTreePerson.js";
 import { genealogyDataWithNodeId } from "./modules/main-graph.js";

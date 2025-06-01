@@ -2,6 +2,7 @@ import { filterPersonList } from "../../utils/filterPersonList.js";
 
 
 const searchPearsonList = (personList, tree, dataWithNodeId) => {
+
     const listWrapperBlock = document.querySelector(".list-wrapper");
     const personInput = document.querySelector(".input_search");
     const searchButton = document.querySelector(".header-panel-button");

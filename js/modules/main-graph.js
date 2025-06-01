@@ -26,7 +26,6 @@ export const keyGraph = (treeData) => {
 
             const modalControls = modals();
             const filteredTreeData = filterMainTreePerson(treeData);
-
             mainTree = dTree.init( convertToDTreeFormat(filteredTreeData), {
                 target: "#graph",
                 debug: true,
@@ -76,7 +75,7 @@ export const keyGraph = (treeData) => {
                         return text;
                     },
                         nodeRenderer: function(name, x, y, height, width, extra, id, nodeClass, textClass, textRenderer) {
-                            genealogyDataWithNodeId = fillPersonsWithNodeId(genealogyDataWithNodeId, filteredTreeData, extra, id);
+                            genealogyDataWithNodeId = fillPersonsWithNodeId(genealogyDataWithNodeId, extra, id);
                             let node = '';
                             node += '<div ';
                             node += 'style="height:100%;width:100%;" ';

@@ -60,12 +60,18 @@ const contextMenu = (name, extra, isMain, rootNodeExtra = null) => {
         }
     };
 
-    // если выбранная нода не имеет родителей и она не является супругом женского пола
+    // - если выбранная нода не имеет родителей и она не является супругом женского пола
     if(!isMain && (extra.parents == null || extra.parents.parents.length < 2)) {
         if(!menuItems.includes(parentMenuItem) && extra.gender !== "F") {
             menuItems.unshift(parentMenuItem);
         }
     };
+
+    //- если нода является частью основного дерева и тажже мужского пола
+    if(!isMain && extra.isMainTree && extra.gender == "M") {
+        return;
+    };
+
 
 
     // Очищаем предыдущий контент
