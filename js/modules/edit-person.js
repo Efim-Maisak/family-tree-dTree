@@ -4,6 +4,7 @@ import { lastClickedNodeTime as time } from "./main-graph.js";
 import { changeInfoIsLivingPerson } from "../../utils/changeInfoIsLivingPerson.js";
 import applyRoleAccess from "./role-access.js";
 import { createQuill } from "./editor.js";
+import toast from "./toast.js";
 
 
 let currentPersonId = null;
@@ -92,7 +93,7 @@ const editPerson = (extra, lastClickedNodeTime, pocketBase) => {
         // Валидация формата файла
         const validFormats = ["image/jpeg", "image/png"];
         if (!validFormats.includes(file.type)) {
-            alert("Пожалуйста, выберите файл в формате JPEG или PNG.");
+            toast("Пожалуйста, выберите файл в формате JPEG или PNG.", "warning", 5000);
             photoInput.value = "";
             return;
         }
@@ -215,9 +216,9 @@ const editPerson = (extra, lastClickedNodeTime, pocketBase) => {
                         toggleEditMode(false);
                         togglePhotoOverlay(false);
                         if(changedData.name == "" || changedData.date_of_birth == "") {
-                            alert('Поля "Имя" и "Дата рождения" нельзя оставлять пустыми');
+                            toast("Поля \"Имя\" и \"Дата рождения\" нельзя оставлять пустыми", "warning", 5000);
                         } else {
-                            alert(`Возникла ошибка при изменении данных: ${e}`);
+                            toast(`Возникла ошибка при изменении данных: ${e}`, "error", 5000);
                         }
                     }
                 } else {

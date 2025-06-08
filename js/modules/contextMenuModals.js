@@ -8,6 +8,8 @@ import prepareAddParentData from "../../utils/prepareAddParentData.js";
 import disableOldKeyNode from "../../utils/disableOldKeyNode.js";
 import addParentToChildren from "../../utils/addParentToChildren.js";
 import { pb } from "../../services/pocketbase-service.js";
+import toast from "./toast.js";
+
 
 const contextMenuModals = (isMain) => {
     const modalElement = document.getElementById("modal");
@@ -267,7 +269,7 @@ const contextMenuModals = (isMain) => {
                 } else {
                     saveBtn.disabled = false;
                     saveBtn.textContent = "Сохранить";
-                    alert(`Код ${createResponse.code}: ${createResponse.message}`);
+                    toast(`Код ${createResponse.code}: ${createResponse.message}`, "error", 5000);
                 }
             }
         } else if(modalType === "addParent") {
@@ -292,7 +294,7 @@ const contextMenuModals = (isMain) => {
                 } else {
                     saveBtn.disabled = false;
                     saveBtn.textContent = "Сохранить";
-                    alert(`Код ${createResponse.code}: ${createResponse.message}`);
+                    toast(`Код ${createResponse.code}: ${createResponse.message}`, "error", 5000);
                 }
             }
         } else if(modalType === "addChild") {
@@ -312,7 +314,7 @@ const contextMenuModals = (isMain) => {
                 } else {
                     saveBtn.disabled = false;
                     saveBtn.textContent = "Сохранить";
-                    alert(`Код ${createResponse.code}: ${createResponse.message}`);
+                    toast(`Код ${createResponse.code}: ${createResponse.message}`, "error", 5000);
                 }
             }
         };
