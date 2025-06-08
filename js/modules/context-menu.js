@@ -1,5 +1,7 @@
 import contextMenuModals from "./contextMenuModals.js";
 import { treeMainFamily } from "../script.js";
+import { pb } from "../../services/pocketbase-service.js";
+import toast from "./toast.js";
 
 
 const contextMenu = (name, extra, isMain, rootNodeExtra = null) => {
@@ -12,10 +14,15 @@ const contextMenu = (name, extra, isMain, rootNodeExtra = null) => {
 
     let menuItems = [childMenuItem];
 
+    if (contextMenu && pb.authStore.model?.role == "viewer") {
+        toast("Недостаточно прав для вызова контекстного меню.", "warning", 4000);
+        return;
+    };
+
     if(!contextMenu) {
         console.warn("Контекстное меню не найдено");
         return;
-    }
+    };
 
     const event = d3.event || window.event;
     if(!event) {
