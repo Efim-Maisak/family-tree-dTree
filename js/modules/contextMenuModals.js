@@ -7,6 +7,7 @@ import prepareAddChildData from "../../utils/prepareAddChildData.js";
 import prepareAddParentData from "../../utils/prepareAddParentData.js";
 import disableOldKeyNode from "../../utils/disableOldKeyNode.js";
 import addParentToChildren from "../../utils/addParentToChildren.js";
+import updateChildrenAfterAddingSpouse from "../../utils/updateChildrenAfterAddingSpouse.js";
 import { pb } from "../../services/pocketbase-service.js";
 import toast from "./toast.js";
 
@@ -263,6 +264,7 @@ const contextMenuModals = (isMain) => {
                 const createResponse = await pb.collection("genealogy").create(prepareAddSpouseData(formData, currentModalExtra));
                 if(!createResponse.hasOwnProperty("code")) {
                     await pb.collection("genealogy").update(currentModalExtra.id, { partner: {spouse: createResponse.id}});
+                    updateChildrenAfterAddingSpouse(currentModalExtra, createResponse);
                     closeModal();
                     saveBtn.disabled = false;
                     location.reload();
