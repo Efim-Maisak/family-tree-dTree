@@ -7,9 +7,6 @@ const updateChildrenAfterAddingSpouse = async (currentNode, newSpouse) => {
     const children = currentNode?.children?.children;
     const parentsArr = [currentNode.id, newSpouse.id];
 
-    console.log('children:', children);
-    console.log('parentsArr:', parentsArr);
-
     if(children && children.length > 0) {
       for (const child of children) {
           batch.collection("genealogy").update(child,
@@ -21,7 +18,6 @@ const updateChildrenAfterAddingSpouse = async (currentNode, newSpouse) => {
             await batch.send();
         } catch (e) {
             console.error("Ошибка обновления массива родителей у детей (pb batch): ", e);
-            console.log(e.originalError);
           throw e;
         }
 
