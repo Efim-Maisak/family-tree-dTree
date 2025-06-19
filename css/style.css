@@ -22,11 +22,12 @@ body {
     height: 100vh;
     font: 10px sans-serif;
     background-color: #f2f0ef;
+    overflow-y: scroll;
 }
 
 /* Стили формы логина */
 
-.login-container {
+#login-overlay {
     display: none;
 }
 
@@ -239,6 +240,7 @@ body {
 
 /* Стили верхней панели */
 .header-panel {
+    display: none;
     justify-content: space-between;
     height: 48px;
     width: calc(100% - 30px);

@@ -19,14 +19,16 @@ import { pb } from "../services/pocketbase-service.js";
 
 export let genealogyData = [];
 export let treeMainFamily = null;
-const { request, isLoading } = httpService();
-const userInfoSpan = document.querySelector(".header-user-text");
-const loadingDiv = document.createElement("div");
-
 let mainTree = null;
+const { request, isLoading } = httpService();
+let userInfoSpan = null;
+const loadingDiv = document.createElement("div");
 
 
 document.addEventListener("DOMContentLoaded", async () => {
+
+    userInfoSpan = document.querySelector(".header-user-text");
+
     if (pb.authStore.isValid) {
         showMainContent();
         userInfoSpan.textContent = pb.authStore.model.email;
