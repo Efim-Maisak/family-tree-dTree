@@ -27,6 +27,9 @@ const loadingDiv = document.createElement("div");
 
 document.addEventListener("DOMContentLoaded", async () => {
 
+    const preloadDefaultAvatar = new Image();
+    preloadDefaultAvatar.src = "../assets/avatar-default-512x488.png";
+
     userInfoSpan = document.querySelector(".header-user-text");
 
     if (pb.authStore.isValid) {
@@ -52,7 +55,6 @@ function initApp() {
                 if(response.totalItems === 0) {
                     showNoDataDiv();
                 } else {
-                    console.log(response);
                     console.log(response.items);
                     genealogyData = response.items;
 

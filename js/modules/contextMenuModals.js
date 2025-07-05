@@ -230,12 +230,10 @@ const contextMenuModals = (isMain) => {
             return { children: { children: [response.id]}}
         } else {
             let childrenArr = parrent.children?.children;
-            console.log('Массив детей: ', childrenArr);
             childrenArr.push(response.id);
-            console.log('Массив детей после: ', childrenArr);
             return { children: { children: childrenArr }};
         }
-    }
+    };
 
     async function handleSave(modalType) {
 

@@ -1,11 +1,14 @@
 import { initApp } from "../script.js";
 import { pb } from "../../services/pocketbase-service.js";
 import { showMainContent } from "../../utils/showMainContent.js";
+import { letterOnShield } from "../../config/apiConfig.js";
 import addLogoutListener from "./logout.js";
+
 
 
 const login = () => {
 
+    const appIcon =document.querySelector(".app-icon");
     const loginForm = document.getElementById("loginForm");
     const emailInput = document.getElementById("email");
     const passwordInput = document.getElementById("password");
@@ -15,6 +18,20 @@ const login = () => {
     const loginStatus = document.getElementById("loginStatus");
     const togglePassword = document.getElementById("togglePassword");
     const userInfoSpan = document.querySelector(".header-user-text");
+
+
+    const createShieldIcon = (letter) => {
+    return `
+        <svg width="72" height="72" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <!-- Форма щита -->
+            <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z" fill="#2196F3"/>
+            <!-- Буква внутри щита -->
+            <text x="12" y="12" text-anchor="middle" dominant-baseline="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="white" stroke="#2196F3" stroke-width="0.6">${letter}</text>
+        </svg>
+    `;
+    };
+
+    appIcon.innerHTML = createShieldIcon(letterOnShield);
 
     const validateEmail = (email) => {
         const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

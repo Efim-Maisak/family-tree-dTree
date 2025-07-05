@@ -15,3 +15,6 @@ export const maxItems = "200";
 
 // Адрес для получения изображений из БД
 export const baseImagePath = "http://127.0.0.1:8090/api/files";
+
+// Первая буква фамилии для расположения на щите экрана логина
+export const letterOnShield = "A";

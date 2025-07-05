@@ -61,8 +61,8 @@ body {
 }
 
 .app-icon {
-    width: 48px;
-    height: 48px;
+    width: 72px;
+    height: 72px;
     margin: 0 auto 1rem;
 }
 
@@ -524,6 +524,7 @@ svg {
     border-style: solid;
     border-width: 1px;
     box-sizing: border-box;
+    cursor: pointer;
 }
 
 .woman {
@@ -531,6 +532,7 @@ svg {
     border-style: solid;
     border-width: 1px;
     box-sizing: border-box;
+    cursor: pointer;
 }
 
 .unknown {
@@ -539,6 +541,7 @@ svg {
     border-style: solid;
     border-width: 1px;
     box-sizing: border-box;
+    cursor: pointer;
 }
 
 .emphasis{
@@ -562,6 +565,7 @@ p {
 .error, .empty {
     display: flex;
     height: 100%;
+    width: 600px;
     flex-direction: row;
     justify-content: center;
     align-items: center;
@@ -680,7 +684,8 @@ p {
     margin: 0 auto 0;
     position: relative;
     width: 250px;
-    height: 250px;
+    min-height: 250px;
+    max-height: 350px;
     border-radius: 8px;
     overflow: hidden;
 }
