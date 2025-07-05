@@ -9,6 +9,7 @@ import { zoomControl } from "../../utils/zoomControl.js";
 import contextMenu from "./context-menu.js";
 import { pb } from "../../services/pocketbase-service.js";
 import fillDataPersonModal from "../../utils/fillDataPersonModal.js";
+import extractYear from "../../utils/extractYear.js";
 
 
 export let genealogyDataWithNodeId = [];
@@ -74,16 +75,26 @@ export const keyGraph = (treeData) => {
                         }
                         return text;
                     },
-                        nodeRenderer: function(name, x, y, height, width, extra, id, nodeClass, textClass, textRenderer) {
-                            genealogyDataWithNodeId = fillPersonsWithNodeId(genealogyDataWithNodeId, extra, id);
-                            let node = '';
-                            node += '<div ';
-                            node += 'style="height:100%;width:100%;" ';
-                            node += 'class="' + nodeClass + '" ';
-                            node += 'id="node' + id + '">\n';
-                            node += textRenderer(name, extra, textClass);
-                            node += '</div>';
-                            return node;
+                    nodeRenderer: function(name, x, y, height, width, extra, id, nodeClass, textClass, textRenderer) {
+                        genealogyDataWithNodeId = fillPersonsWithNodeId(genealogyDataWithNodeId, extra, id);
+                        let node = '';
+                        node += '<div ';
+                        node += 'style="height:100%;width:100%;" ';
+                        node += 'class="' + nodeClass + '" ';
+                        node += 'id="node' + id + '">\n';
+                        node += textRenderer(name, extra, textClass);
+                        node += '</div>';
+                        return node;
+                    },
+                    nodeSorter: function(aName, aExtra, bName, bExtra) {
+                        const aYear = extractYear(aExtra.birthDate);
+                        const bYear = extractYear(bExtra.birthDate);
+
+                        if (aYear === null && bYear === null) return 0;
+                        if (aYear === null) return 1;
+                        if (bYear === null) return -1;
+
+                        return aYear - bYear;
                     }
                 }
             });

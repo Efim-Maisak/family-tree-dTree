@@ -10,6 +10,7 @@ import editPerson from "./edit-person.js";
 import { filteredSpouseFamily } from  "../../utils/fillDataPersonModal.js";
 import { genealogyDataWithNodeId } from "./main-graph.js";
 import contextMenu from "./context-menu.js";
+import extractYear from "../../utils/extractYear.js";
 import { genealogyData } from "../script.js";
 import { pb } from "../../services/pocketbase-service.js";
 
@@ -112,6 +113,16 @@ const graphs = (elementId, treeData, rootNodeExtra = null) => {
                             node += textRenderer(name, extra, textClass);
                             node += '</div>';
                             return node;
+                        },
+                        nodeSorter: function(aName, aExtra, bName, bExtra) {
+                            const aYear = extractYear(aExtra.birthDate);
+                            const bYear = extractYear(bExtra.birthDate);
+
+                            if (aYear === null && bYear === null) return 0;
+                            if (aYear === null) return 1;
+                            if (bYear === null) return -1;
+
+                            return aYear - bYear;
                         }
                     }
                 });
