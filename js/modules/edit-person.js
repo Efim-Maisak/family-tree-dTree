@@ -104,7 +104,7 @@ const editPerson = (extra, lastClickedNodeTime, pocketBase) => {
         formData.append("portret", file);
 
         try {
-            const updatedFoto = await pb.collection("genealogy").update(extra.id, formData);
+            const updatedFoto = await pb.collection(dataTable).update(extra.id, formData);
             personPhoto.src = `${baseImagePath}/${dataTable}/${extra.id}/${updatedFoto.portret}`;
             photoIsChanged = true;
         } catch (error) {
@@ -198,7 +198,7 @@ const editPerson = (extra, lastClickedNodeTime, pocketBase) => {
                 if (hasChanges) {
                     saveBtn.disabled = true;
                     try {
-                        const response = await pb.collection('genealogy').update(currentPersonId, changedData);
+                        const response = await pb.collection(dataTable).update(currentPersonId, changedData);
                         if (response.id) {
                             saveBtn.disabled = false;
                             toggleEditMode(false);

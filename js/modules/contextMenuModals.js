@@ -1,6 +1,7 @@
 import { calcScroll } from "../../utils/calcScroll.js";
 import { createQuill } from "./editor.js";
 import { genealogyData } from "../script.js";
+import { dataTable } from "../../config/apiConfig.js";
 import { validateSendData } from "../../utils/validateSendData.js";
 import prepareAddSpouseData from "../../utils/prepareAddSpouseData.js";
 import prepareAddChildData from "../../utils/prepareAddChildData.js";
@@ -259,9 +260,9 @@ const contextMenuModals = (isMain) => {
             if(validateSendData(formData)) {
                 saveBtn.disabled = true;
                 saveBtn.textContent = "Сохраняю...";
-                const createResponse = await pb.collection("genealogy").create(prepareAddSpouseData(formData, currentModalExtra));
+                const createResponse = await pb.collection(dataTable).create(prepareAddSpouseData(formData, currentModalExtra));
                 if(!createResponse.hasOwnProperty("code")) {
-                    await pb.collection("genealogy").update(currentModalExtra.id, { partner: {spouse: createResponse.id}});
+                    await pb.collection(dataTable).update(currentModalExtra.id, { partner: {spouse: createResponse.id}});
                     updateChildrenAfterAddingSpouse(currentModalExtra, createResponse);
                     closeModal();
                     saveBtn.disabled = false;
@@ -278,15 +279,15 @@ const contextMenuModals = (isMain) => {
                 saveBtn.textContent = "Сохраняю...";
                 const isNewKeyNode = formData.isKeyNode;
                 disableOldKeyNode(isNewKeyNode, genealogyData);
-                const createResponse = await pb.collection("genealogy").create(prepareAddParentData(formData, currentModalExtra));
+                const createResponse = await pb.collection(dataTable).create(prepareAddParentData(formData, currentModalExtra));
                 if(!createResponse.hasOwnProperty("code")) {
                     if(currentModalExtra.parents === null) {
-                        await pb.collection("genealogy").update(currentModalExtra.id, { parents: { parents: [ createResponse.id ] }});
+                        await pb.collection(dataTable).update(currentModalExtra.id, { parents: { parents: [ createResponse.id ] }});
                     } else {
                         addParentToChildren(currentModalExtra, createResponse, genealogyData);
                         const parentId = currentModalExtra.parents?.parents[0];
                         // добавляем новосозданного родителя в качестве супруга к первому родителю, если он существует
-                        await pb.collection("genealogy").update(parentId, { partner: { spouse: createResponse.id}});
+                        await pb.collection(dataTable).update(parentId, { partner: { spouse: createResponse.id}});
                     }
                     closeModal();
                     saveBtn.disabled = false;
@@ -301,12 +302,12 @@ const contextMenuModals = (isMain) => {
             if(validateSendData(formData)) {
                 saveBtn.disabled = true;
                 saveBtn.textContent = "Сохраняю...";
-                const createResponse = await pb.collection("genealogy").create(prepareAddChildData(formData, currentModalExtra));
+                const createResponse = await pb.collection(dataTable).create(prepareAddChildData(formData, currentModalExtra));
                 if(!createResponse.hasOwnProperty("code")) {
-                    await pb.collection("genealogy").update(currentModalExtra.id, addChild(currentModalExtra, createResponse));
+                    await pb.collection(dataTable).update(currentModalExtra.id, addChild(currentModalExtra, createResponse));
                     if(currentModalExtra.partner !== null && currentModalExtra.partner.hasOwnProperty("spouse")) {
                         const spouseParent = genealogyData.filter( person => person.id == currentModalExtra.partner.spouse);
-                        await pb.collection("genealogy").update(currentModalExtra.partner.spouse, addChild(spouseParent[0], createResponse));
+                        await pb.collection(dataTable).update(currentModalExtra.partner.spouse, addChild(spouseParent[0], createResponse));
                     }
                     closeModal();
                     saveBtn.disabled = false;
