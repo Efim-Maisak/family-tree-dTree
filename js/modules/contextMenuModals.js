@@ -58,23 +58,23 @@ const contextMenuModals = (isMain) => {
             <div class="popup_content__add-spouse">
                 <label for="person-name-input" style="display: block; margin-top: 8px;">Фамилия, имя, отчество:</label>
                 <p style=" font-style: italic; color: gray;">${data.gender == "M" ? "Желательно указывать девичью фамилию" : ""}<p>
-                <input type="text" id="person-name-input" autocomplete="off" autocorrect="off">
+                <input type="text" id="person-name-input" class="popup_content__input" autocomplete="off" autocorrect="off">
                 <label for="person-gender-select" style="display: block; margin-top: 16px;">Пол:</label>
-                <select id="person-gender-select">
+                <select id="person-gender-select" class="popup_content__input">
                     <option value="M">М</option>
                     <option value="F">Ж</option>
                 </select>
                 <label for="person-birth-input" style="display: block; margin-top: 16px;">Дата рождения:</label>
-                <input type="text" id="person-birth-input" autocomplete="off" autocorrect="off">
+                <input type="text" id="person-birth-input" class="popup_content__input" autocomplete="off" autocorrect="off">
                 <label for="person-death-input" style="display: block; margin-top: 16px;">Дата смерти:</label>
-                <input type="text" id="person-death-input" autocomplete="off" autocorrect="off">
+                <input type="text" id="person-death-input" class="popup_content__input" autocomplete="off" autocorrect="off">
                 <label for="place-birth-input" style="display: block; margin-top: 16px;">Место рождения:</label>
-                <input type="text" id="place-birth-input" autocomplete="off" autocorrect="off">
+                <input type="text" id="place-birth-input" class="popup_content__input" autocomplete="off" autocorrect="off">
                 <label for="coordinates-input" style="display: block; margin-top: 16px;">Координаты места рождения (широта, долгота):</label>
                 <p style=" font-style: italic; color: gray;">Вставьте координаты скопированные из google maps<p>
-                <input type="text" id="coordinates-input" autocomplete="off" autocorrect="off">
+                <input type="text" id="coordinates-input" class="popup_content__input" autocomplete="off" autocorrect="off">
                 <label for="place-death-input" style="display: block; margin-top: 16px;">Место смерти:</label>
-                <input type="text" id="place-death-input" autocomplete="off" autocorrect="off">
+                <input type="text" id="place-death-input" class="popup_content__input" autocomplete="off" autocorrect="off">
                 <div class="toggle-container">
                     <span class="toggle-label">Жив:</span>
                     <label class="toggle-switch" style="display: block; margin-top: 16px;">
@@ -103,23 +103,23 @@ const contextMenuModals = (isMain) => {
             <h3 class="popup_content__title" style="margin-right: 48px; margin-bottom: 24px;">${data.name} - добавление родителя</h3>
             <div class="popup_content__add-spouse">
                 <label for="person-name-input" style="display: block; margin-top: 8px;">Фамилия, имя, отчество:</label>
-                <input type="text" id="person-name-input" autocomplete="off" autocorrect="off">
+                <input type="text" id="person-name-input" class="popup_content__input" autocomplete="off" autocorrect="off">
                 <label for="person-gender-select" style="display: block; margin-top: 16px;">Пол:</label>
-                <select id="person-gender-select">
+                <select id="person-gender-select" class="popup_content__input">
                     <option value="M">М</option>
                     <option value="F">Ж</option>
                 </select>
                 <label for="person-birth-input" style="display: block; margin-top: 16px;">Дата рождения:</label>
-                <input type="text" id="person-birth-input" autocomplete="off" autocorrect="off">
+                <input type="text" id="person-birth-input" class="popup_content__input" autocomplete="off" autocorrect="off">
                 <label for="person-death-input" style="display: block; margin-top: 16px;">Дата смерти:</label>
-                <input type="text" id="person-death-input" autocomplete="off" autocorrect="off">
+                <input type="text" id="person-death-input" class="popup_content__input" autocomplete="off" autocorrect="off">
                 <label for="place-birth-input" style="display: block; margin-top: 16px;">Место рождения:</label>
-                <input type="text" id="place-birth-input" autocomplete="off" autocorrect="off">
+                <input type="text" id="place-birth-input" class="popup_content__input" autocomplete="off" autocorrect="off">
                 <label for="coordinates-input" style="display: block; margin-top: 16px;">Координаты места рождения (широта, долгота):</label>
                 <p style=" font-style: italic; color: gray;">Вставьте координаты скопированные из google maps<p>
-                <input type="text" id="coordinates-input" autocomplete="off" autocorrect="off">
+                <input type="text" id="coordinates-input" class="popup_content__input" autocomplete="off" autocorrect="off">
                 <label for="place-death-input" style="display: block; margin-top: 16px;">Место смерти:</label>
-                <input type="text" id="place-death-input" autocomplete="off" autocorrect="off">
+                <input type="text" id="place-death-input" class="popup_content__input" autocomplete="off" autocorrect="off">
                 <div class="toggle-container">
                     <span class="toggle-label">Жив:</span>
                     <label class="toggle-switch" style="display: block; margin-top: 16px;">
@@ -157,23 +157,23 @@ const contextMenuModals = (isMain) => {
             <h3 class="popup_content__title" style="margin-right: 48px; margin-bottom: 24px;">${data.name} - добавление ребенка</h3>
             <div class="popup_content__add-spouse">
                 <label for="person-name-input" style="display: block; margin-top: 8px;">Фамилия, имя, отчество:</label>
-                <input type="text" id="person-name-input" autocomplete="off" autocorrect="off">
+                <input type="text" id="person-name-input" class="popup_content__input" autocomplete="off" autocorrect="off">
                 <label for="person-gender-select" style="display: block; margin-top: 16px;">Пол:</label>
-                <select id="person-gender-select">
+                <select id="person-gender-select" class="popup_content__input">
                     <option value="M">М</option>
                     <option value="F">Ж</option>
                 </select>
                 <label for="person-birth-input" style="display: block; margin-top: 16px;">Дата рождения:</label>
-                <input type="text" id="person-birth-input" autocomplete="off" autocorrect="off">
+                <input type="text" id="person-birth-input" class="popup_content__input" autocomplete="off" autocorrect="off">
                 <label for="person-death-input" style="display: block; margin-top: 16px;">Дата смерти:</label>
-                <input type="text" id="person-death-input" autocomplete="off" autocorrect="off">
+                <input type="text" id="person-death-input" class="popup_content__input" autocomplete="off" autocorrect="off">
                 <label for="place-birth-input" style="display: block; margin-top: 16px;">Место рождения:</label>
-                <input type="text" id="place-birth-input" autocomplete="off" autocorrect="off">
+                <input type="text" id="place-birth-input" class="popup_content__input" autocomplete="off" autocorrect="off">
                 <label for="coordinates-input" style="display: block; margin-top: 16px;">Координаты места рождения (широта, долгота):</label>
                 <p style=" font-style: italic; color: gray;">Вставьте координаты скопированные из google maps<p>
-                <input type="text" id="coordinates-input" autocomplete="off" autocorrect="off">
+                <input type="text" id="coordinates-input" class="popup_content__input" autocomplete="off" autocorrect="off">
                 <label for="place-death-input" style="display: block; margin-top: 16px;">Место смерти:</label>
-                <input type="text" id="place-death-input" autocomplete="off" autocorrect="off">
+                <input type="text" id="place-death-input" class="popup_content__input" autocomplete="off" autocorrect="off">
                 <div class="toggle-container">
                     <span class="toggle-label">Жив:</span>
                     <label class="toggle-switch" style="display: block; margin-top: 16px;">

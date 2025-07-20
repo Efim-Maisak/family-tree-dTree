@@ -22,7 +22,7 @@ body {
     height: 100vh;
     font: 10px sans-serif;
     background-color: #f2f0ef;
-    overflow-y: scroll;
+    overflow: hidden;
 }
 
 /* Стили формы логина */
@@ -239,6 +239,7 @@ body {
 
 
 /* Стили верхней панели */
+
 .header-panel {
     display: none;
     justify-content: space-between;
@@ -250,13 +251,15 @@ body {
     z-index: 101;
     font-size: 18px;
     color: #5f6368;
+    flex-wrap: wrap;
 }
 
 .header-panel__info {
     display: flex;
     justify-content: center;
-    width: 190px;
-    padding: 6px 24px;
+    width: 270px;
+    height: 48px;
+    padding: 0px 24px;
     border-radius: 30px;
     background-color: #ffff;
     opacity: 0.9;
@@ -407,12 +410,13 @@ body {
 
 .header-panel__user {
     width: 300px;
+    height: 48px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-right: 30px;
     margin-left: 12px;
-    padding: 6px 3px 6px 24px;
+    padding: 0px 3px 0px 24px;
     border-radius: 30px;
     background-color: #fff;
     opacity: 0.9;
@@ -450,6 +454,12 @@ body {
 
 .header-panel-button img, .header-user-button img {
     height: 30px;
+}
+
+.header-panel__info,
+.header-panel__search,
+.header-panel__user {
+    flex: 0 1 auto;
 }
 
 /* Стили зум панели */
@@ -505,7 +515,6 @@ body {
 svg {
     width: 100%;
     height: 100vh;
-    height: 100%;
     border-style: none;
     border-width: 0;
 }
@@ -668,6 +677,25 @@ p {
     animation-fill-mode: none;
     animation-name: popUpfadeInDown;
     overflow-y: auto;
+}
+
+.popup_content__input,
+.popup_content__input select {
+    font-size: 16px;
+    padding: 8px;
+    border: none;
+    outline: 1px solid #ddd;
+    outline-offset: -1px;
+    border-radius: 4px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.popup_content__input:focus,
+.popup_content__input select:focus {
+    outline: none;
+    outline: 2px solid goldenrod;
+    outline-offset: -2px;
 }
 
 @keyframes popUpfadeInDown {
@@ -867,22 +895,13 @@ p {
 }
 
 .popup_content__add-spouse, .popup_content__edit {
+    display: flex;
     margin-top: 16px;
     padding-right: 8px;
     flex-direction: column;
     gap: 6px;
     height: 400px;
     overflow-y: scroll;
-}
-
-.popup_content__edit input,
-.popup_content__edit select {
-    font-size: 16px;
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    width: 100%;
-    box-sizing: border-box;
 }
 
 .popup_content__add-spouse input,
@@ -894,7 +913,6 @@ p {
     width: 100%;
     box-sizing: border-box;
 }
-
 
 .popup_content__add-spouse label:first-of-type,
 .popup_content__edit label:first-of-type {
@@ -1058,4 +1076,82 @@ input:checked + .toggle-slider:before {
 
 .context-menu-item:hover {
     background: #ddd
+}
+
+
+/* Медиа-запросы */
+
+@media (max-width: 1165px) {
+    .header-panel__search {
+        width: 100%;
+        order: 3;
+        margin-top: 10px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .search-wrapper {
+        width: 100%;
+        max-width: 800px;
+        margin-left: 0;
+        margin-right: 28px;
+    }
+
+    .list-wrapper {
+        left: 50%;
+        transform: translateX(-50%);
+        width: 90%;
+        max-width: 500px;
+    }
+}
+
+
+@media (max-width: 728px) {
+    .header-panel {
+        left: 20px;
+    }
+
+    .header-panel__info {
+        width: 100%;
+    }
+
+    .search-wrapper {
+        max-width: none;
+        margin-right: 12px;
+    }
+
+    .header-panel__user {
+        width: 100%;
+        margin-top: 10px;
+        margin-left: 0;
+        margin-right: 12px;
+    }
+
+    .popup_content {
+        width: 88vw;
+        padding: 15px;
+        font-size: 13px;
+        max-height: 90vh;
+    }
+
+    .photo-wrapper {
+        padding-top: 68px;
+    }
+
+    .person-info {
+        margin-bottom: 6px;
+    }
+
+    #person-name {
+        font-size: 15px;
+        padding: 14px 0;
+    }
+
+    .edit-buttons {
+        margin-top: 8px;
+    }
+
+    .edit-buttons button {
+        font-size: 13px;
+    }
 }
