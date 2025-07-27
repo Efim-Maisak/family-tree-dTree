@@ -55,7 +55,6 @@ function initApp() {
                 if(response.totalItems === 0) {
                     showNoDataDiv();
                 } else {
-                    console.log(response.items);
                     genealogyData = response.items;
 
                     const treeMainFamilyNode = genealogyData.find( item => {
